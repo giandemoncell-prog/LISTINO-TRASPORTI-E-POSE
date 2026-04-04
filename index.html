@@ -680,8 +680,36 @@ function installApp() {
     });
 }
 
+// --- Trial 30 giorni ---
+function checkTrial() {
+    const key = 'serena_trial_start';
+    let start = localStorage.getItem(key);
+    if (!start) {
+        start = Date.now().toString();
+        localStorage.setItem(key, start);
+    }
+    const elapsed = Date.now() - parseInt(start);
+    const daysLeft = Math.ceil(30 - elapsed / (1000 * 60 * 60 * 24));
+    if (daysLeft <= 0) {
+        document.body.innerHTML = `
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#f0f2f5;text-align:center;padding:20px;">
+                <img src="Logo/serena_infissi.gif" alt="Serena Infissi" style="height:80px;margin-bottom:20px;border-radius:8px;">
+                <h1 style="color:#1a5276;margin-bottom:10px;">Periodo di prova terminato</h1>
+                <p style="color:#555;font-size:1.1em;max-width:400px;">Il trial gratuito di 30 giorni è scaduto. Contatta Serena Infissi per attivare la licenza completa.</p>
+            </div>`;
+        return false;
+    }
+    // Mostra giorni rimanenti nell'header
+    const badge = document.createElement('div');
+    badge.style.cssText = 'background:rgba(255,255,255,0.2);padding:5px 12px;border-radius:20px;font-size:0.8em;';
+    badge.textContent = daysLeft + ' giorni rimanenti';
+    if (daysLeft <= 7) badge.style.background = 'rgba(231,76,60,0.8)';
+    document.querySelector('.header').appendChild(badge);
+    return true;
+}
+
 // --- Start ---
-init();
+if (checkTrial()) init();
 </script>
 </body>
 </html>
