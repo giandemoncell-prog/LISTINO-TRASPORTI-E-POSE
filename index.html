@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serena Infissi - Listino Trasporti e Pose</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a5276">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Serena Infissi">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f0f2f5; color: #333; }
+
+        .header {
+            background: linear-gradient(135deg, #1a5276, #2e86c1);
+            color: white; padding: 20px 30px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .header h1 { font-size: 1.5em; }
+        .header .subtitle { opacity: 0.8; font-size: 0.9em; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        .tabs {
+            display: flex; gap: 5px; margin-bottom: 20px;
+        }
+        .tab {
+            padding: 12px 24px; background: white; border: none;
+            border-radius: 8px 8px 0 0; cursor: pointer;
+            font-size: 0.95em; color: #555; transition: all 0.2s;
+        }
+        .tab.active { background: #2e86c1; color: white; font-weight: 600; }
+        .tab:hover:not(.active) { background: #e8e8e8; }
+
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        .card {
+            background: white; border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 25px; margin-bottom: 20px;
+        }
+        .card h2 { color: #1a5276; margin-bottom: 15px; font-size: 1.2em; border-bottom: 2px solid #2e86c1; padding-bottom: 8px; }
+        .card h3 { color: #2e86c1; margin: 15px 0 10px; font-size: 1em; }
+
+        .tariff-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+        .tariff-table th { background: #1a5276; color: white; padding: 10px 15px; text-align: left; font-weight: 500; }
+        .tariff-table td { padding: 10px 15px; border-bottom: 1px solid #eee; }
+        .tariff-table tr:hover { background: #f8f9fa; }
+        .tariff-table input {
+            width: 100px; padding: 6px 10px; border: 1px solid #ccc;
+            border-radius: 4px; text-align: right; font-size: 0.95em;
+        }
+        .tariff-table input:focus { outline: none; border-color: #2e86c1; box-shadow: 0 0 0 2px rgba(46,134,193,0.2); }
+
+        .form-row { display: flex; gap: 15px; margin-bottom: 12px; flex-wrap: wrap; }
+        .form-group { flex: 1; min-width: 200px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: 500; color: #555; font-size: 0.9em; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%; padding: 10px 12px; border: 1px solid #ccc;
+            border-radius: 6px; font-size: 0.95em;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none; border-color: #2e86c1; box-shadow: 0 0 0 2px rgba(46,134,193,0.2);
+        }
+
+        .btn {
+            padding: 12px 28px; border: none; border-radius: 6px;
+            font-size: 0.95em; cursor: pointer; transition: all 0.2s;
+            display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-primary { background: #2e86c1; color: white; }
+        .btn-primary:hover { background: #1a5276; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-success:hover { background: #1e8449; }
+        .btn-danger { background: #e74c3c; color: white; font-size: 0.85em; padding: 6px 12px; }
+        .btn-danger:hover { background: #c0392b; }
+        .btn-secondary { background: #95a5a6; color: white; }
+        .btn-secondary:hover { background: #7f8c8d; }
+
+        .actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+
+        .preventivo-linea {
+            display: flex; gap: 10px; align-items: center;
+            padding: 10px; background: #f8f9fa; border-radius: 6px;
+            margin-bottom: 8px; flex-wrap: wrap;
+        }
+        .preventivo-linea .form-group { min-width: 120px; }
+        .preventivo-linea .form-group.desc { flex: 2; }
+        .preventivo-linea .subtotale { font-weight: 700; color: #1a5276; min-width: 100px; text-align: right; }
+
+        .totale-box {
+            background: #1a5276; color: white; padding: 20px;
+            border-radius: 8px; margin-top: 15px;
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .totale-box .label { font-size: 1.1em; }
+        .totale-box .amount { font-size: 1.8em; font-weight: 700; }
+
+        .iva-row {
+            display: flex; justify-content: space-between;
+            padding: 8px 20px; background: #2e86c1; color: white;
+            border-radius: 0 0 8px 8px; margin-top: -15px; font-size: 0.95em;
+        }
+
+        .saved-msg {
+            display: none; padding: 10px 15px; background: #d5f5e3;
+            color: #1e8449; border-radius: 6px; margin-top: 10px;
+        }
+        .saved-msg.show { display: block; }
+
+        .storico-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 15px; border-bottom: 1px solid #eee; cursor: pointer;
+            transition: background 0.15s;
+        }
+        .storico-item:hover { background: #f0f7ff; }
+        .storico-item .info { flex: 1; }
+        .storico-item .info .cliente { font-weight: 600; color: #1a5276; }
+        .storico-item .info .data { font-size: 0.85em; color: #888; }
+        .storico-item .totale { font-weight: 700; font-size: 1.1em; color: #27ae60; }
+
+        .empty-state { text-align: center; padding: 40px; color: #999; }
+
+        @media print {
+            .header, .tabs, .actions, .btn, .no-print { display: none !important; }
+            .panel { display: block !important; }
+            .panel:not(#panel-preventivo) { display: none !important; }
+            #panel-preventivo { display: block !important; }
+            body { background: white; }
+            .card { box-shadow: none; border: 1px solid #ddd; }
+        }
+
+        @media (max-width: 600px) {
+            .header { flex-direction: column; text-align: center; gap: 5px; }
+            .form-row { flex-direction: column; }
+            .form-group { min-width: 100%; }
+            .preventivo-linea { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div>
+        <h1>Serena Infissi</h1>
+        <div class="subtitle">Listino Trasporti e Pose in Opera</div>
+    </div>
+    <div style="text-align:right">
+    </div>
+</div>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab active" onclick="showPanel('listino')">Listino Prezzi</button>
+        <button class="tab" onclick="showPanel('preventivo')">Nuovo Preventivo</button>
+        <button class="tab" onclick="showPanel('storico')">Storico Preventivi</button>
+    </div>
+
+    <!-- LISTINO PREZZI -->
+    <div id="panel-listino" class="panel active">
+        <div class="card">
+            <h2>Tariffe Trasporto</h2>
+            <table class="tariff-table">
+                <thead>
+                    <tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Trasporto fino a 30 km</td>
+                        <td><input type="number" id="t_trasporto_30" value="120" step="5" onchange="saveTariffe()"> &euro;</td>
+                    </tr>
+                    <tr>
+                        <td>Supplemento per ogni km oltre i 30</td>
+                        <td><input type="number" id="t_trasporto_extra_km" value="2.50" step="0.10" onchange="saveTariffe()"> &euro;/km</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Tariffe Smaltimento</h2>
+            <table class="tariff-table">
+                <thead>
+                    <tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Smaltimento fino a 30 km</td>
+                        <td><input type="number" id="t_smaltimento_30" value="80" step="5" onchange="saveTariffe()"> &euro;</td>
+                    </tr>
+                    <tr>
+                        <td>Supplemento smaltimento per ogni km oltre i 30</td>
+                        <td><input type="number" id="t_smaltimento_extra_km" value="2.00" step="0.10" onchange="saveTariffe()"> &euro;/km</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Tariffe Posa in Opera</h2>
+            <table class="tariff-table">
+                <thead>
+                    <tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Posa infisso (cad.)</td>
+                        <td><input type="number" id="t_posa_infisso" value="85" step="5" onchange="saveTariffe()"> &euro;</td>
+                    </tr>
+                    <tr>
+                        <td>Posa portoncino ingresso (cad.)</td>
+                        <td><input type="number" id="t_posa_portoncino" value="150" step="5" onchange="saveTariffe()"> &euro;</td>
+                    </tr>
+                    <tr>
+                        <td>Smontaggio vecchio infisso (cad.)</td>
+                        <td><input type="number" id="t_smontaggio" value="35" step="5" onchange="saveTariffe()"> &euro;</td>
+                    </tr>
+                    <tr>
+                        <td>Supplemento piano senza ascensore (per piano)</td>
+                        <td><input type="number" id="t_piano_no_asc" value="20" step="5" onchange="saveTariffe()"> &euro;</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>IVA</h2>
+            <table class="tariff-table">
+                <tbody>
+                    <tr>
+                        <td>Aliquota IVA (%)</td>
+                        <td><input type="number" id="t_iva" value="22" step="1" onchange="saveTariffe()"> %</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="saved-msg" id="saved-msg">Tariffe salvate!</div>
+    </div>
+
+    <!-- NUOVO PREVENTIVO -->
+    <div id="panel-preventivo" class="panel">
+        <div class="card">
+            <h2>Dati Cliente</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Nome / Ragione Sociale</label>
+                    <input type="text" id="p_cliente" placeholder="Es. Mario Rossi">
+                </div>
+                <div class="form-group">
+                    <label>Telefono</label>
+                    <input type="text" id="p_telefono" placeholder="Es. 333 1234567">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Indirizzo consegna</label>
+                    <input type="text" id="p_indirizzo" placeholder="Via, Civico, CAP, Città">
+                </div>
+                <div class="form-group">
+                    <label>Distanza (km)</label>
+                    <input type="number" id="p_km" value="0" min="0" step="1" onchange="calcolaPreventivo()">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Piano</label>
+                    <select id="p_piano" onchange="calcolaPreventivo()">
+                        <option value="0">Piano Terra</option>
+                        <option value="1">1° Piano</option>
+                        <option value="2">2° Piano</option>
+                        <option value="3">3° Piano</option>
+                        <option value="4">4° Piano</option>
+                        <option value="5">5° Piano</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ascensore</label>
+                    <select id="p_ascensore" onchange="calcolaPreventivo()">
+                        <option value="si">Sì</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Data</label>
+                    <input type="date" id="p_data">
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Voci Preventivo</h2>
+            <div id="linee-preventivo"></div>
+            <button class="btn btn-primary" onclick="aggiungiLinea()" style="margin-top:10px">+ Aggiungi voce</button>
+        </div>
+
+        <div class="card">
+            <h2>Riepilogo</h2>
+            <div id="riepilogo"></div>
+            <div class="totale-box">
+                <span class="label">Totale imponibile</span>
+                <span class="amount" id="totale-imponibile">&euro; 0,00</span>
+            </div>
+            <div class="iva-row">
+                <span>IVA (<span id="iva-perc">22</span>%)</span>
+                <span id="totale-iva">&euro; 0,00</span>
+            </div>
+            <div class="totale-box" style="margin-top:5px; background:#27ae60;">
+                <span class="label">TOTALE</span>
+                <span class="amount" id="totale-finale">&euro; 0,00</span>
+            </div>
+        </div>
+
+        <div class="actions no-print">
+            <button class="btn btn-success" onclick="salvaPreventivo()">Salva Preventivo</button>
+            <button class="btn btn-primary" onclick="window.print()">Stampa / PDF</button>
+            <button class="btn btn-secondary" onclick="resetPreventivo()">Nuovo</button>
+        </div>
+    </div>
+
+    <!-- STORICO -->
+    <div id="panel-storico" class="panel">
+        <div class="card">
+            <h2>Storico Preventivi</h2>
+            <div id="lista-storico">
+                <div class="empty-state">Nessun preventivo salvato</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// --- Tariffe default ---
+const TARIFFE_DEFAULT = {
+    t_trasporto_30: 120,
+    t_trasporto_extra_km: 2.50,
+    t_smaltimento_30: 80,
+    t_smaltimento_extra_km: 2.00,
+    t_posa_infisso: 85,
+    t_posa_portoncino: 150,
+    t_smontaggio: 35,
+    t_piano_no_asc: 20,
+    t_iva: 22
+};
+
+let lineePreventivo = [];
+let lineaCounter = 0;
+
+// --- Init ---
+function init() {
+    loadTariffe();
+    document.getElementById('p_data').value = new Date().toISOString().split('T')[0];
+    aggiungiLinea();
+    renderStorico();
+}
+
+// --- Tariffe ---
+function getTariffa(id) {
+    return parseFloat(document.getElementById(id).value) || 0;
+}
+
+function saveTariffe() {
+    const tariffe = {};
+    Object.keys(TARIFFE_DEFAULT).forEach(k => {
+        tariffe[k] = parseFloat(document.getElementById(k).value) || 0;
+    });
+    localStorage.setItem('serena_tariffe', JSON.stringify(tariffe));
+    const msg = document.getElementById('saved-msg');
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 2000);
+}
+
+function loadTariffe() {
+    const saved = localStorage.getItem('serena_tariffe');
+    const tariffe = saved ? JSON.parse(saved) : TARIFFE_DEFAULT;
+    Object.keys(tariffe).forEach(k => {
+        const el = document.getElementById(k);
+        if (el) el.value = tariffe[k];
+    });
+}
+
+// --- Tabs ---
+function showPanel(name) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    event.target.classList.add('active');
+}
+
+// --- Linee preventivo ---
+function aggiungiLinea() {
+    const id = lineaCounter++;
+    lineePreventivo.push(id);
+    renderLinee();
+}
+
+function rimuoviLinea(id) {
+    lineePreventivo = lineePreventivo.filter(l => l !== id);
+    renderLinee();
+    calcolaPreventivo();
+}
+
+function renderLinee() {
+    const container = document.getElementById('linee-preventivo');
+    container.innerHTML = lineePreventivo.map(id => {
+        const existingEl = document.querySelector(`[data-linea="${id}"]`);
+        const tipo = existingEl ? existingEl.querySelector('.tipo-select').value : 'trasporto';
+        const qta = existingEl ? existingEl.querySelector('.qta-input').value : '1';
+        const note = existingEl ? existingEl.querySelector('.note-input').value : '';
+
+        return `
+        <div class="preventivo-linea" data-linea="${id}">
+            <div class="form-group desc">
+                <label>Tipo</label>
+                <select class="tipo-select" onchange="calcolaPreventivo()">
+                    <option value="trasporto" ${tipo==='trasporto'?'selected':''}>Trasporto</option>
+                    <option value="smaltimento" ${tipo==='smaltimento'?'selected':''}>Smaltimento</option>
+                    <option value="posa_infisso" ${tipo==='posa_infisso'?'selected':''}>Posa infisso</option>
+                    <option value="posa_portoncino" ${tipo==='posa_portoncino'?'selected':''}>Posa portoncino</option>
+                    <option value="smontaggio" ${tipo==='smontaggio'?'selected':''}>Smontaggio vecchio</option>
+                </select>
+            </div>
+            <div class="form-group" style="max-width:80px">
+                <label>Q.tà</label>
+                <input type="number" class="qta-input" value="${qta}" min="1" step="1" onchange="calcolaPreventivo()">
+            </div>
+            <div class="form-group">
+                <label>Note</label>
+                <input type="text" class="note-input" value="${note}" placeholder="Note...">
+            </div>
+            <div class="subtotale" data-sub="${id}">&euro; 0,00</div>
+            <button class="btn btn-danger" onclick="rimuoviLinea(${id})" ${lineePreventivo.length<=1?'disabled':''}>X</button>
+        </div>`;
+    }).join('');
+    calcolaPreventivo();
+}
+
+function calcolaPreventivo() {
+    const km = parseFloat(document.getElementById('p_km').value) || 0;
+    const piano = parseInt(document.getElementById('p_piano').value) || 0;
+    const ascensore = document.getElementById('p_ascensore').value === 'si';
+    const iva = getTariffa('t_iva');
+
+    let totale = 0;
+    const righe = [];
+
+    document.querySelectorAll('.preventivo-linea').forEach(el => {
+        const tipo = el.querySelector('.tipo-select').value;
+        const qta = parseInt(el.querySelector('.qta-input').value) || 1;
+        const id = el.dataset.linea;
+        let prezzo = 0;
+        let desc = '';
+
+        switch(tipo) {
+            case 'trasporto':
+                prezzo = getTariffa('t_trasporto_30');
+                desc = 'Trasporto fino a 30 km';
+                if (km > 30) {
+                    const extra = (km - 30) * getTariffa('t_trasporto_extra_km');
+                    prezzo += extra;
+                    desc = `Trasporto ${km} km (30 km + ${km-30} km extra)`;
+                }
+                break;
+            case 'smaltimento':
+                prezzo = getTariffa('t_smaltimento_30');
+                desc = 'Smaltimento fino a 30 km';
+                if (km > 30) {
+                    const extra = (km - 30) * getTariffa('t_smaltimento_extra_km');
+                    prezzo += extra;
+                    desc = `Smaltimento ${km} km (30 km + ${km-30} km extra)`;
+                }
+                break;
+            case 'posa_infisso':
+                prezzo = getTariffa('t_posa_infisso');
+                desc = 'Posa in opera infisso';
+                if (!ascensore && piano > 0) {
+                    const suppl = piano * getTariffa('t_piano_no_asc');
+                    prezzo += suppl;
+                    desc += ` (${piano}° piano senza ascensore)`;
+                }
+                break;
+            case 'posa_portoncino':
+                prezzo = getTariffa('t_posa_portoncino');
+                desc = 'Posa portoncino ingresso';
+                if (!ascensore && piano > 0) {
+                    const suppl = piano * getTariffa('t_piano_no_asc');
+                    prezzo += suppl;
+                    desc += ` (${piano}° piano senza ascensore)`;
+                }
+                break;
+            case 'smontaggio':
+                prezzo = getTariffa('t_smontaggio');
+                desc = 'Smontaggio vecchio infisso';
+                break;
+        }
+
+        const subtotale = prezzo * qta;
+        totale += subtotale;
+        righe.push({ desc, qta, prezzo, subtotale });
+
+        const subEl = el.querySelector(`[data-sub="${id}"]`);
+        if (subEl) subEl.textContent = formatEuro(subtotale);
+    });
+
+    // Riepilogo
+    const riepilogo = document.getElementById('riepilogo');
+    riepilogo.innerHTML = `
+        <table class="tariff-table">
+            <thead><tr><th>Descrizione</th><th>Q.tà</th><th>Prezzo Unit.</th><th>Subtotale</th></tr></thead>
+            <tbody>
+                ${righe.map(r => `
+                    <tr>
+                        <td>${r.desc}</td>
+                        <td>${r.qta}</td>
+                        <td>${formatEuro(r.prezzo)}</td>
+                        <td><strong>${formatEuro(r.subtotale)}</strong></td>
+                    </tr>
+                `).join('')}
+            </tbody>
+        </table>`;
+
+    const ivaAmount = totale * iva / 100;
+    document.getElementById('totale-imponibile').textContent = formatEuro(totale);
+    document.getElementById('iva-perc').textContent = iva;
+    document.getElementById('totale-iva').textContent = formatEuro(ivaAmount);
+    document.getElementById('totale-finale').textContent = formatEuro(totale + ivaAmount);
+}
+
+function formatEuro(n) {
+    return '\u20AC ' + n.toFixed(2).replace('.', ',');
+}
+
+// --- Salvataggio ---
+function salvaPreventivo() {
+    const cliente = document.getElementById('p_cliente').value || 'Senza nome';
+    const data = document.getElementById('p_data').value;
+    const totaleText = document.getElementById('totale-finale').textContent;
+
+    const righe = [];
+    document.querySelectorAll('.preventivo-linea').forEach(el => {
+        righe.push({
+            tipo: el.querySelector('.tipo-select').value,
+            qta: el.querySelector('.qta-input').value,
+            note: el.querySelector('.note-input').value
+        });
+    });
+
+    const preventivo = {
+        id: Date.now(),
+        cliente,
+        telefono: document.getElementById('p_telefono').value,
+        indirizzo: document.getElementById('p_indirizzo').value,
+        km: document.getElementById('p_km').value,
+        piano: document.getElementById('p_piano').value,
+        ascensore: document.getElementById('p_ascensore').value,
+        data,
+        totale: totaleText,
+        righe
+    };
+
+    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    storico.unshift(preventivo);
+    localStorage.setItem('serena_storico', JSON.stringify(storico));
+    renderStorico();
+    alert('Preventivo salvato!');
+}
+
+function resetPreventivo() {
+    document.getElementById('p_cliente').value = '';
+    document.getElementById('p_telefono').value = '';
+    document.getElementById('p_indirizzo').value = '';
+    document.getElementById('p_km').value = 0;
+    document.getElementById('p_piano').value = '0';
+    document.getElementById('p_ascensore').value = 'si';
+    document.getElementById('p_data').value = new Date().toISOString().split('T')[0];
+    lineePreventivo = [];
+    lineaCounter = 0;
+    aggiungiLinea();
+}
+
+function renderStorico() {
+    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    const container = document.getElementById('lista-storico');
+
+    if (storico.length === 0) {
+        container.innerHTML = '<div class="empty-state">Nessun preventivo salvato</div>';
+        return;
+    }
+
+    container.innerHTML = storico.map((p, i) => `
+        <div class="storico-item" onclick="caricaPreventivo(${i})">
+            <div class="info">
+                <div class="cliente">${p.cliente}</div>
+                <div class="data">${p.data} - ${p.indirizzo || ''}</div>
+            </div>
+            <div class="totale">${p.totale}</div>
+            <button class="btn btn-danger" onclick="eliminaPreventivo(${i}, event)" style="margin-left:10px">X</button>
+        </div>
+    `).join('');
+}
+
+function caricaPreventivo(index) {
+    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    const p = storico[index];
+    if (!p) return;
+
+    document.getElementById('p_cliente').value = p.cliente || '';
+    document.getElementById('p_telefono').value = p.telefono || '';
+    document.getElementById('p_indirizzo').value = p.indirizzo || '';
+    document.getElementById('p_km').value = p.km || 0;
+    document.getElementById('p_piano').value = p.piano || '0';
+    document.getElementById('p_ascensore').value = p.ascensore || 'si';
+    document.getElementById('p_data').value = p.data || '';
+
+    lineePreventivo = [];
+    lineaCounter = 0;
+    if (p.righe && p.righe.length > 0) {
+        p.righe.forEach(() => {
+            lineePreventivo.push(lineaCounter++);
+        });
+        renderLinee();
+        document.querySelectorAll('.preventivo-linea').forEach((el, i) => {
+            if (p.righe[i]) {
+                el.querySelector('.tipo-select').value = p.righe[i].tipo;
+                el.querySelector('.qta-input').value = p.righe[i].qta;
+                el.querySelector('.note-input').value = p.righe[i].note || '';
+            }
+        });
+    } else {
+        aggiungiLinea();
+    }
+
+    showPanel('preventivo');
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab')[1].classList.add('active');
+    calcolaPreventivo();
+}
+
+function eliminaPreventivo(index, e) {
+    e.stopPropagation();
+    if (!confirm('Eliminare questo preventivo?')) return;
+    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    storico.splice(index, 1);
+    localStorage.setItem('serena_storico', JSON.stringify(storico));
+    renderStorico();
+}
+
+// --- PWA Service Worker ---
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js');
+}
+
+// --- Install prompt ---
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const banner = document.createElement('div');
+    banner.id = 'install-banner';
+    banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#1a5276;color:white;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;z-index:9999;box-shadow:0 -2px 10px rgba(0,0,0,0.2)';
+    banner.innerHTML = '<span>Installa Serena Infissi sul tuo dispositivo</span><div><button onclick="installApp()" style="padding:8px 20px;background:#27ae60;color:white;border:none;border-radius:6px;cursor:pointer;margin-right:10px">Installa</button><button onclick="this.parentElement.parentElement.remove()" style="padding:8px 16px;background:transparent;color:white;border:1px solid white;border-radius:6px;cursor:pointer">No grazie</button></div>';
+    document.body.appendChild(banner);
+});
+
+function installApp() {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        const banner = document.getElementById('install-banner');
+        if (banner) banner.remove();
+    });
+}
+
+// --- Start ---
+init();
+</script>
+</body>
+</html>
