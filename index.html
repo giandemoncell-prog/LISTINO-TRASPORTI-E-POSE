@@ -126,6 +126,8 @@
 
         .empty-state { text-align: center; padding: 40px; color: #999; }
 
+        .print-header { display: none; }
+
         @media print {
             .header, .tabs, .actions, .btn, .no-print { display: none !important; }
             .panel { display: block !important; }
@@ -133,6 +135,9 @@
             #panel-preventivo { display: block !important; }
             body { background: white; }
             .card { box-shadow: none; border: 1px solid #ddd; }
+            .print-header { display: block !important; text-align: center; margin-bottom: 20px; padding: 15px; border-bottom: 2px solid #1a5276; }
+            .print-header h2 { color: #1a5276; margin-bottom: 5px; }
+            .print-header p { color: #555; font-size: 0.85em; margin: 2px 0; }
         }
 
         @media (max-width: 600px) {
@@ -162,6 +167,7 @@
         <button class="tab active" onclick="showPanel('listino')">Listino Prezzi</button>
         <button class="tab" onclick="showPanel('preventivo')">Nuovo Preventivo</button>
         <button class="tab" onclick="showPanel('storico')">Storico Preventivi</button>
+        <button class="tab" onclick="showPanel('impostazioni')">Impostazioni</button>
     </div>
 
     <!-- LISTINO PREZZI -->
@@ -288,6 +294,7 @@
 
     <!-- NUOVO PREVENTIVO -->
     <div id="panel-preventivo" class="panel">
+        <div class="print-header" id="print-header-az"></div>
         <div class="card">
             <h2>Dati Cliente</h2>
             <div class="form-row">
@@ -347,7 +354,7 @@
 
         <div class="actions no-print">
             <button class="btn btn-success" onclick="salvaPreventivo()">Salva Preventivo</button>
-            <button class="btn btn-primary" onclick="window.print()">Stampa / PDF</button>
+            <button class="btn btn-primary" onclick="stampaPreventivo()">Stampa / PDF</button>
             <button class="btn btn-secondary" onclick="resetPreventivo()">Nuovo</button>
             <button class="btn" onclick="inviaWhatsApp()" style="background:#25d366;color:white;">WhatsApp</button>
             <button class="btn" onclick="inviaEmail()" style="background:#ea4335;color:white;">Email</button>
@@ -361,6 +368,63 @@
             <div id="lista-storico">
                 <div class="empty-state">Nessun preventivo salvato</div>
             </div>
+        </div>
+    </div>
+
+    <!-- IMPOSTAZIONI -->
+    <div id="panel-impostazioni" class="panel">
+        <div class="card">
+            <h2>Dati Ditta Trasportatore / Posatore</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Ragione Sociale</label>
+                    <input type="text" id="az_ragione" placeholder="Es. Ditta Rossi Mario">
+                </div>
+                <div class="form-group">
+                    <label>Titolare / Referente</label>
+                    <input type="text" id="az_titolare" placeholder="Es. Mario Rossi">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Indirizzo</label>
+                    <input type="text" id="az_indirizzo" placeholder="Via, Civico, CAP, Città">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>P.IVA</label>
+                    <input type="text" id="az_piva" placeholder="Es. 01234567890">
+                </div>
+                <div class="form-group">
+                    <label>Codice Fiscale</label>
+                    <input type="text" id="az_cf" placeholder="Es. RSSMRA80A01H501Z">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Telefono</label>
+                    <input type="text" id="az_telefono" placeholder="Es. 333 1234567">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="az_email" placeholder="Es. info@ditta.it">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>PEC</label>
+                    <input type="email" id="az_pec" placeholder="Es. ditta@pec.it">
+                </div>
+                <div class="form-group">
+                    <label>SDI (Codice Destinatario)</label>
+                    <input type="text" id="az_sdi" placeholder="Es. ABCDEFG">
+                </div>
+            </div>
+            <div class="actions">
+                <button class="btn btn-success" onclick="salvaAzienda()">Salva Dati Ditta</button>
+            </div>
+            <div class="saved-msg" id="saved-msg-az">Dati ditta salvati!</div>
         </div>
     </div>
 </div>
@@ -455,11 +519,49 @@ let lineePreventivo = [];
 let lineaCounter = 0;
 
 // --- Init ---
+const AZIENDA_FIELDS = ['az_ragione','az_titolare','az_indirizzo','az_piva','az_cf','az_telefono','az_email','az_pec','az_sdi'];
+
 function init() {
     loadTariffe();
+    loadAzienda();
     document.getElementById('p_data').value = new Date().toISOString().split('T')[0];
     aggiungiLinea();
     renderStorico();
+}
+
+function salvaAzienda() {
+    const dati = {};
+    AZIENDA_FIELDS.forEach(id => { dati[id] = document.getElementById(id).value; });
+    localStorage.setItem('serena_azienda', JSON.stringify(dati));
+    const msg = document.getElementById('saved-msg-az');
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 2000);
+}
+
+function loadAzienda() {
+    const saved = localStorage.getItem('serena_azienda');
+    if (!saved) return;
+    const dati = JSON.parse(saved);
+    AZIENDA_FIELDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && dati[id]) el.value = dati[id];
+    });
+}
+
+function getAziendaTesto() {
+    const saved = localStorage.getItem('serena_azienda');
+    if (!saved) return '';
+    const d = JSON.parse(saved);
+    let t = '';
+    if (d.az_ragione) t += d.az_ragione + '\n';
+    if (d.az_indirizzo) t += d.az_indirizzo + '\n';
+    if (d.az_piva) t += 'P.IVA ' + d.az_piva;
+    if (d.az_cf) t += ' - C.F. ' + d.az_cf;
+    if (d.az_piva || d.az_cf) t += '\n';
+    if (d.az_telefono) t += 'Tel. ' + d.az_telefono;
+    if (d.az_email) t += ' - ' + d.az_email;
+    if (d.az_telefono || d.az_email) t += '\n';
+    return t;
 }
 
 // --- Tariffe ---
@@ -627,7 +729,9 @@ function buildTestoPreventivo() {
     const km = document.getElementById('p_km').value;
     const note = document.getElementById('p_note').value;
 
-    let testo = `*PREVENTIVO SERENA INFISSI*\n`;
+    const azienda = getAziendaTesto();
+    let testo = `*PREVENTIVO*\n`;
+    if (azienda) testo += azienda + '\n';
     testo += `Data: ${data}\n`;
     testo += `Cliente: ${cliente}\n`;
     if (indirizzo) testo += `Indirizzo: ${indirizzo}\n`;
@@ -651,6 +755,27 @@ function buildTestoPreventivo() {
     testo += `\n*TOTALE:* ${document.getElementById('totale-finale').textContent}`;
     if (note) testo += `\n\nNote: ${note}`;
     return testo;
+}
+
+function stampaPreventivo() {
+    const saved = localStorage.getItem('serena_azienda');
+    const header = document.getElementById('print-header-az');
+    if (saved) {
+        const d = JSON.parse(saved);
+        let html = '';
+        if (d.az_ragione) html += `<h2>${d.az_ragione}</h2>`;
+        if (d.az_indirizzo) html += `<p>${d.az_indirizzo}</p>`;
+        const fiscal = [];
+        if (d.az_piva) fiscal.push('P.IVA ' + d.az_piva);
+        if (d.az_cf) fiscal.push('C.F. ' + d.az_cf);
+        if (fiscal.length) html += `<p>${fiscal.join(' - ')}</p>`;
+        const contatti = [];
+        if (d.az_telefono) contatti.push('Tel. ' + d.az_telefono);
+        if (d.az_email) contatti.push(d.az_email);
+        if (contatti.length) html += `<p>${contatti.join(' - ')}</p>`;
+        header.innerHTML = html;
+    }
+    window.print();
 }
 
 function inviaWhatsApp() {
