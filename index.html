@@ -150,7 +150,7 @@
         <img src="Logo/serena_infissi.gif" alt="Serena Infissi" style="height:50px;border-radius:6px;background:white;padding:3px;">
         <div>
             <h1>Serena Infissi</h1>
-            <div class="subtitle">Listino Trasporti e Pose in Opera</div>
+            <div class="subtitle">Listino Trasporti e Pose in Opera 2026</div>
         </div>
     </div>
     <div style="text-align:right">
@@ -167,66 +167,94 @@
     <!-- LISTINO PREZZI -->
     <div id="panel-listino" class="panel active">
         <div class="card">
-            <h2>Tariffe Trasporto</h2>
+            <h2>Montaggio Porte da Interno</h2>
             <table class="tariff-table">
-                <thead>
-                    <tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr>
-                </thead>
+                <thead><tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr></thead>
                 <tbody>
-                    <tr>
-                        <td>Trasporto fino a 30 km</td>
-                        <td><input type="number" id="t_trasporto_30" value="120" step="5" onchange="saveTariffe()"> &euro;</td>
-                    </tr>
-                    <tr>
-                        <td>Supplemento per ogni km oltre i 30</td>
-                        <td><input type="number" id="t_trasporto_extra_km" value="2.50" step="0.10" onchange="saveTariffe()"> &euro;/km</td>
-                    </tr>
+                    <tr><td>Porta a battente 1 anta</td><td><input type="number" id="t_porta_battente_1" value="40" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Porta a battente 2 ante</td><td><input type="number" id="t_porta_battente_2" value="80" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Porta scorrevole interno muro</td><td><input type="number" id="t_porta_scorr_int" value="50" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Porta scorrevole esterno muro</td><td><input type="number" id="t_porta_scorr_est" value="50" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Porta a libro</td><td><input type="number" id="t_porta_libro" value="50" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Porta a rotazione</td><td><input type="number" id="t_porta_rotazione" value="60" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Porta a soffietto</td><td><input type="number" id="t_porta_soffietto" value="40" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Porta in vetro 1 anta</td><td><input type="number" id="t_porta_vetro_1" value="80" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Porta in vetro 2 ante</td><td><input type="number" id="t_porta_vetro_2" value="150" step="5" onchange="saveTariffe()"> &euro;</td></tr>
                 </tbody>
             </table>
         </div>
 
         <div class="card">
-            <h2>Tariffe Smaltimento</h2>
+            <h2>Montaggio Infissi Esterni</h2>
             <table class="tariff-table">
-                <thead>
-                    <tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr>
-                </thead>
+                <thead><tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr></thead>
                 <tbody>
-                    <tr>
-                        <td>Smaltimento fino a 30 km</td>
-                        <td><input type="number" id="t_smaltimento_30" value="80" step="5" onchange="saveTariffe()"> &euro;</td>
-                    </tr>
-                    <tr>
-                        <td>Supplemento smaltimento per ogni km oltre i 30</td>
-                        <td><input type="number" id="t_smaltimento_extra_km" value="2.00" step="0.10" onchange="saveTariffe()"> &euro;/km</td>
-                    </tr>
+                    <tr><td>Fisso (su controcassa)</td><td><input type="number" id="t_fisso" value="60" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Finestra 1/2 anta (su controcassa)</td><td><input type="number" id="t_finestra" value="60" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Portafinestra 1-2 ante (su controcassa)</td><td><input type="number" id="t_portafinestra" value="60" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Bilico</td><td><input type="number" id="t_bilico" value="80" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Persiana 1/2 anta</td><td><input type="number" id="t_persiana" value="60" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Portapersiana 1/2 ante</td><td><input type="number" id="t_portapersiana" value="60" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Persiana con tassello chimico</td><td><input type="number" id="t_persiana_chimico" value="70" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Monoblocco (esclusa avvolgibile)</td><td><input type="number" id="t_monoblocco" value="80" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Avvolgibile</td><td><input type="number" id="t_avvolgibile" value="30" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Motore avvolgibile</td><td><input type="number" id="t_motore_avvolgibile" value="30" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Cassonetto</td><td><input type="number" id="t_cassonetto" value="30" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Cinghia</td><td><input type="number" id="t_cinghia" value="10" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Rulli</td><td><input type="number" id="t_rulli" value="10" step="5" onchange="saveTariffe()"> &euro;</td></tr>
                 </tbody>
             </table>
         </div>
 
         <div class="card">
-            <h2>Tariffe Posa in Opera</h2>
+            <h2>Varie</h2>
             <table class="tariff-table">
-                <thead>
-                    <tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr>
-                </thead>
+                <thead><tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr></thead>
                 <tbody>
-                    <tr>
-                        <td>Posa infisso (cad.)</td>
-                        <td><input type="number" id="t_posa_infisso" value="85" step="5" onchange="saveTariffe()"> &euro;</td>
-                    </tr>
-                    <tr>
-                        <td>Posa portoncino ingresso (cad.)</td>
-                        <td><input type="number" id="t_posa_portoncino" value="150" step="5" onchange="saveTariffe()"> &euro;</td>
-                    </tr>
-                    <tr>
-                        <td>Smontaggio vecchio infisso (cad.)</td>
-                        <td><input type="number" id="t_smontaggio" value="35" step="5" onchange="saveTariffe()"> &euro;</td>
-                    </tr>
-                    <tr>
-                        <td>Supplemento piano senza ascensore (per piano)</td>
-                        <td><input type="number" id="t_piano_no_asc" value="20" step="5" onchange="saveTariffe()"> &euro;</td>
-                    </tr>
+                    <tr><td>Rivestimento cassonetti</td><td><input type="number" id="t_rivest_cassonetti" value="30" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Blindato 1 anta</td><td><input type="number" id="t_blindato_1" value="60" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Blindato 2 ante</td><td><input type="number" id="t_blindato_2" value="120" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Pannello blindato</td><td><input type="number" id="t_pannello_blindato" value="30" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Portoncino PVC/Legno</td><td><input type="number" id="t_portoncino" value="80" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Zanzariere a molla o catena</td><td><input type="number" id="t_zanzariera_molla" value="30" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Zanzariere laterali/plissé/anta</td><td><input type="number" id="t_zanzariera_lat" value="40" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Battiscopa 7cm</td><td><input type="number" id="t_battiscopa" value="5" step="1" onchange="saveTariffe()"> &euro;/ml</td></tr>
+                    <tr><td>Parquet flottante</td><td><input type="number" id="t_parquet" value="20" step="5" onchange="saveTariffe()"> &euro;/mq</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Supplementi</h2>
+            <table class="tariff-table">
+                <thead><tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr></thead>
+                <tbody>
+                    <tr><td>Smontaggio vecchio infisso/persiana</td><td><input type="number" id="t_smontaggio" value="20" step="5" onchange="saveTariffe()"> &euro;/pz</td></tr>
+                    <tr><td>Spalletta spessore muro</td><td><input type="number" id="t_spalletta" value="30" step="5" onchange="saveTariffe()"> &euro;/pz</td></tr>
+                    <tr><td>Fissaggio con schiuma/torx</td><td><input type="number" id="t_fissaggio" value="10" step="5" onchange="saveTariffe()"> &euro;/pz</td></tr>
+                    <tr><td>Infisso ristrutturazione</td><td><input type="number" id="t_ristrutturazione" value="70" step="5" onchange="saveTariffe()"> &euro;/pz</td></tr>
+                    <tr><td>Smontaggio avvolgibili o motori</td><td><input type="number" id="t_smont_avvolgibili" value="20" step="5" onchange="saveTariffe()"> &euro;/pz</td></tr>
+                    <tr><td>Sostituzione cinghie e rulli</td><td><input type="number" id="t_sost_cinghie" value="20" step="5" onchange="saveTariffe()"> &euro;/pz</td></tr>
+                    <tr><td>Vetratura in cantiere</td><td><input type="number" id="t_vetratura" value="20" step="5" onchange="saveTariffe()"> &euro;/pz</td></tr>
+                    <tr><td>Impennata minima (oltre 3mq)</td><td><input type="number" id="t_impennata" value="30" step="5" onchange="saveTariffe()"> &euro;/mq</td></tr>
+                    <tr><td>Interventi in economia</td><td><input type="number" id="t_economia" value="30" step="5" onchange="saveTariffe()"> &euro;/h x operaio</td></tr>
+                    <tr><td>Interventi minimo garantito</td><td><input type="number" id="t_minimo_garantito" value="100" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Posa clima infissi 1/2 ante</td><td><input type="number" id="t_posa_clima" value="110" step="5" onchange="saveTariffe()"> &euro;/pz</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>Trasporto, Scarico e Smistamento</h2>
+            <table class="tariff-table">
+                <thead><tr><th>Descrizione</th><th>Prezzo (EUR)</th></tr></thead>
+                <tbody>
+                    <tr><td>Trasporto infissi interni (base)</td><td><input type="number" id="t_trasp_interni" value="50" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Trasporto infissi interni (per km)</td><td><input type="number" id="t_trasp_interni_km" value="0.50" step="0.10" onchange="saveTariffe()"> &euro;/km</td></tr>
+                    <tr><td>Trasporto infissi esterni (base)</td><td><input type="number" id="t_trasp_esterni" value="50" step="5" onchange="saveTariffe()"> &euro;</td></tr>
+                    <tr><td>Trasporto infissi esterni (per km)</td><td><input type="number" id="t_trasp_esterni_km" value="0.50" step="0.10" onchange="saveTariffe()"> &euro;/km</td></tr>
+                    <tr><td>Scarico infissi interni/esterni</td><td><input type="number" id="t_scarico" value="10" step="5" onchange="saveTariffe()"> &euro;/piano</td></tr>
+                    <tr><td>Sollevamento con pedana idraulica</td><td><input type="number" id="t_pedana" value="30" step="5" onchange="saveTariffe()"> &euro;/h x operaio</td></tr>
                 </tbody>
             </table>
         </div>
@@ -241,6 +269,18 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <div class="card" style="background:#f8f9fa;border-left:4px solid #2e86c1;">
+            <h2 style="border:none;padding:0;margin-bottom:10px;">Note</h2>
+            <ul style="color:#555;font-size:0.9em;line-height:1.8;padding-left:20px;">
+                <li>Materiali di consumo a nostro carico (con certificazione)</li>
+                <li>Smaltimento rifiuti a carico del fornitore</li>
+                <li>Garanzia su posa in opera: 1 anno a nostro carico</li>
+                <li>Pagamenti: 7gg data fattura</li>
+                <li>Tutto ciò non specificato da concordare tra le parti</li>
+                <li>Per lavorazioni extra il prezzo verrà concordato</li>
+            </ul>
         </div>
 
         <div class="saved-msg" id="saved-msg">Tariffe salvate!</div>
@@ -272,26 +312,12 @@
             </div>
             <div class="form-row">
                 <div class="form-group">
-                    <label>Piano</label>
-                    <select id="p_piano" onchange="calcolaPreventivo()">
-                        <option value="0">Piano Terra</option>
-                        <option value="1">1° Piano</option>
-                        <option value="2">2° Piano</option>
-                        <option value="3">3° Piano</option>
-                        <option value="4">4° Piano</option>
-                        <option value="5">5° Piano</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Ascensore</label>
-                    <select id="p_ascensore" onchange="calcolaPreventivo()">
-                        <option value="si">Sì</option>
-                        <option value="no">No</option>
-                    </select>
-                </div>
-                <div class="form-group">
                     <label>Data</label>
                     <input type="date" id="p_data">
+                </div>
+                <div class="form-group">
+                    <label>Note generali</label>
+                    <input type="text" id="p_note" placeholder="Note aggiuntive...">
                 </div>
             </div>
         </div>
@@ -338,17 +364,89 @@
 </div>
 
 <script>
-// --- Tariffe default ---
+// --- Tariffe default (da listino 2026) ---
 const TARIFFE_DEFAULT = {
-    t_trasporto_30: 120,
-    t_trasporto_extra_km: 2.50,
-    t_smaltimento_30: 80,
-    t_smaltimento_extra_km: 2.00,
-    t_posa_infisso: 85,
-    t_posa_portoncino: 150,
-    t_smontaggio: 35,
-    t_piano_no_asc: 20,
+    // Porte da interno
+    t_porta_battente_1: 40, t_porta_battente_2: 80,
+    t_porta_scorr_int: 50, t_porta_scorr_est: 50,
+    t_porta_libro: 50, t_porta_rotazione: 60, t_porta_soffietto: 40,
+    t_porta_vetro_1: 80, t_porta_vetro_2: 150,
+    // Infissi esterni
+    t_fisso: 60, t_finestra: 60, t_portafinestra: 60, t_bilico: 80,
+    t_persiana: 60, t_portapersiana: 60, t_persiana_chimico: 70,
+    t_monoblocco: 80, t_avvolgibile: 30, t_motore_avvolgibile: 30,
+    t_cassonetto: 30, t_cinghia: 10, t_rulli: 10,
+    // Varie
+    t_rivest_cassonetti: 30, t_blindato_1: 60, t_blindato_2: 120,
+    t_pannello_blindato: 30, t_portoncino: 80,
+    t_zanzariera_molla: 30, t_zanzariera_lat: 40,
+    t_battiscopa: 5, t_parquet: 20,
+    // Supplementi
+    t_smontaggio: 20, t_spalletta: 30, t_fissaggio: 10,
+    t_ristrutturazione: 70, t_smont_avvolgibili: 20,
+    t_sost_cinghie: 20, t_vetratura: 20, t_impennata: 30,
+    t_economia: 30, t_minimo_garantito: 100, t_posa_clima: 110,
+    // Trasporto
+    t_trasp_interni: 50, t_trasp_interni_km: 0.50,
+    t_trasp_esterni: 50, t_trasp_esterni_km: 0.50,
+    t_scarico: 10, t_pedana: 30,
+    // IVA
     t_iva: 22
+};
+
+// Catalogo voci per il preventivo
+const CATALOGO_VOCI = {
+    // Porte da interno
+    porta_battente_1:   { label: 'Porta a battente 1 anta', tariffa: 't_porta_battente_1', unita: 'pz' },
+    porta_battente_2:   { label: 'Porta a battente 2 ante', tariffa: 't_porta_battente_2', unita: 'pz' },
+    porta_scorr_int:    { label: 'Porta scorrevole interno muro', tariffa: 't_porta_scorr_int', unita: 'pz' },
+    porta_scorr_est:    { label: 'Porta scorrevole esterno muro', tariffa: 't_porta_scorr_est', unita: 'pz' },
+    porta_libro:        { label: 'Porta a libro', tariffa: 't_porta_libro', unita: 'pz' },
+    porta_rotazione:    { label: 'Porta a rotazione', tariffa: 't_porta_rotazione', unita: 'pz' },
+    porta_soffietto:    { label: 'Porta a soffietto', tariffa: 't_porta_soffietto', unita: 'pz' },
+    porta_vetro_1:      { label: 'Porta in vetro 1 anta', tariffa: 't_porta_vetro_1', unita: 'pz' },
+    porta_vetro_2:      { label: 'Porta in vetro 2 ante', tariffa: 't_porta_vetro_2', unita: 'pz' },
+    // Infissi esterni
+    fisso:              { label: 'Fisso (su controcassa)', tariffa: 't_fisso', unita: 'pz' },
+    finestra:           { label: 'Finestra 1/2 anta (su controcassa)', tariffa: 't_finestra', unita: 'pz' },
+    portafinestra:      { label: 'Portafinestra 1-2 ante (su controcassa)', tariffa: 't_portafinestra', unita: 'pz' },
+    bilico:             { label: 'Bilico', tariffa: 't_bilico', unita: 'pz' },
+    persiana:           { label: 'Persiana 1/2 anta', tariffa: 't_persiana', unita: 'pz' },
+    portapersiana:      { label: 'Portapersiana 1/2 ante', tariffa: 't_portapersiana', unita: 'pz' },
+    persiana_chimico:   { label: 'Persiana con tassello chimico', tariffa: 't_persiana_chimico', unita: 'pz' },
+    monoblocco:         { label: 'Monoblocco (escl. avvolgibile)', tariffa: 't_monoblocco', unita: 'pz' },
+    avvolgibile:        { label: 'Avvolgibile', tariffa: 't_avvolgibile', unita: 'pz' },
+    motore_avvolgibile: { label: 'Motore avvolgibile', tariffa: 't_motore_avvolgibile', unita: 'pz' },
+    cassonetto:         { label: 'Cassonetto', tariffa: 't_cassonetto', unita: 'pz' },
+    cinghia:            { label: 'Cinghia', tariffa: 't_cinghia', unita: 'pz' },
+    rulli:              { label: 'Rulli', tariffa: 't_rulli', unita: 'pz' },
+    // Varie
+    rivest_cassonetti:  { label: 'Rivestimento cassonetti', tariffa: 't_rivest_cassonetti', unita: 'pz' },
+    blindato_1:         { label: 'Blindato 1 anta', tariffa: 't_blindato_1', unita: 'pz' },
+    blindato_2:         { label: 'Blindato 2 ante', tariffa: 't_blindato_2', unita: 'pz' },
+    pannello_blindato:  { label: 'Pannello blindato', tariffa: 't_pannello_blindato', unita: 'pz' },
+    portoncino:         { label: 'Portoncino PVC/Legno', tariffa: 't_portoncino', unita: 'pz' },
+    zanzariera_molla:   { label: 'Zanzariere a molla o catena', tariffa: 't_zanzariera_molla', unita: 'pz' },
+    zanzariera_lat:     { label: 'Zanzariere laterali/plissé/anta', tariffa: 't_zanzariera_lat', unita: 'pz' },
+    battiscopa:         { label: 'Battiscopa 7cm', tariffa: 't_battiscopa', unita: 'ml' },
+    parquet:            { label: 'Parquet flottante', tariffa: 't_parquet', unita: 'mq' },
+    // Supplementi
+    smontaggio:         { label: 'Smontaggio vecchio infisso/persiana', tariffa: 't_smontaggio', unita: 'pz' },
+    spalletta:          { label: 'Spalletta spessore muro', tariffa: 't_spalletta', unita: 'pz' },
+    fissaggio:          { label: 'Fissaggio con schiuma/torx', tariffa: 't_fissaggio', unita: 'pz' },
+    ristrutturazione:   { label: 'Infisso ristrutturazione', tariffa: 't_ristrutturazione', unita: 'pz' },
+    smont_avvolgibili:  { label: 'Smontaggio avvolgibili o motori', tariffa: 't_smont_avvolgibili', unita: 'pz' },
+    sost_cinghie:       { label: 'Sostituzione cinghie e rulli', tariffa: 't_sost_cinghie', unita: 'pz' },
+    vetratura:          { label: 'Vetratura in cantiere', tariffa: 't_vetratura', unita: 'pz' },
+    impennata:          { label: 'Impennata minima (oltre 3mq)', tariffa: 't_impennata', unita: 'mq' },
+    economia:           { label: 'Interventi in economia', tariffa: 't_economia', unita: 'h' },
+    minimo_garantito:   { label: 'Interventi minimo garantito', tariffa: 't_minimo_garantito', unita: 'pz' },
+    posa_clima:         { label: 'Posa clima infissi 1/2 ante', tariffa: 't_posa_clima', unita: 'pz' },
+    // Trasporto
+    trasp_interni:      { label: 'Trasporto infissi interni', tariffa: 't_trasp_interni', unita: 'viaggio', perKm: 't_trasp_interni_km' },
+    trasp_esterni:      { label: 'Trasporto infissi esterni', tariffa: 't_trasp_esterni', unita: 'viaggio', perKm: 't_trasp_esterni_km' },
+    scarico:            { label: 'Scarico infissi int./est.', tariffa: 't_scarico', unita: 'piano' },
+    pedana:             { label: 'Sollevamento con pedana idraulica', tariffa: 't_pedana', unita: 'h' },
 };
 
 let lineePreventivo = [];
@@ -408,29 +506,45 @@ function rimuoviLinea(id) {
     calcolaPreventivo();
 }
 
+function buildOptions(selectedKey) {
+    const groups = {
+        'Porte da interno': ['porta_battente_1','porta_battente_2','porta_scorr_int','porta_scorr_est','porta_libro','porta_rotazione','porta_soffietto','porta_vetro_1','porta_vetro_2'],
+        'Infissi esterni': ['fisso','finestra','portafinestra','bilico','persiana','portapersiana','persiana_chimico','monoblocco','avvolgibile','motore_avvolgibile','cassonetto','cinghia','rulli'],
+        'Varie': ['rivest_cassonetti','blindato_1','blindato_2','pannello_blindato','portoncino','zanzariera_molla','zanzariera_lat','battiscopa','parquet'],
+        'Supplementi': ['smontaggio','spalletta','fissaggio','ristrutturazione','smont_avvolgibili','sost_cinghie','vetratura','impennata','economia','minimo_garantito','posa_clima'],
+        'Trasporto': ['trasp_interni','trasp_esterni','scarico','pedana']
+    };
+    let html = '';
+    for (const [groupName, keys] of Object.entries(groups)) {
+        html += `<optgroup label="${groupName}">`;
+        keys.forEach(k => {
+            const sel = k === selectedKey ? 'selected' : '';
+            html += `<option value="${k}" ${sel}>${CATALOGO_VOCI[k].label}</option>`;
+        });
+        html += '</optgroup>';
+    }
+    return html;
+}
+
 function renderLinee() {
     const container = document.getElementById('linee-preventivo');
     container.innerHTML = lineePreventivo.map(id => {
         const existingEl = document.querySelector(`[data-linea="${id}"]`);
-        const tipo = existingEl ? existingEl.querySelector('.tipo-select').value : 'trasporto';
+        const tipo = existingEl ? existingEl.querySelector('.tipo-select').value : 'porta_battente_1';
         const qta = existingEl ? existingEl.querySelector('.qta-input').value : '1';
         const note = existingEl ? existingEl.querySelector('.note-input').value : '';
 
         return `
         <div class="preventivo-linea" data-linea="${id}">
             <div class="form-group desc">
-                <label>Tipo</label>
+                <label>Voce</label>
                 <select class="tipo-select" onchange="calcolaPreventivo()">
-                    <option value="trasporto" ${tipo==='trasporto'?'selected':''}>Trasporto</option>
-                    <option value="smaltimento" ${tipo==='smaltimento'?'selected':''}>Smaltimento</option>
-                    <option value="posa_infisso" ${tipo==='posa_infisso'?'selected':''}>Posa infisso</option>
-                    <option value="posa_portoncino" ${tipo==='posa_portoncino'?'selected':''}>Posa portoncino</option>
-                    <option value="smontaggio" ${tipo==='smontaggio'?'selected':''}>Smontaggio vecchio</option>
+                    ${buildOptions(tipo)}
                 </select>
             </div>
             <div class="form-group" style="max-width:80px">
                 <label>Q.tà</label>
-                <input type="number" class="qta-input" value="${qta}" min="1" step="1" onchange="calcolaPreventivo()">
+                <input type="number" class="qta-input" value="${qta}" min="0.1" step="1" onchange="calcolaPreventivo()">
             </div>
             <div class="form-group">
                 <label>Note</label>
@@ -445,8 +559,6 @@ function renderLinee() {
 
 function calcolaPreventivo() {
     const km = parseFloat(document.getElementById('p_km').value) || 0;
-    const piano = parseInt(document.getElementById('p_piano').value) || 0;
-    const ascensore = document.getElementById('p_ascensore').value === 'si';
     const iva = getTariffa('t_iva');
 
     let totale = 0;
@@ -454,57 +566,25 @@ function calcolaPreventivo() {
 
     document.querySelectorAll('.preventivo-linea').forEach(el => {
         const tipo = el.querySelector('.tipo-select').value;
-        const qta = parseInt(el.querySelector('.qta-input').value) || 1;
+        const qta = parseFloat(el.querySelector('.qta-input').value) || 1;
         const id = el.dataset.linea;
-        let prezzo = 0;
-        let desc = '';
+        const voce = CATALOGO_VOCI[tipo];
+        if (!voce) return;
 
-        switch(tipo) {
-            case 'trasporto':
-                prezzo = getTariffa('t_trasporto_30');
-                desc = 'Trasporto fino a 30 km';
-                if (km > 30) {
-                    const extra = (km - 30) * getTariffa('t_trasporto_extra_km');
-                    prezzo += extra;
-                    desc = `Trasporto ${km} km (30 km + ${km-30} km extra)`;
-                }
-                break;
-            case 'smaltimento':
-                prezzo = getTariffa('t_smaltimento_30');
-                desc = 'Smaltimento fino a 30 km';
-                if (km > 30) {
-                    const extra = (km - 30) * getTariffa('t_smaltimento_extra_km');
-                    prezzo += extra;
-                    desc = `Smaltimento ${km} km (30 km + ${km-30} km extra)`;
-                }
-                break;
-            case 'posa_infisso':
-                prezzo = getTariffa('t_posa_infisso');
-                desc = 'Posa in opera infisso';
-                if (!ascensore && piano > 0) {
-                    const suppl = piano * getTariffa('t_piano_no_asc');
-                    prezzo += suppl;
-                    desc += ` (${piano}° piano senza ascensore)`;
-                }
-                break;
-            case 'posa_portoncino':
-                prezzo = getTariffa('t_posa_portoncino');
-                desc = 'Posa portoncino ingresso';
-                if (!ascensore && piano > 0) {
-                    const suppl = piano * getTariffa('t_piano_no_asc');
-                    prezzo += suppl;
-                    desc += ` (${piano}° piano senza ascensore)`;
-                }
-                break;
-            case 'smontaggio':
-                prezzo = getTariffa('t_smontaggio');
-                desc = 'Smontaggio vecchio infisso';
-                break;
+        let prezzo = getTariffa(voce.tariffa);
+        let desc = voce.label;
+
+        // Per le voci di trasporto, aggiungi il costo al km
+        if (voce.perKm && km > 0) {
+            const costoKm = km * getTariffa(voce.perKm);
+            prezzo += costoKm;
+            desc += ` (${km} km)`;
         }
 
         const subtotale = prezzo * qta;
         totale += subtotale;
-        righe.push({ desc, qta, prezzo, subtotale });
+        const unitaLabel = voce.unita !== 'pz' && voce.unita !== 'viaggio' ? ` (${voce.unita})` : '';
+        righe.push({ desc, qta, prezzo, subtotale, unita: voce.unita });
 
         const subEl = el.querySelector(`[data-sub="${id}"]`);
         if (subEl) subEl.textContent = formatEuro(subtotale);
@@ -519,7 +599,7 @@ function calcolaPreventivo() {
                 ${righe.map(r => `
                     <tr>
                         <td>${r.desc}</td>
-                        <td>${r.qta}</td>
+                        <td>${r.qta} ${r.unita !== 'pz' && r.unita !== 'viaggio' ? r.unita : ''}</td>
                         <td>${formatEuro(r.prezzo)}</td>
                         <td><strong>${formatEuro(r.subtotale)}</strong></td>
                     </tr>
@@ -559,8 +639,7 @@ function salvaPreventivo() {
         telefono: document.getElementById('p_telefono').value,
         indirizzo: document.getElementById('p_indirizzo').value,
         km: document.getElementById('p_km').value,
-        piano: document.getElementById('p_piano').value,
-        ascensore: document.getElementById('p_ascensore').value,
+        note: document.getElementById('p_note').value,
         data,
         totale: totaleText,
         righe
@@ -578,8 +657,7 @@ function resetPreventivo() {
     document.getElementById('p_telefono').value = '';
     document.getElementById('p_indirizzo').value = '';
     document.getElementById('p_km').value = 0;
-    document.getElementById('p_piano').value = '0';
-    document.getElementById('p_ascensore').value = 'si';
+    document.getElementById('p_note').value = '';
     document.getElementById('p_data').value = new Date().toISOString().split('T')[0];
     lineePreventivo = [];
     lineaCounter = 0;
@@ -616,8 +694,7 @@ function caricaPreventivo(index) {
     document.getElementById('p_telefono').value = p.telefono || '';
     document.getElementById('p_indirizzo').value = p.indirizzo || '';
     document.getElementById('p_km').value = p.km || 0;
-    document.getElementById('p_piano').value = p.piano || '0';
-    document.getElementById('p_ascensore').value = p.ascensore || 'si';
+    document.getElementById('p_note').value = p.note || '';
     document.getElementById('p_data').value = p.data || '';
 
     lineePreventivo = [];
