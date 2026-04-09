@@ -349,6 +349,8 @@
             <button class="btn btn-success" onclick="salvaPreventivo()">Salva Preventivo</button>
             <button class="btn btn-primary" onclick="window.print()">Stampa / PDF</button>
             <button class="btn btn-secondary" onclick="resetPreventivo()">Nuovo</button>
+            <button class="btn" onclick="inviaWhatsApp()" style="background:#25d366;color:white;">WhatsApp</button>
+            <button class="btn" onclick="inviaEmail()" style="background:#ea4335;color:white;">Email</button>
         </div>
     </div>
 
@@ -616,6 +618,53 @@ function calcolaPreventivo() {
 
 function formatEuro(n) {
     return '\u20AC ' + n.toFixed(2).replace('.', ',');
+}
+
+function buildTestoPreventivo() {
+    const cliente = document.getElementById('p_cliente').value || 'Cliente';
+    const data = document.getElementById('p_data').value;
+    const indirizzo = document.getElementById('p_indirizzo').value;
+    const km = document.getElementById('p_km').value;
+    const note = document.getElementById('p_note').value;
+
+    let testo = `*PREVENTIVO SERENA INFISSI*\n`;
+    testo += `Data: ${data}\n`;
+    testo += `Cliente: ${cliente}\n`;
+    if (indirizzo) testo += `Indirizzo: ${indirizzo}\n`;
+    if (km > 0) testo += `Distanza: ${km} km\n`;
+    testo += `\n*--- DETTAGLIO ---*\n`;
+
+    document.querySelectorAll('.preventivo-linea').forEach(el => {
+        const tipo = el.querySelector('.tipo-select').value;
+        const qta = parseFloat(el.querySelector('.qta-input').value) || 1;
+        const voce = CATALOGO_VOCI[tipo];
+        if (!voce) return;
+        let prezzo = getTariffa(voce.tariffa);
+        if (voce.perKm && km > 0) prezzo += km * getTariffa(voce.perKm);
+        const sub = prezzo * qta;
+        const unitaStr = voce.unita !== 'pz' && voce.unita !== 'viaggio' ? ` ${voce.unita}` : '';
+        testo += `${voce.label} x${qta}${unitaStr} = ${formatEuro(sub)}\n`;
+    });
+
+    testo += `\n*Totale imponibile:* ${document.getElementById('totale-imponibile').textContent}`;
+    testo += `\n*IVA (${document.getElementById('iva-perc').textContent}%):* ${document.getElementById('totale-iva').textContent}`;
+    testo += `\n*TOTALE:* ${document.getElementById('totale-finale').textContent}`;
+    if (note) testo += `\n\nNote: ${note}`;
+    return testo;
+}
+
+function inviaWhatsApp() {
+    const testo = buildTestoPreventivo();
+    const url = 'https://wa.me/?text=' + encodeURIComponent(testo);
+    window.open(url, '_blank');
+}
+
+function inviaEmail() {
+    const cliente = document.getElementById('p_cliente').value || 'Cliente';
+    const testo = buildTestoPreventivo().replace(/\*/g, '');
+    const subject = `Preventivo Serena Infissi - ${cliente}`;
+    const url = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(testo);
+    window.location.href = url;
 }
 
 // --- Salvataggio ---
