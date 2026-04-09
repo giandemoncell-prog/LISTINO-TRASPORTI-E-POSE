@@ -1,24 +1,42 @@
 {
     "name": "Serena Infissi - Listino Trasporti e Pose",
     "short_name": "Serena Infissi",
-    "description": "Listino prezzi per trasporti, smaltimento e pose in opera infissi",
+    "description": "App per posatori e installatori di infissi: listino prezzi posa in opera, trasporto e supplementi. Crea preventivi, invia via WhatsApp o email, stampa PDF.",
     "start_url": "./index.html",
+    "scope": "./",
     "display": "standalone",
     "background_color": "#f0f2f5",
     "theme_color": "#1a5276",
     "orientation": "any",
+    "lang": "it",
+    "dir": "ltr",
+    "categories": ["business", "productivity"],
     "icons": [
         {
             "src": "icon-192.png",
             "sizes": "192x192",
             "type": "image/png",
-            "purpose": "any maskable"
+            "purpose": "any"
+        },
+        {
+            "src": "icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
         },
         {
             "src": "icon-512.png",
             "sizes": "512x512",
             "type": "image/png",
-            "purpose": "any maskable"
+            "purpose": "any"
+        },
+        {
+            "src": "icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
-    ]
+    ],
+    "screenshots": [],
+    "prefer_related_applications": false
 }
