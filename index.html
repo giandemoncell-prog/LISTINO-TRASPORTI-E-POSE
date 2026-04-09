@@ -168,6 +168,7 @@
         <button class="tab" onclick="showPanel('preventivo')">Nuovo Preventivo</button>
         <button class="tab" onclick="showPanel('storico')">Storico Preventivi</button>
         <button class="tab" onclick="showPanel('impostazioni')">Impostazioni</button>
+        <button class="tab" onclick="showPanel('guida')">Guida</button>
     </div>
 
     <!-- LISTINO PREZZI -->
@@ -425,6 +426,118 @@
                 <button class="btn btn-success" onclick="salvaAzienda()">Salva Dati Ditta</button>
             </div>
             <div class="saved-msg" id="saved-msg-az">Dati ditta salvati!</div>
+        </div>
+    </div>
+
+    <!-- GUIDA UTENTE -->
+    <div id="panel-guida" class="panel">
+        <div class="card">
+            <h2>Manuale Utente</h2>
+            <p style="color:#555;margin-bottom:15px;">Guida completa all'utilizzo dell'app Serena Infissi - Listino Trasporti e Pose in Opera.</p>
+        </div>
+
+        <div class="card">
+            <h2>1. Installazione</h2>
+            <h3>Su Android (Chrome)</h3>
+            <ol style="padding-left:20px;line-height:2;color:#555;">
+                <li>Apri l'app nel browser Chrome</li>
+                <li>Tocca i <strong>3 puntini</strong> in alto a destra</li>
+                <li>Tocca <strong>"Installa app"</strong> o <strong>"Aggiungi a schermata Home"</strong></li>
+                <li>Conferma l'installazione</li>
+            </ol>
+            <h3>Su iPhone (Safari)</h3>
+            <ol style="padding-left:20px;line-height:2;color:#555;">
+                <li>Apri l'app in Safari</li>
+                <li>Tocca l'icona <strong>Condividi</strong> (quadrato con freccia)</li>
+                <li>Scorri e tocca <strong>"Aggiungi a schermata Home"</strong></li>
+                <li>Conferma</li>
+            </ol>
+            <p style="margin-top:10px;color:#555;">Dopo l'installazione l'app funziona anche <strong>senza connessione internet</strong>.</p>
+        </div>
+
+        <div class="card">
+            <h2>2. Impostazioni Ditta</h2>
+            <p style="color:#555;line-height:1.8;">
+                Prima di iniziare, vai nel tab <strong>"Impostazioni"</strong> e inserisci i dati della tua ditta:
+                ragione sociale, indirizzo, P.IVA, codice fiscale, telefono, email, PEC e codice SDI.
+                <br>Premi <strong>"Salva Dati Ditta"</strong> per memorizzare. Questi dati appariranno automaticamente:
+            </p>
+            <ul style="padding-left:20px;line-height:2;color:#555;">
+                <li>Nell'intestazione quando stampi un preventivo</li>
+                <li>Nel testo inviato via WhatsApp o Email</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>3. Listino Prezzi</h2>
+            <p style="color:#555;line-height:1.8;">
+                Il tab <strong>"Listino Prezzi"</strong> mostra tutte le tariffe suddivise per categoria:
+            </p>
+            <ul style="padding-left:20px;line-height:2;color:#555;">
+                <li><strong>Porte da interno</strong> - battente, scorrevole, libro, rotazione, soffietto, vetro</li>
+                <li><strong>Infissi esterni</strong> - fisso, finestra, portafinestra, bilico, persiane, monoblocco, avvolgibili, cassonetti</li>
+                <li><strong>Varie</strong> - blindati, portoncini, zanzariere, battiscopa, parquet</li>
+                <li><strong>Supplementi</strong> - smontaggio, spallette, fissaggio, ristrutturazione, vetratura, interventi in economia</li>
+                <li><strong>Trasporto</strong> - trasporto interni/esterni (base + costo al km), scarico per piano, pedana</li>
+                <li><strong>IVA</strong> - aliquota personalizzabile</li>
+            </ul>
+            <p style="margin-top:10px;color:#555;">
+                Ogni prezzo e' <strong>modificabile</strong>: basta cliccare sul campo e cambiare il valore.
+                Le modifiche vengono salvate automaticamente.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>4. Creare un Preventivo</h2>
+            <p style="color:#555;line-height:1.8;">
+                Vai nel tab <strong>"Nuovo Preventivo"</strong> e segui questi passaggi:
+            </p>
+            <ol style="padding-left:20px;line-height:2.2;color:#555;">
+                <li><strong>Compila i dati cliente</strong>: nome, telefono, indirizzo di consegna, distanza in km, data</li>
+                <li><strong>Aggiungi le voci</strong>: seleziona il tipo di lavorazione dal menu a tendina (organizzato per categoria), imposta la quantita' e aggiungi eventuali note</li>
+                <li>Premi <strong>"+ Aggiungi voce"</strong> per inserire altre righe</li>
+                <li>Premi la <strong>X</strong> rossa per rimuovere una voce</li>
+                <li>Il <strong>riepilogo</strong> si aggiorna automaticamente con imponibile, IVA e totale</li>
+            </ol>
+            <p style="margin-top:10px;padding:10px;background:#fff3cd;border-radius:6px;color:#856404;">
+                <strong>Nota:</strong> Per le voci di trasporto, il costo viene calcolato automaticamente
+                come tariffa base + (km indicati x costo al km).
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>5. Salvare e Inviare</h2>
+            <p style="color:#555;line-height:1.8;">Una volta completato il preventivo, hai a disposizione 5 azioni:</p>
+            <table class="tariff-table" style="margin-top:10px;">
+                <tbody>
+                    <tr><td><strong style="color:#27ae60;">Salva Preventivo</strong></td><td>Memorizza il preventivo nello storico dell'app</td></tr>
+                    <tr><td><strong style="color:#2e86c1;">Stampa / PDF</strong></td><td>Apre la finestra di stampa del browser. Puoi stampare su carta o salvare come PDF</td></tr>
+                    <tr><td><strong style="color:#95a5a6;">Nuovo</strong></td><td>Pulisce tutti i campi per iniziare un nuovo preventivo</td></tr>
+                    <tr><td><strong style="color:#25d366;">WhatsApp</strong></td><td>Apre WhatsApp con il testo del preventivo pronto da inviare a un contatto</td></tr>
+                    <tr><td><strong style="color:#ea4335;">Email</strong></td><td>Apre l'app email con oggetto e corpo pre-compilati con il dettaglio del preventivo</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h2>6. Storico Preventivi</h2>
+            <p style="color:#555;line-height:1.8;">
+                Il tab <strong>"Storico Preventivi"</strong> mostra tutti i preventivi salvati, dal piu' recente al piu' vecchio.
+            </p>
+            <ul style="padding-left:20px;line-height:2;color:#555;">
+                <li><strong>Clicca</strong> su un preventivo per ricaricarlo nel form e modificarlo o ristamparlo</li>
+                <li>Premi la <strong>X</strong> rossa per eliminarlo definitivamente</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>7. Consigli Utili</h2>
+            <ul style="padding-left:20px;line-height:2.2;color:#555;">
+                <li>I dati sono salvati <strong>localmente sul dispositivo</strong>. Se cancelli i dati del browser, perderai tariffe personalizzate, storico e dati ditta</li>
+                <li>L'app funziona <strong>offline</strong> dopo la prima apertura</li>
+                <li>Per <strong>aggiornare</strong> l'app, chiudila completamente e riaprila</li>
+                <li>Il <strong>periodo di prova</strong> dura 30 giorni dall'installazione</li>
+            </ul>
         </div>
     </div>
 </div>
