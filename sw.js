@@ -1,10 +1,11 @@
-const CACHE_NAME = 'serena-infissi-v6';
+const CACHE_NAME = 'serena-infissi-v7';
 const ASSETS = [
     './',
     './index.html',
     './manifest.json',
     './icon-192.png',
-    './icon-512.png'
+    './icon-512.png',
+    './privacy-policy.html'
 ];
 
 // Install - cache all assets
