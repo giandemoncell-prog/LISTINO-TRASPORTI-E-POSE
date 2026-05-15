@@ -15,15 +15,20 @@ App PWA (Progressive Web App) single-page per la gestione del listino prezzi tra
 
 ```
 LISTINO TRASPORTI E POSE/
-├── index.html          # App principale (HTML + CSS + JS)
-├── sw.js               # Service Worker per cache e offline
-├── manifest.json       # Manifest PWA (nome, icone, colori)
-├── icon-192.png        # Icona PWA 192x192
-├── icon-512.png        # Icona PWA 512x512
+├── index.html              # App principale (HTML + CSS + JS)
+├── sw.js                   # Service Worker per cache e offline (v7)
+├── manifest.json           # Manifest PWA (pronto per Google Play)
+├── privacy-policy.html     # Privacy policy GDPR in italiano
+├── icon-192.png            # Icona PWA 192x192
+├── icon-512.png            # Icona PWA 512x512
 ├── Logo/
 │   └── serena_infissi.gif  # Logo aziendale
-└── .github/
-    └── workflows/      # Deploy automatico su GitHub Pages
+├── .github/
+│   └── workflows/          # Deploy automatico su GitHub Pages
+├── MANUALE_TECNICO.md      # Questo file
+├── STORE_LISTING.md        # Testi per pubblicazione Google Play
+├── CHANGELOG.md            # Storico modifiche (solo locale)
+└── TESTI_PROMO.md          # Testi promozionali (solo locale)
 ```
 
 ## Architettura index.html
@@ -44,13 +49,13 @@ Classi principali:
 
 ### HTML (riga 150-430)
 
-5 pannelli (tabs):
+6 pannelli (tabs):
 
 1. **panel-listino** - 7 card con tabelle tariffe editabili (porte interno, infissi esterni, varie, supplementi, trasporto, IVA, note)
-2. **panel-preventivo** - form dati cliente + voci preventivo dinamiche + riepilogo + pulsanti azione
-3. **panel-storico** - lista preventivi salvati
-4. **panel-impostazioni** - form dati ditta trasportatore/posatore
-5. **panel-guida** - manuale utente integrato (se presente)
+2. **panel-preventivo** - form dati cliente + voci preventivo dinamiche + riepilogo + pulsanti azione (Salva, Stampa, Nuovo, WhatsApp, Email)
+3. **panel-storico** - lista preventivi salvati con caricamento e eliminazione
+4. **panel-impostazioni** - form dati ditta trasportatore/posatore (ragione sociale, indirizzo, P.IVA, CF, telefono, email, PEC, SDI)
+5. **panel-guida** - manuale utente integrato con 7 sezioni
 
 ### JavaScript (riga 432-fine)
 
@@ -109,7 +114,36 @@ Classi principali:
 
 ## Service Worker (sw.js)
 
-Strategia **cache-first**: le risorse vengono servite dalla cache se disponibili, altrimenti dalla rete. Per forzare un aggiornamento, incrementare il numero di versione in `CACHE_NAME` (es. `serena-infissi-v4` -> `serena-infissi-v5`). L'evento `activate` elimina automaticamente le cache con nome diverso.
+Strategia **cache-first**: le risorse vengono servite dalla cache se disponibili, altrimenti dalla rete. Per forzare un aggiornamento, incrementare il numero di versione in `CACHE_NAME` (es. `serena-infissi-v7` -> `serena-infissi-v8`). L'evento `activate` elimina automaticamente le cache con nome diverso.
+
+Risorse in cache:
+- `./` , `./index.html`, `./manifest.json`, `./icon-192.png`, `./icon-512.png`, `./privacy-policy.html`
+
+## Privacy Policy
+
+File `privacy-policy.html` - pagina standalone in italiano, stile coerente con l'app. Conforme GDPR. Dichiara che:
+- Nessun dato viene inviato a server esterni
+- Tutti i dati sono in localStorage sul dispositivo
+- Nessun cookie, analytics o tracciamento
+- Condivisione solo su azione esplicita dell'utente (WhatsApp/Email/Stampa)
+- Unico servizio esterno: GitHub Pages (hosting)
+
+URL: `https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/privacy-policy.html`
+
+## Pubblicazione Google Play Store
+
+L'app è pronta per essere wrappata come TWA (Trusted Web Activity) tramite PWABuilder.
+
+File di riferimento:
+- `manifest.json` - ottimizzato per PWABuilder (purpose separati, categories, lang)
+- `STORE_LISTING.md` - nome app, descrizione breve/completa, keywords ASO
+- `privacy-policy.html` - richiesta da Google Play
+
+Procedura:
+1. Andare su pwabuilder.com, inserire l'URL dell'app
+2. Generare il file `.aab` per Android
+3. Caricare su Google Play Console (account sviluppatore: 25$ una tantum)
+4. Conservare la signing key per aggiornamenti futuri
 
 ## Deploy
 

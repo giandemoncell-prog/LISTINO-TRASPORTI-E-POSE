@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serena Infissi - Listino Trasporti e Pose</title>
+    <title>Posa &amp; Trasporti - Preventivi Infissi</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1a5276">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Serena Infissi">
+    <meta name="apple-mobile-web-app-title" content="Posa & Trasporti">
     <link rel="apple-touch-icon" href="icon-192.png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -152,13 +152,14 @@
 
 <div class="header">
     <div style="display:flex;align-items:center;gap:15px;">
-        <img src="Logo/serena_infissi.gif" alt="Serena Infissi" style="height:50px;border-radius:6px;background:white;padding:3px;">
+        <img src="Logo/serena_infissi.gif" alt="Posa &amp; Trasporti" style="height:50px;border-radius:6px;background:white;padding:3px;">
         <div>
-            <h1>Serena Infissi</h1>
-            <div class="subtitle">Listino Trasporti e Pose in Opera 2026</div>
+            <h1>Posa &amp; Trasporti</h1>
+            <div class="subtitle">Preventivi Posa Infissi 2026</div>
         </div>
     </div>
-    <div style="text-align:right">
+    <div style="text-align:right;display:flex;align-items:center;gap:10px;">
+        <span id="pro-header-badge" onclick="showPanelByName('abbonamento')" style="cursor:pointer;background:rgba(255,255,255,0.2);color:white;padding:5px 12px;border-radius:20px;font-size:0.8em;font-weight:600;letter-spacing:0.5px;">FREE</span>
     </div>
 </div>
 
@@ -169,6 +170,7 @@
         <button class="tab" onclick="showPanel('storico')">Storico Preventivi</button>
         <button class="tab" onclick="showPanel('impostazioni')">Impostazioni</button>
         <button class="tab" onclick="showPanel('guida')">Guida</button>
+        <button class="tab" onclick="showPanel('abbonamento')" id="tab-abbonamento" style="margin-left:auto;background:#f1c40f;color:#1a5276;font-weight:600;">Pro / Abbonamento</button>
     </div>
 
     <!-- LISTINO PREZZI -->
@@ -429,11 +431,68 @@
         </div>
     </div>
 
+    <!-- ABBONAMENTO -->
+    <div id="panel-abbonamento" class="panel">
+        <div class="card">
+            <h2>Il tuo piano</h2>
+            <div id="pro-status-box" style="padding:20px;background:#f8f9fa;border-radius:8px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                <div>
+                    <div style="font-size:0.85em;color:#666;">Stato attuale</div>
+                    <div id="pro-status-text" style="font-size:1.4em;font-weight:700;color:#95a5a6;">FREE</div>
+                </div>
+                <div id="pro-status-detail" style="text-align:right;color:#555;font-size:0.9em;">
+                    Versione gratuita con funzioni limitate
+                </div>
+            </div>
+
+            <div id="pro-limit-info" style="background:#fff3cd;border:1px solid #ffeaa7;padding:15px;border-radius:8px;margin-bottom:20px;color:#856404;">
+                <strong>Limiti versione gratuita:</strong>
+                <ul style="margin:8px 0 0 20px;">
+                    <li>Massimo 3 preventivi salvati</li>
+                    <li>Stampa / Esportazione PDF non disponibile</li>
+                    <li>Invio via WhatsApp non disponibile</li>
+                    <li>Invio via Email non disponibile</li>
+                    <li>Dati azienda non vengono mostrati nei preventivi stampati</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Passa a Pro</h2>
+            <p style="color:#555;margin-bottom:20px;">Sblocca tutte le funzioni: preventivi illimitati, stampa PDF, condivisione WhatsApp ed email, intestazione professionale con i dati della tua ditta.</p>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                <div style="border:2px solid #e0e0e0;border-radius:10px;padding:20px;">
+                    <h3 style="margin:0 0 8px;color:#1a5276;">Mensile</h3>
+                    <div style="font-size:2em;font-weight:700;color:#1a5276;">4,99 €<span style="font-size:0.5em;color:#888;font-weight:400;">/mese</span></div>
+                    <p style="color:#666;font-size:0.85em;margin:8px 0 15px;">Disdici quando vuoi</p>
+                    <button class="btn btn-primary" onclick="acquistaMensile()" style="width:100%;">Attiva mensile</button>
+                </div>
+                <div style="border:2px solid #27ae60;border-radius:10px;padding:20px;background:#f4fdf6;position:relative;">
+                    <div style="position:absolute;top:-10px;right:15px;background:#27ae60;color:white;font-size:0.75em;padding:3px 10px;border-radius:10px;font-weight:600;">CONSIGLIATO</div>
+                    <h3 style="margin:0 0 8px;color:#27ae60;">Annuale</h3>
+                    <div style="font-size:2em;font-weight:700;color:#27ae60;">39,99 €<span style="font-size:0.5em;color:#888;font-weight:400;">/anno</span></div>
+                    <p style="color:#666;font-size:0.85em;margin:8px 0 15px;">Risparmi il 33% &middot; 7 giorni di prova gratuita</p>
+                    <button class="btn btn-success" onclick="acquistaAnnuale()" style="width:100%;">Attiva annuale</button>
+                </div>
+            </div>
+
+            <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="btn btn-secondary" onclick="ripristinaAcquisti()">Ripristina acquisti</button>
+                <button class="btn" onclick="apriGestioneAbbonamento()" style="background:#ecf0f1;color:#555;">Gestisci abbonamento</button>
+            </div>
+
+            <p style="margin-top:20px;color:#888;font-size:0.85em;">
+                Il pagamento viene gestito da Google Play. L'abbonamento si rinnova automaticamente; puoi disdire in qualsiasi momento dalle impostazioni del tuo account Google Play.
+            </p>
+        </div>
+    </div>
+
     <!-- GUIDA UTENTE -->
     <div id="panel-guida" class="panel">
         <div class="card">
             <h2>Manuale Utente</h2>
-            <p style="color:#555;margin-bottom:15px;">Guida completa all'utilizzo dell'app Serena Infissi - Listino Trasporti e Pose in Opera.</p>
+            <p style="color:#555;margin-bottom:15px;">Guida completa all'utilizzo dell'app Posa &amp; Trasporti - Preventivi posa infissi e trasporto.</p>
         </div>
 
         <div class="card">
@@ -542,6 +601,8 @@
     </div>
 </div>
 
+<!-- Cordova bridge (iniettato da Capacitor sul device; assente nel browser web) -->
+<script src="cordova.js" onerror=""></script>
 <script>
 // --- Tariffe default (da listino 2026) ---
 const TARIFFE_DEFAULT = {
@@ -708,6 +769,7 @@ function showPanel(name) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById('panel-' + name).classList.add('active');
     event.target.classList.add('active');
+    window.scrollTo(0, 0);
 }
 
 // --- Linee preventivo ---
@@ -776,19 +838,22 @@ function renderLinee() {
 
 function calcolaPreventivo() {
     const km = parseFloat(document.getElementById('p_km').value) || 0;
-    const iva = getTariffa('t_iva');
+    const ivaRaw = getTariffa('t_iva');
+    const iva = ivaRaw > 0 ? ivaRaw : 0;
 
     let totale = 0;
     const righe = [];
 
     document.querySelectorAll('.preventivo-linea').forEach(el => {
         const tipo = el.querySelector('.tipo-select').value;
-        const qta = parseFloat(el.querySelector('.qta-input').value) || 1;
+        const qtaRaw = parseFloat(el.querySelector('.qta-input').value);
+        const qta = qtaRaw > 0 ? qtaRaw : 1;
         const id = el.dataset.linea;
         const voce = CATALOGO_VOCI[tipo];
         if (!voce) return;
 
         let prezzo = getTariffa(voce.tariffa);
+        if (prezzo < 0) prezzo = 0;
         let desc = voce.label;
 
         // Per le voci di trasporto, aggiungi il costo al km
@@ -800,7 +865,6 @@ function calcolaPreventivo() {
 
         const subtotale = prezzo * qta;
         totale += subtotale;
-        const unitaLabel = voce.unita !== 'pz' && voce.unita !== 'viaggio' ? ` (${voce.unita})` : '';
         righe.push({ desc, qta, prezzo, subtotale, unita: voce.unita });
 
         const subEl = el.querySelector(`[data-sub="${id}"]`);
@@ -836,9 +900,9 @@ function formatEuro(n) {
 }
 
 function buildTestoPreventivo() {
-    const cliente = document.getElementById('p_cliente').value || 'Cliente';
+    const cliente = (document.getElementById('p_cliente').value || 'Cliente').replace(/[\r\n]+/g, ' ');
     const data = document.getElementById('p_data').value;
-    const indirizzo = document.getElementById('p_indirizzo').value;
+    const indirizzo = document.getElementById('p_indirizzo').value.replace(/[\r\n]+/g, ' ');
     const km = document.getElementById('p_km').value;
     const note = document.getElementById('p_note').value;
 
@@ -871,6 +935,7 @@ function buildTestoPreventivo() {
 }
 
 function stampaPreventivo() {
+    if (!richiediPro('Stampa / Esportazione PDF')) return;
     const saved = localStorage.getItem('serena_azienda');
     const header = document.getElementById('print-header-az');
     if (saved) {
@@ -892,21 +957,24 @@ function stampaPreventivo() {
 }
 
 function inviaWhatsApp() {
+    if (!richiediPro('Invio via WhatsApp')) return;
     const testo = buildTestoPreventivo();
     const url = 'https://wa.me/?text=' + encodeURIComponent(testo);
     window.open(url, '_blank');
 }
 
 function inviaEmail() {
+    if (!richiediPro('Invio via Email')) return;
     const cliente = document.getElementById('p_cliente').value || 'Cliente';
     const testo = buildTestoPreventivo().replace(/\*/g, '');
-    const subject = `Preventivo Serena Infissi - ${cliente}`;
+    const subject = `Preventivo - ${cliente}`;
     const url = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(testo);
     window.location.href = url;
 }
 
 // --- Salvataggio ---
 function salvaPreventivo() {
+    if (!checkLimitePreventivi()) return;
     const cliente = document.getElementById('p_cliente').value || 'Senza nome';
     const data = document.getElementById('p_data').value;
     const totaleText = document.getElementById('totale-finale').textContent;
@@ -987,12 +1055,16 @@ function caricaPreventivo(index) {
     lineePreventivo = [];
     lineaCounter = 0;
     if (p.righe && p.righe.length > 0) {
+        const ids = [];
         p.righe.forEach(() => {
-            lineePreventivo.push(lineaCounter++);
+            const id = lineaCounter++;
+            lineePreventivo.push(id);
+            ids.push(id);
         });
         renderLinee();
-        document.querySelectorAll('.preventivo-linea').forEach((el, i) => {
-            if (p.righe[i]) {
+        ids.forEach((id, i) => {
+            const el = document.querySelector(`.preventivo-linea[data-linea="${id}"]`);
+            if (el && p.righe[i]) {
                 el.querySelector('.tipo-select').value = p.righe[i].tipo;
                 el.querySelector('.qta-input').value = p.righe[i].qta;
                 el.querySelector('.note-input').value = p.righe[i].note || '';
@@ -1030,7 +1102,7 @@ window.addEventListener('beforeinstallprompt', e => {
     const banner = document.createElement('div');
     banner.id = 'install-banner';
     banner.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#1a5276;color:white;padding:15px 20px;display:flex;justify-content:space-between;align-items:center;z-index:9999;box-shadow:0 -2px 10px rgba(0,0,0,0.2)';
-    banner.innerHTML = '<span>Installa Serena Infissi sul tuo dispositivo</span><div><button onclick="installApp()" style="padding:8px 20px;background:#27ae60;color:white;border:none;border-radius:6px;cursor:pointer;margin-right:10px">Installa</button><button onclick="this.parentElement.parentElement.remove()" style="padding:8px 16px;background:transparent;color:white;border:1px solid white;border-radius:6px;cursor:pointer">No grazie</button></div>';
+    banner.innerHTML = '<span>Installa Posa &amp; Trasporti sul tuo dispositivo</span><div><button onclick="installApp()" style="padding:8px 20px;background:#27ae60;color:white;border:none;border-radius:6px;cursor:pointer;margin-right:10px">Installa</button><button onclick="this.parentElement.parentElement.remove()" style="padding:8px 16px;background:transparent;color:white;border:1px solid white;border-radius:6px;cursor:pointer">No grazie</button></div>';
     document.body.appendChild(banner);
 });
 
@@ -1044,36 +1116,146 @@ function installApp() {
     });
 }
 
-// --- Trial 30 giorni ---
-function checkTrial() {
-    const key = 'serena_trial_start';
-    let start = localStorage.getItem(key);
-    if (!start) {
-        start = Date.now().toString();
-        localStorage.setItem(key, start);
-    }
-    const elapsed = Date.now() - parseInt(start);
-    const daysLeft = Math.ceil(30 - elapsed / (1000 * 60 * 60 * 24));
-    if (daysLeft <= 0) {
-        document.body.innerHTML = `
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;background:#f0f2f5;text-align:center;padding:20px;">
-                <img src="Logo/serena_infissi.gif" alt="Serena Infissi" style="height:80px;margin-bottom:20px;border-radius:8px;">
-                <h1 style="color:#1a5276;margin-bottom:10px;">Periodo di prova terminato</h1>
-                <p style="color:#555;font-size:1.1em;max-width:400px;">Il trial gratuito di 30 giorni è scaduto. Contatta Serena Infissi per attivare la licenza completa.</p>
-            </div>`;
+// --- Pro / Abbonamento ---
+const FREE_PREVENTIVI_LIMIT = 3;
+const PRODUCT_MONTHLY = 'pro_monthly';
+const PRODUCT_YEARLY = 'pro_yearly';
+
+function isPro() {
+    try {
+        const val = localStorage.getItem('serena_pro');
+        return val === '1';
+    } catch(e) {
         return false;
     }
-    // Mostra giorni rimanenti nell'header
-    const badge = document.createElement('div');
-    badge.style.cssText = 'background:rgba(255,255,255,0.2);padding:5px 12px;border-radius:20px;font-size:0.8em;';
-    badge.textContent = daysLeft + ' giorni rimanenti';
-    if (daysLeft <= 7) badge.style.background = 'rgba(231,76,60,0.8)';
-    document.querySelector('.header').appendChild(badge);
+}
+
+function setPro(value) {
+    localStorage.setItem('serena_pro', value ? '1' : '0');
+    aggiornaProUI();
+}
+
+function aggiornaProUI() {
+    const pro = isPro();
+    const headerBadge = document.getElementById('pro-header-badge');
+    if (headerBadge) {
+        headerBadge.textContent = pro ? 'PRO' : 'FREE';
+        headerBadge.style.background = pro ? 'rgba(39,174,96,0.9)' : 'rgba(255,255,255,0.2)';
+    }
+    const tab = document.getElementById('tab-abbonamento');
+    if (tab) tab.textContent = pro ? 'Il tuo Piano Pro' : 'Pro / Abbonamento';
+    const statusText = document.getElementById('pro-status-text');
+    const statusDetail = document.getElementById('pro-status-detail');
+    const limitInfo = document.getElementById('pro-limit-info');
+    if (statusText) {
+        statusText.textContent = pro ? 'PRO' : 'FREE';
+        statusText.style.color = pro ? '#27ae60' : '#95a5a6';
+    }
+    if (statusDetail) {
+        statusDetail.textContent = pro
+            ? 'Tutte le funzioni sono attive. Grazie per il supporto!'
+            : 'Versione gratuita con funzioni limitate';
+    }
+    if (limitInfo) limitInfo.style.display = pro ? 'none' : 'block';
+}
+
+function richiediPro(funzione) {
+    if (isPro()) return true;
+    showPanelByName('abbonamento');
+    setTimeout(() => alert('Funzione disponibile solo nella versione Pro:\n\n' + funzione + '\n\nPassa a Pro per sbloccarla.'), 100);
+    return false;
+}
+
+function checkLimitePreventivi() {
+    if (isPro()) return true;
+    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    if (storico.length >= FREE_PREVENTIVI_LIMIT) {
+        showPanelByName('abbonamento');
+        setTimeout(() => alert('Hai raggiunto il limite di ' + FREE_PREVENTIVI_LIMIT + ' preventivi salvati nella versione gratuita.\n\nPassa a Pro per salvarne illimitati.'), 100);
+        return false;
+    }
     return true;
 }
 
+function showPanelByName(name) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    const panel = document.getElementById('panel-' + name);
+    if (panel) panel.classList.add('active');
+    document.querySelectorAll('.tab').forEach(t => {
+        if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + name + "'")) {
+            t.classList.add('active');
+        }
+    });
+}
+
+// --- Play Billing (attivo solo dentro APK con cordova-plugin-purchase) ---
+function initPlayBilling() {
+    if (typeof CdvPurchase === 'undefined') return;
+    try {
+        const { store, ProductType, Platform } = CdvPurchase;
+        store.register([
+            { id: PRODUCT_MONTHLY, type: ProductType.PAID_SUBSCRIPTION, platform: Platform.GOOGLE_PLAY },
+            { id: PRODUCT_YEARLY, type: ProductType.PAID_SUBSCRIPTION, platform: Platform.GOOGLE_PLAY }
+        ]);
+        store.when()
+            .approved(t => { try { t.verify(); } catch(e) { console.warn('verify error:', e); } })
+            .verified(r => { try { aggiornaStatoAbbonamento(); r.finish(); } catch(e) { console.warn('finish error:', e); } })
+            .unverified(() => { try { aggiornaStatoAbbonamento(); } catch(e) { console.warn('unverified error:', e); } });
+        store.error(err => console.warn('Play Billing error:', err));
+        store.initialize([Platform.GOOGLE_PLAY])
+            .then(() => aggiornaStatoAbbonamento())
+            .catch(err => console.warn('Play Billing init error:', err));
+    } catch(e) {
+        console.warn('initPlayBilling error:', e);
+    }
+}
+
+function aggiornaStatoAbbonamento() {
+    if (typeof CdvPurchase === 'undefined') return;
+    try {
+        const { store } = CdvPurchase;
+        const attivo = [PRODUCT_MONTHLY, PRODUCT_YEARLY].some(id => {
+            const p = store.get(id);
+            return p && p.owned;
+        });
+        setPro(attivo);
+    } catch(e) {
+        console.warn('aggiornaStatoAbbonamento error:', e);
+    }
+}
+
+function nativoNonDisponibile() {
+    alert('Acquisto disponibile solo nell\'app installata dal Google Play Store.\n\nDal browser web non e\' possibile sottoscrivere l\'abbonamento.');
+}
+
+function acquistaMensile() {
+    if (typeof CdvPurchase === 'undefined') return nativoNonDisponibile();
+    const product = CdvPurchase.store.get(PRODUCT_MONTHLY);
+    if (product && product.getOffer()) product.getOffer().order();
+}
+
+function acquistaAnnuale() {
+    if (typeof CdvPurchase === 'undefined') return nativoNonDisponibile();
+    const product = CdvPurchase.store.get(PRODUCT_YEARLY);
+    if (product && product.getOffer()) product.getOffer().order();
+}
+
+function ripristinaAcquisti() {
+    if (typeof CdvPurchase === 'undefined') return nativoNonDisponibile();
+    CdvPurchase.store.restorePurchases().then(() => aggiornaStatoAbbonamento());
+}
+
+function apriGestioneAbbonamento() {
+    window.open('https://play.google.com/store/account/subscriptions', '_blank');
+}
+
+// Hook Capacitor: inizializza Play Billing quando il device e' pronto
+document.addEventListener('deviceready', initPlayBilling, false);
+
 // --- Start ---
-if (checkTrial()) init();
+init();
+aggiornaProUI();
 </script>
 </body>
 </html>

@@ -1,0 +1,15 @@
+{
+  "appId": "com.serenainfissi.listino",
+  "appName": "Posa & Trasporti",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true
+  },
+  "plugins": {
+    "CapacitorHttp": {
+      "enabled": false
+    }
+  }
+}

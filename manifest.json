@@ -1,6 +1,6 @@
 {
-    "name": "Serena Infissi - Listino Trasporti e Pose",
-    "short_name": "Serena Infissi",
+    "name": "Posa & Trasporti - Preventivi Infissi",
+    "short_name": "Posa & Trasporti",
     "description": "App per posatori e installatori di infissi: listino prezzi posa in opera, trasporto e supplementi. Crea preventivi, invia via WhatsApp o email, stampa PDF.",
     "start_url": "./index.html",
     "scope": "./",

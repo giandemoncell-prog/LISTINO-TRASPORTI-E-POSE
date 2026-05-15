@@ -1,14 +1,14 @@
-# Google Play Store Listing - Serena Infissi
+# Google Play Store Listing - Posa & Trasporti
 
 ---
 
 ## 1. Nome App (max 30 caratteri)
 
 ```
-Listino Pose e Trasporti
+Posa & Trasporti
 ```
 
-(24 caratteri)
+(16 caratteri)
 
 ---
 

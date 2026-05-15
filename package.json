@@ -1,0 +1,35 @@
+{
+  "name": "listino-trasporti-e-pose",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sw.js",
+  "scripts": {
+    "sync-www": "node scripts/sync-www.js",
+    "android:sync": "npm run sync-www && npx cap sync android",
+    "android:open": "npx cap open android",
+    "android:build": "npm run android:sync && npx cap open android",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giandemoncell-prog/LISTINO-TRASPORTI-E-POSE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/giandemoncell-prog/LISTINO-TRASPORTI-E-POSE/issues"
+  },
+  "homepage": "https://github.com/giandemoncell-prog/LISTINO-TRASPORTI-E-POSE#readme",
+  "dependencies": {
+    "@capacitor/android": "^8.3.1",
+    "@capacitor/cli": "^8.3.1",
+    "@capacitor/core": "^8.3.1",
+    "cordova-plugin-purchase": "^13.15.4"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "sharp": "^0.34.5"
+  }
+}

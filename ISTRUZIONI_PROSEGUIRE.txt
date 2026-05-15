@@ -1,0 +1,307 @@
+================================================================
+ISTRUZIONI PER PROSEGUIRE - Pubblicazione Posa & Trasporti
+================================================================
+Tutto il pacchetto e' pronto. Devi solo seguire i passi sotto.
+
+File AAB da caricare:
+  D:\LISTINO TRASPORTI E POSE\android\app\build\outputs\bundle\release\app-release.aab
+  (3.7 MB, firmato, versione 1.0.1, versionCode 2)
+
+
+================================================================
+STEP 0 - URGENTE: BACKUP DEL KEYSTORE (FAI ORA, PRIMA DI TUTTO)
+================================================================
+Se perdi il keystore o la password, NON potrai mai aggiornare
+l'app sul Play Store (a meno di attivare App Signing by Google
+al primo upload, vedi step 3).
+
+Salva queste 3 cose in 3 posti diversi:
+
+  1) File:     D:\LISTINO TRASPORTI E POSE\keystore\serena-release.jks
+  2) File:     D:\LISTINO TRASPORTI E POSE\android\key.properties
+  3) Password: Cussorgia.69
+     Alias:    serena-key
+     Validita: fino al 2053-09-13
+
+Posti consigliati:
+  - Google Drive privato (cartella criptata)
+  - Chiavetta USB offline
+  - Password manager (Bitwarden, 1Password, KeePass) per la password
+
+
+================================================================
+STEP 1 - ATTENDI L'APPROVAZIONE PLAY CONSOLE (1-2 giorni)
+================================================================
+Hai gia' fatto la registrazione (25 USD pagati). Google verifica
+la tua identita'. Riceverai una email quando l'account e' attivo.
+
+Mentre aspetti, fai gli step 0 (backup) e 2 (verifica privacy
+policy).
+
+
+================================================================
+STEP 2 - VERIFICA PRIVACY POLICY ONLINE
+================================================================
+Apri questo URL nel browser:
+  https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/privacy-policy.html
+
+Deve aprirsi la pagina della privacy policy.
+
+Se vedi 404:
+  1. Vai su https://github.com/giandemoncell-prog/LISTINO-TRASPORTI-E-POSE
+  2. Settings > Pages
+  3. Source: Branch "master", folder "/ (root)"
+  4. Save
+  5. Aspetta 1-2 minuti, poi riprova l'URL
+
+
+================================================================
+STEP 3 - CREA L'APP SU PLAY CONSOLE
+================================================================
+Quando l'account e' attivato:
+
+  1. Vai su https://play.google.com/console
+  2. Tutte le app > Crea app
+  3. Compila:
+       - Nome app:       Posa & Trasporti
+       - Lingua default: Italiano (Italia)
+       - App o gioco:    App
+       - Gratuita o pag: Gratuita (con acquisti in-app)
+       - Dichiarazioni:  spunta tutte (sono obbligatorie)
+  4. Crea app
+
+  5. Configurazione > Firma dell'app
+       - Verifica che "App Signing by Google Play" sia ATTIVA
+       - DEVE essere attiva alla prima pubblicazione (poi non si
+         puo' piu' cambiare)
+       - Vantaggio: se perdi il keystore, Google ti aiuta a
+         recuperare
+
+
+================================================================
+STEP 4 - CARICA L'AAB IN TEST INTERNO
+================================================================
+  1. Pubblica > Test > Test interno > Crea nuova versione
+  2. Carica il file:
+       D:\LISTINO TRASPORTI E POSE\android\app\build\outputs\bundle\release\app-release.aab
+  3. Note di rilascio (italiano):
+       Apri il file RELEASE_NOTES.md e copia il blocco
+       "Versione 1.0.1 - PRIMA PUBBLICAZIONE"
+  4. Salva > Esamina versione > Inizia rollout in test interno
+
+  5. Tester:
+       - Aggiungi il tuo account Google personale come tester
+       - Oppure crea una mailing list (opzionale)
+       - Copia il "Link copia tester" e aprilo dal telefono per
+         scaricare l'app
+
+
+================================================================
+STEP 5 - COMPILA LA SCHEDA PLAY STORE
+================================================================
+Sezione: Crescita > Presenza nello store > Scheda principale
+
+5.1 - INFORMAZIONI SU APP
+  - Nome app:           Posa & Trasporti
+  - Descrizione breve:  copia da STORE_LISTING.md sezione 2
+  - Descrizione comp.:  copia da STORE_LISTING.md sezione 3
+
+5.2 - GRAFICA (campi obbligatori)
+  - Icona app 512x512:
+      D:\LISTINO TRASPORTI E POSE\icon-512.png
+  - Feature graphic 1024x500:
+      D:\LISTINO TRASPORTI E POSE\store-assets\feature-graphic-1024x500.png
+  - Screenshot telefono (minimo 2):
+      Apri l'app sul telefono Android (dopo aver installato dal
+      link di test interno) e fai screenshot di:
+        - Tab "Listino Prezzi"
+        - Tab "Nuovo Preventivo" compilato
+        - Tab "Storico Preventivi"
+        - Tab "Pro / Abbonamento"
+      Carica le immagini.
+  - Screenshot tablet 7": opzionale (puoi saltarli)
+  - Screenshot tablet 10": opzionale
+
+5.3 - CATEGORIA
+  - Tipo:        App
+  - Categoria:   Affari (Business)
+  - Tag:         posa, infissi, preventivi, listino
+
+
+================================================================
+STEP 6 - SEZIONE "NORME APP" (obbligatoria)
+================================================================
+
+6.1 - SICUREZZA DEI DATI
+  Apri DATA_SAFETY.md e segui le risposte. Riassunto:
+    - Raccogli dati? NO
+    - Crittografia in transito? N/A
+    - Cancellazione su richiesta? Si (locale)
+
+6.2 - CLASSIFICAZIONE DEI CONTENUTI
+  Compila il questionario:
+    - Categoria: Utility/Strumenti
+    - Tutte le risposte: NO (no violenza, no scommesse, no chat,
+      no UGC, no localizzazione, no farmaci, ecc.)
+  Otterrai PEGI 3 / Everyone
+
+6.3 - PUBBLICO E CONTENUTI
+  - Pubblico target: 18+
+  - L'app si rivolge a bambini? NO
+  - Annunci? NO
+
+6.4 - PRIVACY POLICY
+  URL: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/privacy-policy.html
+
+
+================================================================
+STEP 7 - CREA I PRODOTTI ABBONAMENTO
+================================================================
+Sezione: Monetizza > Prodotti > Abbonamenti
+
+Apri STORE_PRODUCTS.md e ricopia ESATTAMENTE i 2 prodotti:
+
+  Prodotto 1:
+    Product ID:  pro_monthly  (deve essere identico, MAI cambiare)
+    Nome:        Posa & Trasporti Pro - Mensile
+    Periodo:     1 mese
+    Prezzo IT:   4,99 EUR
+    Trial:       nessuno
+
+  Prodotto 2:
+    Product ID:  pro_yearly  (deve essere identico, MAI cambiare)
+    Nome:        Posa & Trasporti Pro - Annuale
+    Periodo:     1 anno
+    Prezzo IT:   39,99 EUR
+    Trial:       7 giorni di prova gratuita
+
+ATTENZIONE: gli ID prodotto devono essere ESATTAMENTE
+"pro_monthly" e "pro_yearly" perche' sono hardcoded nel codice.
+Se li cambi, l'app non li riconoscera'.
+
+
+================================================================
+STEP 8 - LICENSE TESTING (per testare gli acquisti senza pagare)
+================================================================
+Sezione: Setup > Test delle licenze
+
+  1. Aggiungi licenze: scrivi la tua email Google personale
+  2. Risposta licenza: "RESPOND_NORMALLY"
+  3. Salva
+
+Ora con quel device puoi acquistare gli abbonamenti in test:
+nessun addebito reale, ma il flusso e' identico a quello vero.
+
+Tempi di rinnovo accelerati per i tester:
+  - Mensile = ogni 5 minuti
+  - Annuale = ogni 30 minuti
+
+Ti permettono di vedere il rinnovo automatico velocemente.
+
+
+================================================================
+STEP 9 - TESTA TUTTO PRIMA DI PUBBLICARE
+================================================================
+Sul telefono Android, dal link di test interno:
+
+  1. Installa l'app
+  2. Verifica:
+       - Icona si chiama "Posa & Trasporti"
+       - Si apre col logo Serena Infissi (background gradient)
+       - Tab "Listino" visibile, modifichi un prezzo > resta salvato
+       - Compili un preventivo > totale corretto con IVA
+       - Salva il preventivo
+       - Ripeti 3 volte > al 4° appare il paywall ✓
+       - Tab "Pro / Abbonamento" mostra i 2 piani
+       - Tap "Attiva mensile" > si apre dialog Play Billing
+       - Acquista (test, no addebito)
+       - Dopo l'acquisto badge diventa PRO, paywall sparisce
+       - Stampa PDF, WhatsApp, Email funzionano
+  3. Disinstalla e reinstalla:
+       - L'app deve riconoscere che hai gia' l'abbonamento PRO
+       - Bottone "Ripristina acquisti" forza la verifica
+
+
+================================================================
+STEP 10 - PUBBLICAZIONE IN PRODUZIONE
+================================================================
+Quando il test interno funziona perfettamente:
+
+  1. Pubblica > Test > Test interno > Promuovi versione > Produzione
+     (oppure crea una nuova versione direttamente in Produzione)
+  2. Verifica che tutte le sezioni "Norme app" siano completate
+     (icona verde a fianco)
+  3. Esamina versione > Inizia rollout in produzione
+
+Tempo di review della prima pubblicazione: 3-7 giorni
+(le successive sono molto piu' rapide, di solito 1-3 ore).
+
+
+================================================================
+STEP 11 - WORKFLOW PER GLI AGGIORNAMENTI FUTURI
+================================================================
+Ogni volta che modifichi l'app:
+
+  1. Modifichi index.html / sw.js / manifest.json
+  2. Aumenti versionCode e versionName in
+     android/app/build.gradle:
+        versionCode 3       <-- +1 ogni volta
+        versionName "1.0.2" <-- patch / 1.1.0 minor / 2.0.0 major
+  3. In terminale (cartella progetto):
+        npm run android:sync
+        cd android
+        ./gradlew bundleRelease
+  4. Carichi il nuovo .aab da:
+        android/app/build/outputs/bundle/release/app-release.aab
+  5. Compili le note di rilascio (RELEASE_NOTES.md per gli esempi)
+  6. Pubblichi
+
+
+================================================================
+FILE DI RIFERIMENTO IN QUESTO PROGETTO
+================================================================
+  ISTRUZIONI_PROSEGUIRE.txt   Questo file
+  STORE_LISTING.md            Testi per la scheda Play Store
+  STORE_PRODUCTS.md           Configurazione prodotti abbonamento
+  DATA_SAFETY.md              Risposte questionario sicurezza dati
+  RELEASE_NOTES.md            Esempi note di rilascio
+  KEYSTORE_README.md          Gestione chiave di firma
+  CAPACITOR_SETUP.md          Documentazione tecnica Capacitor
+  MANUALE_TECNICO.md          Documentazione tecnica completa
+  TESTI_PROMO.md              Testi marketing
+  store-assets/               Feature graphic 1024x500
+  keystore/                   CHIAVE DI FIRMA (NON CONDIVIDERE)
+  android/                    Progetto Android nativo
+
+
+================================================================
+COSA NON FARE (per evitare guai)
+================================================================
+  - NON modificare gli ID prodotto pro_monthly / pro_yearly
+    dopo averli creati su Play Console
+  - NON cambiare l'appId com.serenainfissi.listino dopo la
+    prima pubblicazione (non si puo' piu' tornare indietro)
+  - NON committare in Git i file: keystore/*.jks e
+    android/key.properties (sono gia' esclusi da .gitignore)
+  - NON ridurre versionCode (deve sempre crescere)
+  - NON disattivare App Signing by Google dopo averlo abilitato
+
+
+================================================================
+SE TI BLOCCHI
+================================================================
+Se Play Console rifiuta l'app, il messaggio di errore ti dice
+esattamente cosa correggere. I motivi piu' comuni sono:
+
+  - Privacy policy non raggiungibile (verifica che il link
+    sia online)
+  - Sicurezza dei dati incompleta (vedi DATA_SAFETY.md)
+  - Screenshot non rispettano i requisiti (devono essere reali,
+    non grafici di marketing)
+  - Descrizione troppo "spam" (usa il testo da STORE_LISTING.md)
+
+Per problemi tecnici di build/sviluppo, riapri il progetto in
+Claude Code (questa stessa chat o una nuova) - tutti i file di
+configurazione sono salvati nel progetto.
+
+================================================================
