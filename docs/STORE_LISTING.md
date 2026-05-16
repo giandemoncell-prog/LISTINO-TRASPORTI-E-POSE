@@ -56,7 +56,6 @@ STORICO PREVENTIVI
 
 Non perdi nulla. Ogni preventivo viene salvato e puoi:
 - Riaprirlo e modificarlo in qualsiasi momento
-- Duplicarlo per lavori simili
 - Eliminare quelli vecchi
 
 IMPOSTAZIONI AZIENDA
