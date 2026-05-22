@@ -25,6 +25,23 @@ Prima versione di Posa & Trasporti.
 
 ---
 
+## Versione 1.0.3 (versionCode 4)
+
+### Italiano (default)
+```
+Versione 1.0.3
+
+- Abbonamento Pro piu' sicuro: verifica fatta direttamente con Play Store, non aggirabile dalle impostazioni del telefono
+- Backup e ripristino dei dati nelle Impostazioni: utile prima di cambiare telefono o reinstallare l'app
+- Conferma prima di cancellare un preventivo in corso: nessuna perdita accidentale
+- Stampa e PDF migliorati su Android: si apre subito il menu di condivisione
+- Correzioni di sicurezza interne
+```
+
+(Caratteri: 436)
+
+---
+
 ## Template per versioni successive
 
 ### Schema da seguire

@@ -429,6 +429,22 @@
             </div>
             <div class="saved-msg" id="saved-msg-az">Dati ditta salvati!</div>
         </div>
+
+        <div class="card">
+            <h2>Backup dati</h2>
+            <p style="color:#555;line-height:1.6;margin-bottom:15px;">
+                Salva un file di backup con tutte le tue tariffe personalizzate, dati ditta e storico preventivi.
+                Utile prima di cambiare telefono o reinstallare l'app. Il backup funziona 100% offline.
+            </p>
+            <div class="actions">
+                <button class="btn btn-primary" onclick="esportaBackup()">Esporta backup</button>
+                <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()">Importa backup</button>
+                <input type="file" id="import-file" accept=".json,application/json" style="display:none" onchange="importaBackup(event)">
+            </div>
+            <p style="margin-top:12px;color:#888;font-size:0.85em;">
+                L'importazione <strong>sovrascrive</strong> tariffe, dati ditta e storico esistenti. Esporta prima un backup se vuoi conservarli.
+            </p>
+        </div>
     </div>
 
     <!-- ABBONAMENTO -->
@@ -763,6 +779,71 @@ function loadTariffe() {
     });
 }
 
+// --- Backup / Restore ---
+const BACKUP_KEYS = ['serena_tariffe', 'serena_azienda', 'serena_storico'];
+
+function esportaBackup() {
+    const payload = { app: 'posa-trasporti', version: 1, esportato: new Date().toISOString(), dati: {} };
+    BACKUP_KEYS.forEach(k => {
+        const v = localStorage.getItem(k);
+        if (v != null) payload.dati[k] = v;
+    });
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const ts = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `posa-trasporti-backup-${ts}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function importaBackup(event) {
+    const file = event.target.files && event.target.files[0];
+    event.target.value = ''; // reset cosi' lo stesso file puo' essere riselezionato
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        let payload;
+        try {
+            payload = JSON.parse(e.target.result);
+        } catch(err) {
+            alert('File non valido: non e\' un backup JSON.');
+            return;
+        }
+        if (!payload || payload.app !== 'posa-trasporti' || !payload.dati) {
+            alert('File non riconosciuto: non sembra un backup di Posa & Trasporti.');
+            return;
+        }
+        const chiaviPresenti = BACKUP_KEYS.filter(k => payload.dati[k] != null);
+        if (chiaviPresenti.length === 0) {
+            alert('Il backup non contiene dati da importare.');
+            return;
+        }
+        const data = payload.esportato ? new Date(payload.esportato).toLocaleString('it-IT') : 'data sconosciuta';
+        const ok = confirm(
+            `Importare il backup del ${data}?\n\n` +
+            `Verranno sovrascritti: ${chiaviPresenti.map(k => k.replace('serena_','')).join(', ')}.\n\n` +
+            `Questa operazione non e\' reversibile.`
+        );
+        if (!ok) return;
+        try {
+            chiaviPresenti.forEach(k => localStorage.setItem(k, payload.dati[k]));
+        } catch(err) {
+            alert('Errore durante il salvataggio: ' + (err && err.message ? err.message : err));
+            return;
+        }
+        loadTariffe();
+        loadAzienda();
+        renderStorico();
+        alert('Backup importato con successo.');
+    };
+    reader.onerror = () => alert('Errore durante la lettura del file.');
+    reader.readAsText(file);
+}
+
 // --- Tabs ---
 function showPanel(name) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -823,11 +904,11 @@ function renderLinee() {
             </div>
             <div class="form-group" style="max-width:80px">
                 <label>Q.tà</label>
-                <input type="number" class="qta-input" value="${qta}" min="0.1" step="1" onchange="calcolaPreventivo()">
+                <input type="number" class="qta-input" value="${esc(qta)}" min="0.1" step="1" onchange="calcolaPreventivo()">
             </div>
             <div class="form-group">
                 <label>Note</label>
-                <input type="text" class="note-input" value="${note}" placeholder="Note...">
+                <input type="text" class="note-input" value="${esc(note)}" placeholder="Note...">
             </div>
             <div class="subtotale" data-sub="${id}">&euro; 0,00</div>
             <button class="btn btn-danger" onclick="rimuoviLinea(${id})" ${lineePreventivo.length<=1?'disabled':''}>X</button>
@@ -899,6 +980,13 @@ function formatEuro(n) {
     return '\u20AC ' + n.toFixed(2).replace('.', ',');
 }
 
+// Escape HTML per evitare XSS quando si inserisce input utente in innerHTML.
+function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+}
+
 function buildTestoPreventivo() {
     const cliente = (document.getElementById('p_cliente').value || 'Cliente').replace(/[\r\n]+/g, ' ');
     const data = document.getElementById('p_data').value;
@@ -934,6 +1022,28 @@ function buildTestoPreventivo() {
     return testo;
 }
 
+// True se l'app gira dentro Capacitor (APK Android), false in browser web.
+function isCapacitorNative() {
+    return (typeof window !== 'undefined') &&
+        ((window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()) ||
+         typeof CdvPurchase !== 'undefined');
+}
+
+async function condividiTestoPreventivo() {
+    const testo = buildTestoPreventivo().replace(/\*/g, '');
+    const cliente = (document.getElementById('p_cliente').value || 'Cliente').trim();
+    if (navigator.share) {
+        try {
+            await navigator.share({ title: `Preventivo - ${cliente}`, text: testo });
+            return true;
+        } catch(e) {
+            // utente ha annullato o share non supportato in questo contesto -> fallthrough
+            if (e && e.name === 'AbortError') return true;
+        }
+    }
+    return false;
+}
+
 function stampaPreventivo() {
     if (!richiediPro('Stampa / Esportazione PDF')) return;
     const saved = localStorage.getItem('serena_azienda');
@@ -941,19 +1051,55 @@ function stampaPreventivo() {
     if (saved) {
         const d = JSON.parse(saved);
         let html = '';
-        if (d.az_ragione) html += `<h2>${d.az_ragione}</h2>`;
-        if (d.az_indirizzo) html += `<p>${d.az_indirizzo}</p>`;
+        if (d.az_ragione) html += `<h2>${esc(d.az_ragione)}</h2>`;
+        if (d.az_indirizzo) html += `<p>${esc(d.az_indirizzo)}</p>`;
         const fiscal = [];
-        if (d.az_piva) fiscal.push('P.IVA ' + d.az_piva);
-        if (d.az_cf) fiscal.push('C.F. ' + d.az_cf);
+        if (d.az_piva) fiscal.push('P.IVA ' + esc(d.az_piva));
+        if (d.az_cf) fiscal.push('C.F. ' + esc(d.az_cf));
         if (fiscal.length) html += `<p>${fiscal.join(' - ')}</p>`;
         const contatti = [];
-        if (d.az_telefono) contatti.push('Tel. ' + d.az_telefono);
-        if (d.az_email) contatti.push(d.az_email);
+        if (d.az_telefono) contatti.push('Tel. ' + esc(d.az_telefono));
+        if (d.az_email) contatti.push(esc(d.az_email));
         if (contatti.length) html += `<p>${contatti.join(' - ')}</p>`;
         header.innerHTML = html;
     }
-    window.print();
+
+    // Su Android (Capacitor) il dialog di stampa nativo del WebView e' inaffidabile:
+    // preferiamo navigator.share, che apre lo "Share Sheet" Android dove l'utente
+    // puo' scegliere "Salva come PDF", "Stampa", o condividere via altre app.
+    if (isCapacitorNative()) {
+        if (navigator.share) {
+            condividiTestoPreventivo().then(ok => {
+                if (!ok) provaPrintConFallback(true);
+            });
+        } else {
+            provaPrintConFallback(true);
+        }
+        return;
+    }
+
+    provaPrintConFallback(false);
+}
+
+function provaPrintConFallback(isAndroid) {
+    let printAvviato = false;
+    const onBeforePrint = () => { printAvviato = true; };
+    window.addEventListener('beforeprint', onBeforePrint, { once: true });
+    try {
+        window.print();
+    } catch(e) {
+        printAvviato = false;
+    }
+    // Se entro 500ms non e' partito 'beforeprint', il dialog non si e' aperto.
+    setTimeout(() => {
+        window.removeEventListener('beforeprint', onBeforePrint);
+        if (!printAvviato) {
+            const msg = isAndroid
+                ? 'La stampa diretta non e\' disponibile su questo dispositivo Android.\n\nPuoi inviare il preventivo usando i pulsanti "WhatsApp" o "Email", oppure riprova dal menu Condividi.'
+                : 'La stampa non e\' disponibile su questo dispositivo.\n\nUsa "WhatsApp" o "Email" per condividere il preventivo, oppure prova "Condividi" dal menu del browser per salvare in PDF.';
+            alert(msg);
+        }
+    }, 500);
 }
 
 function inviaWhatsApp() {
@@ -1007,7 +1153,24 @@ function salvaPreventivo() {
     alert('Preventivo salvato!');
 }
 
+// True se il form preventivo ha dati inseriti dall'utente (cliente, indirizzo,
+// note, telefono, km>0, o almeno una linea con qta!=1, tipo!=default, note).
+function formHaDati() {
+    const campi = ['p_cliente', 'p_telefono', 'p_indirizzo', 'p_note'];
+    if (campi.some(id => (document.getElementById(id).value || '').trim() !== '')) return true;
+    if ((parseFloat(document.getElementById('p_km').value) || 0) > 0) return true;
+    const linee = document.querySelectorAll('.preventivo-linea');
+    for (const el of linee) {
+        const tipo = el.querySelector('.tipo-select').value;
+        const qta = parseFloat(el.querySelector('.qta-input').value);
+        const note = (el.querySelector('.note-input').value || '').trim();
+        if (tipo !== 'porta_battente_1' || qta !== 1 || note !== '') return true;
+    }
+    return false;
+}
+
 function resetPreventivo() {
+    if (formHaDati() && !confirm('Vuoi davvero iniziare un nuovo preventivo?\n\nI dati non salvati andranno persi.')) return;
     document.getElementById('p_cliente').value = '';
     document.getElementById('p_telefono').value = '';
     document.getElementById('p_indirizzo').value = '';
@@ -1031,10 +1194,10 @@ function renderStorico() {
     container.innerHTML = storico.map((p, i) => `
         <div class="storico-item" onclick="caricaPreventivo(${i})">
             <div class="info">
-                <div class="cliente">${p.cliente}</div>
-                <div class="data">${p.data} - ${p.indirizzo || ''}</div>
+                <div class="cliente">${esc(p.cliente)}</div>
+                <div class="data">${esc(p.data)} - ${esc(p.indirizzo || '')}</div>
             </div>
-            <div class="totale">${p.totale}</div>
+            <div class="totale">${esc(p.totale)}</div>
             <button class="btn btn-danger" onclick="eliminaPreventivo(${i}, event)" style="margin-left:10px">X</button>
         </div>
     `).join('');
@@ -1044,6 +1207,7 @@ function caricaPreventivo(index) {
     const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
     const p = storico[index];
     if (!p) return;
+    if (formHaDati() && !confirm(`Caricare il preventivo "${p.cliente || 'Senza nome'}"?\n\nI dati attualmente nel form andranno persi.`)) return;
 
     document.getElementById('p_cliente').value = p.cliente || '';
     document.getElementById('p_telefono').value = p.telefono || '';
@@ -1065,7 +1229,8 @@ function caricaPreventivo(index) {
         ids.forEach((id, i) => {
             const el = document.querySelector(`.preventivo-linea[data-linea="${id}"]`);
             if (el && p.righe[i]) {
-                el.querySelector('.tipo-select').value = p.righe[i].tipo;
+                const tipo = CATALOGO_VOCI[p.righe[i].tipo] ? p.righe[i].tipo : 'porta_battente_1';
+                el.querySelector('.tipo-select').value = tipo;
                 el.querySelector('.qta-input').value = p.righe[i].qta;
                 el.querySelector('.note-input').value = p.righe[i].note || '';
             }
@@ -1121,17 +1286,33 @@ const FREE_PREVENTIVI_LIMIT = 3;
 const PRODUCT_MONTHLY = 'pro_monthly';
 const PRODUCT_YEARLY = 'pro_yearly';
 
-function isPro() {
+function isProFromStore() {
+    if (typeof CdvPurchase === 'undefined') return false;
     try {
-        const val = localStorage.getItem('serena_pro');
-        return val === '1';
+        const { store } = CdvPurchase;
+        return [PRODUCT_MONTHLY, PRODUCT_YEARLY].some(id => {
+            const p = store.get(id);
+            return p && p.owned;
+        });
     } catch(e) {
         return false;
     }
 }
 
-function setPro(value) {
-    localStorage.setItem('serena_pro', value ? '1' : '0');
+// Fonte di verita': su device sempre il Play Store; in browser web sempre FREE.
+// localStorage NON e' attendibile (manipolabile da DevTools) — usato solo come
+// cache UI di fallback per il primissimo render prima che lo store risponda.
+function isPro() {
+    if (typeof CdvPurchase !== 'undefined') {
+        return isProFromStore();
+    }
+    return false;
+}
+
+function cacheProState(value) {
+    try {
+        localStorage.setItem('serena_pro', value ? '1' : '0');
+    } catch(e) { /* ignore */ }
     aggiornaProUI();
 }
 
@@ -1214,12 +1395,7 @@ function initPlayBilling() {
 function aggiornaStatoAbbonamento() {
     if (typeof CdvPurchase === 'undefined') return;
     try {
-        const { store } = CdvPurchase;
-        const attivo = [PRODUCT_MONTHLY, PRODUCT_YEARLY].some(id => {
-            const p = store.get(id);
-            return p && p.owned;
-        });
-        setPro(attivo);
+        cacheProState(isProFromStore());
     } catch(e) {
         console.warn('aggiornaStatoAbbonamento error:', e);
     }
