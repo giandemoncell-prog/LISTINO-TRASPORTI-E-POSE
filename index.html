@@ -1115,7 +1115,7 @@ function inviaEmail() {
     const testo = buildTestoPreventivo().replace(/\*/g, '');
     const subject = `Preventivo - ${cliente}`;
     const url = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(testo);
-    window.location.href = url;
+    window.open(url, '_system');
 }
 
 // --- Salvataggio ---
@@ -1413,6 +1413,13 @@ function acquistaMensile() {
 
 function acquistaAnnuale() {
     if (typeof CdvPurchase === 'undefined') return nativoNonDisponibile();
+    const confermato = confirm(
+        'Abbonamento annuale — 39,99 €/anno\n\n' +
+        'Prova gratuita: 7 giorni. Al termine, il rinnovo annuale viene addebitato automaticamente tramite Google Play.\n\n' +
+        'Puoi disdire in qualsiasi momento dal tuo account Google Play prima della scadenza del periodo di prova.\n\n' +
+        'Vuoi continuare?'
+    );
+    if (!confermato) return;
     const product = CdvPurchase.store.get(PRODUCT_YEARLY);
     if (product && product.getOffer()) product.getOffer().order();
 }
