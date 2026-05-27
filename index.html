@@ -292,6 +292,9 @@
             </ul>
         </div>
 
+        <div style="margin-top:10px;">
+            <button class="btn btn-secondary" onclick="ripristinaTariffeDefault()" style="background:#e67e22;color:white;">Ripristina tariffe default</button>
+        </div>
         <div class="saved-msg" id="saved-msg">Tariffe salvate!</div>
     </div>
 
@@ -368,6 +371,7 @@
     <div id="panel-storico" class="panel">
         <div class="card">
             <h2>Storico Preventivi</h2>
+            <input type="text" id="cerca-storico" placeholder="Cerca cliente o indirizzo..." oninput="renderStorico()" style="width:100%;padding:8px;margin-bottom:12px;border:1px solid #ccc;border-radius:6px;font-size:1em;box-sizing:border-box;">
             <div id="lista-storico">
                 <div class="empty-state">Nessun preventivo salvato</div>
             </div>
@@ -779,6 +783,16 @@ function loadTariffe() {
     });
 }
 
+function ripristinaTariffeDefault() {
+    if (!confirm('Ripristinare tutte le tariffe ai valori del listino 2026?\n\nLe tue personalizzazioni andranno perse.')) return;
+    localStorage.removeItem('serena_tariffe');
+    loadTariffe();
+    const msg = document.getElementById('saved-msg');
+    msg.textContent = 'Tariffe ripristinate!';
+    msg.classList.add('show');
+    setTimeout(() => { msg.classList.remove('show'); msg.textContent = 'Tariffe salvate!'; }, 2000);
+}
+
 // --- Backup / Restore ---
 const BACKUP_KEYS = ['serena_tariffe', 'serena_azienda', 'serena_storico'];
 
@@ -1185,13 +1199,26 @@ function resetPreventivo() {
 function renderStorico() {
     const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
     const container = document.getElementById('lista-storico');
+    const q = (document.getElementById('cerca-storico') || {}).value || '';
+    const filtro = q.trim().toLowerCase();
 
     if (storico.length === 0) {
         container.innerHTML = '<div class="empty-state">Nessun preventivo salvato</div>';
         return;
     }
 
-    container.innerHTML = storico.map((p, i) => `
+    const risultati = storico
+        .map((p, i) => ({ p, i }))
+        .filter(({ p }) => !filtro ||
+            (p.cliente || '').toLowerCase().includes(filtro) ||
+            (p.indirizzo || '').toLowerCase().includes(filtro));
+
+    if (risultati.length === 0) {
+        container.innerHTML = '<div class="empty-state">Nessun risultato trovato</div>';
+        return;
+    }
+
+    container.innerHTML = risultati.map(({ p, i }) => `
         <div class="storico-item" onclick="caricaPreventivo(${i})">
             <div class="info">
                 <div class="cliente">${esc(p.cliente)}</div>
@@ -1382,11 +1409,16 @@ function initPlayBilling() {
         store.when()
             .approved(t => { try { t.verify(); } catch(e) { console.warn('verify error:', e); } })
             .verified(r => { try { aggiornaStatoAbbonamento(); r.finish(); } catch(e) { console.warn('finish error:', e); } })
-            .unverified(() => { try { aggiornaStatoAbbonamento(); } catch(e) { console.warn('unverified error:', e); } });
+            .unverified(() => { try { aggiornaStatoAbbonamento(); } catch(e) { console.warn('unverified error:', e); } })
+            .expired(() => { try { aggiornaStatoAbbonamento(); } catch(e) { console.warn('expired error:', e); } })
+            .cancelled(() => { try { aggiornaStatoAbbonamento(); } catch(e) { console.warn('cancelled error:', e); } });
         store.error(err => console.warn('Play Billing error:', err));
         store.initialize([Platform.GOOGLE_PLAY])
             .then(() => aggiornaStatoAbbonamento())
             .catch(err => console.warn('Play Billing init error:', err));
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') aggiornaStatoAbbonamento();
+        });
     } catch(e) {
         console.warn('initPlayBilling error:', e);
     }
