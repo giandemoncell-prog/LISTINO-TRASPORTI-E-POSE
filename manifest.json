@@ -37,6 +37,20 @@
             "purpose": "maskable"
         }
     ],
+    "shortcuts": [
+        {
+            "name": "Nuovo Preventivo",
+            "short_name": "Preventivo",
+            "url": "./index.html",
+            "description": "Crea un nuovo preventivo"
+        },
+        {
+            "name": "Storico Preventivi",
+            "short_name": "Storico",
+            "url": "./index.html",
+            "description": "Visualizza lo storico preventivi salvati"
+        }
+    ],
     "screenshots": [],
     "prefer_related_applications": false
 }

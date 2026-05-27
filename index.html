@@ -165,12 +165,12 @@
 
 <div class="container">
     <div class="tabs">
-        <button class="tab active" onclick="showPanel('listino')">Listino Prezzi</button>
-        <button class="tab" onclick="showPanel('preventivo')">Nuovo Preventivo</button>
-        <button class="tab" onclick="showPanel('storico')">Storico Preventivi</button>
-        <button class="tab" onclick="showPanel('impostazioni')">Impostazioni</button>
-        <button class="tab" onclick="showPanel('guida')">Guida</button>
-        <button class="tab" onclick="showPanel('abbonamento')" id="tab-abbonamento" style="margin-left:auto;background:#f1c40f;color:#1a5276;font-weight:600;">Pro / Abbonamento</button>
+        <button class="tab active" onclick="showPanel('listino', this)">Listino Prezzi</button>
+        <button class="tab" onclick="showPanel('preventivo', this)">Nuovo Preventivo</button>
+        <button class="tab" onclick="showPanel('storico', this)">Storico Preventivi</button>
+        <button class="tab" onclick="showPanel('impostazioni', this)">Impostazioni</button>
+        <button class="tab" onclick="showPanel('guida', this)">Guida</button>
+        <button class="tab" onclick="showPanel('abbonamento', this)" id="tab-abbonamento" style="margin-left:auto;background:#f1c40f;color:#1a5276;font-weight:600;">Pro / Abbonamento</button>
     </div>
 
     <!-- LISTINO PREZZI -->
@@ -306,7 +306,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Nome / Ragione Sociale</label>
-                    <input type="text" id="p_cliente" placeholder="Es. Mario Rossi">
+                    <input type="text" id="p_cliente" placeholder="Es. Mario Rossi" maxlength="100">
                 </div>
                 <div class="form-group">
                     <label>Telefono</label>
@@ -316,7 +316,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>Indirizzo consegna</label>
-                    <input type="text" id="p_indirizzo" placeholder="Via, Civico, CAP, Città">
+                    <input type="text" id="p_indirizzo" placeholder="Via, Civico, CAP, Città" maxlength="100">
                 </div>
                 <div class="form-group">
                     <label>Distanza (km)</label>
@@ -779,7 +779,7 @@ function loadTariffe() {
     const tariffe = saved ? JSON.parse(saved) : TARIFFE_DEFAULT;
     Object.keys(tariffe).forEach(k => {
         const el = document.getElementById(k);
-        if (el) el.value = tariffe[k];
+        if (el) { el.value = tariffe[k]; el.min = '0'; }
     });
 }
 
@@ -859,11 +859,11 @@ function importaBackup(event) {
 }
 
 // --- Tabs ---
-function showPanel(name) {
+function showPanel(name, btn) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById('panel-' + name).classList.add('active');
-    event.target.classList.add('active');
+    if (btn) btn.classList.add('active');
     window.scrollTo(0, 0);
 }
 
@@ -932,7 +932,7 @@ function renderLinee() {
 }
 
 function calcolaPreventivo() {
-    const km = parseFloat(document.getElementById('p_km').value) || 0;
+    const km = Math.max(0, parseFloat(document.getElementById('p_km').value) || 0);
     const ivaRaw = getTariffa('t_iva');
     const iva = ivaRaw > 0 ? ivaRaw : 0;
 
