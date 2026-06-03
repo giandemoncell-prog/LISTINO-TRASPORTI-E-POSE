@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posa & Trasporti — App preventivi posa infissi</title>
+<meta name="description" content="App Android per posatori e serramentisti. Calcola il preventivo posa e trasporto in 30 secondi, anche senza internet. Gratis su Google Play.">
+<meta property="og:title" content="Posa & Trasporti — Preventivi posa in 30 secondi">
+<meta property="og:description" content="App per posatori e serramentisti italiani. Calcola posa e trasporto dal telefono, funziona offline. Gratis su Google Play.">
+<meta property="og:type" content="website">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; color: #333; background: #fff; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1a5276, #2e86c1);
+    color: white;
+    padding: 60px 20px 80px;
+    text-align: center;
+  }
+  .hero-logo {
+    width: 80px; height: 80px; border-radius: 18px;
+    background: white; padding: 6px; margin: 0 auto 20px;
+    display: block;
+  }
+  .hero h1 { font-size: 2.2em; font-weight: 700; margin-bottom: 12px; }
+  .hero .tagline { font-size: 1.2em; opacity: 0.92; margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #27ae60; color: white;
+    padding: 16px 32px; border-radius: 50px;
+    text-decoration: none; font-size: 1.1em; font-weight: 700;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.1s;
+  }
+  .cta-btn:hover { background: #1e8449; transform: translateY(-1px); }
+  .cta-sub { margin-top: 14px; opacity: 0.8; font-size: 0.9em; }
+
+  /* PROBLEMA */
+  .problema {
+    background: #f0f2f5;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .problema h2 { font-size: 1.6em; color: #1a5276; margin-bottom: 30px; }
+  .problema-grid {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 20px; max-width: 800px; margin: 0 auto;
+  }
+  .problema-item {
+    background: white; border-radius: 12px;
+    padding: 20px 24px; flex: 1; min-width: 200px; max-width: 240px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    border-left: 4px solid #e74c3c;
+  }
+  .problema-item .emoji { font-size: 1.8em; margin-bottom: 8px; display: block; }
+  .problema-item p { color: #555; font-size: 0.95em; line-height: 1.5; }
+
+  /* SOLUZIONE */
+  .soluzione {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .soluzione h2 { font-size: 1.6em; color: #1a5276; margin-bottom: 10px; }
+  .soluzione .subtitle { color: #666; margin-bottom: 40px; font-size: 1em; }
+  .feature-grid {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 20px; max-width: 900px; margin: 0 auto;
+  }
+  .feature-card {
+    background: white; border-radius: 12px;
+    padding: 24px; flex: 1; min-width: 200px; max-width: 260px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    border-top: 4px solid #2e86c1;
+    text-align: left;
+  }
+  .feature-card .icon { font-size: 2em; margin-bottom: 10px; display: block; }
+  .feature-card h3 { font-size: 1em; font-weight: 700; color: #1a5276; margin-bottom: 6px; }
+  .feature-card p { color: #666; font-size: 0.9em; line-height: 1.5; }
+
+  /* COME FUNZIONA */
+  .come-funziona {
+    background: #f0f2f5;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .come-funziona h2 { font-size: 1.6em; color: #1a5276; margin-bottom: 40px; }
+  .steps {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 0; max-width: 700px; margin: 0 auto;
+  }
+  .step {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: white; border-radius: 12px; padding: 20px 24px;
+    margin-bottom: 12px; width: 100%; max-width: 600px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    text-align: left;
+  }
+  .step-num {
+    background: #2e86c1; color: white;
+    width: 36px; height: 36px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 1em; flex-shrink: 0;
+  }
+  .step-text h3 { font-size: 1em; font-weight: 700; color: #1a5276; margin-bottom: 4px; }
+  .step-text p { color: #666; font-size: 0.9em; line-height: 1.4; }
+
+  /* PREZZI */
+  .prezzi {
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .prezzi h2 { font-size: 1.6em; color: #1a5276; margin-bottom: 10px; }
+  .prezzi .subtitle { color: #666; margin-bottom: 40px; }
+  .piani {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 20px; max-width: 700px; margin: 0 auto 30px;
+  }
+  .piano {
+    background: white; border-radius: 14px; padding: 30px 24px;
+    flex: 1; min-width: 220px; max-width: 280px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.09);
+    border: 2px solid #e0e0e0;
+    position: relative;
+  }
+  .piano.consigliato { border-color: #27ae60; }
+  .badge-cons {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: #27ae60; color: white; font-size: 0.75em;
+    padding: 3px 14px; border-radius: 20px; font-weight: 700;
+    white-space: nowrap;
+  }
+  .piano h3 { font-size: 1em; color: #555; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .piano .prezzo { font-size: 2em; font-weight: 800; color: #1a5276; }
+  .piano .prezzo span { font-size: 0.45em; font-weight: 400; color: #888; }
+  .piano .desc { color: #666; font-size: 0.85em; margin-top: 8px; line-height: 1.4; }
+  .piano-free { color: #888; font-size: 0.85em; }
+
+  /* CTA FINALE */
+  .cta-finale {
+    background: linear-gradient(135deg, #1a5276, #2e86c1);
+    color: white; padding: 60px 20px; text-align: center;
+  }
+  .cta-finale h2 { font-size: 1.6em; margin-bottom: 12px; }
+  .cta-finale p { opacity: 0.9; margin-bottom: 30px; font-size: 1em; }
+
+  /* FOOTER */
+  footer {
+    background: #1a1a2e; color: #aaa;
+    padding: 30px 20px; text-align: center; font-size: 0.85em;
+  }
+  footer a { color: #aaa; }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 1.7em; }
+    .hero .tagline { font-size: 1em; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <img class="hero-logo" src="Logo/serena_infissi.gif" alt="Posa & Trasporti logo" onerror="this.style.display='none'">
+  <h1>Posa & Trasporti</h1>
+  <p class="tagline">Il preventivo posa e trasporto infissi in 30 secondi. Dal telefono. Anche senza internet.</p>
+  <a class="cta-btn" href="https://play.google.com/store/apps/details?id=com.serenainfissi.listino" target="_blank">
+    ▶ Scarica gratis su Google Play
+  </a>
+  <p class="cta-sub">Gratis — Android — Nessuna registrazione</p>
+</section>
+
+<!-- PROBLEMA -->
+<section class="problema">
+  <h2>Ti riconosci in qualcuna di queste situazioni?</h2>
+  <div class="problema-grid">
+    <div class="problema-item">
+      <span class="emoji">📞</span>
+      <p>Il cliente chiama dal cantiere e vuole subito il prezzo della posa</p>
+    </div>
+    <div class="problema-item">
+      <span class="emoji">🧮</span>
+      <p>Fai i conti a mente o su un foglio volante che poi perdi</p>
+    </div>
+    <div class="problema-item">
+      <span class="emoji">⏱️</span>
+      <p>Perdi tempo a ricalcolare ogni volta trasporto e manodopera</p>
+    </div>
+    <div class="problema-item">
+      <span class="emoji">📶</span>
+      <p>In cantiere non prendi segnale e non riesci ad usare l'app</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUZIONE -->
+<section class="soluzione">
+  <h2>L'app che ti mancava</h2>
+  <p class="subtitle">Sviluppata da chi fa questo lavoro, per chi fa questo lavoro.</p>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <span class="icon">⚡</span>
+      <h3>Calcolo istantaneo</h3>
+      <p>Inserisci numero di infissi e km di trasporto. Il totale esce in automatico con le tue tariffe.</p>
+    </div>
+    <div class="feature-card">
+      <span class="icon">📵</span>
+      <h3>100% offline</h3>
+      <p>Funziona senza connessione. Perfetta in cantiere, in zone senza segnale, ovunque tu lavori.</p>
+    </div>
+    <div class="feature-card">
+      <span class="icon">💬</span>
+      <h3>Condividi in un tap</h3>
+      <p>Invia il preventivo al cliente via WhatsApp o email direttamente dall'app.</p>
+    </div>
+    <div class="feature-card">
+      <span class="icon">⚙️</span>
+      <h3>Tariffe tue</h3>
+      <p>Imposti le tariffe orarie e al km una sola volta. L'app le ricorda per sempre.</p>
+    </div>
+    <div class="feature-card">
+      <span class="icon">📋</span>
+      <h3>Storico preventivi</h3>
+      <p>Salva i preventivi con nome cliente e indirizzo. Ritrovali quando vuoi.</p>
+    </div>
+    <div class="feature-card">
+      <span class="icon">🖨️</span>
+      <h3>Stampa PDF</h3>
+      <p>Genera un PDF professionale da consegnare o allegare alla fattura.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COME FUNZIONA -->
+<section class="come-funziona">
+  <h2>Come funziona</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-text">
+        <h3>Imposta le tue tariffe</h3>
+        <p>Prima volta sola: inserisci tariffa oraria per la posa e costo al km per il trasporto.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-text">
+        <h3>Inserisci i dati del lavoro</h3>
+        <p>Numero di infissi, ore stimate e km dal tuo magazzino al cantiere.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-text">
+        <h3>Preventivo pronto</h3>
+        <p>Il totale appare in automatico, con il dettaglio posa + trasporto separati.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-text">
+        <h3>Invia al cliente</h3>
+        <p>Un tap su WhatsApp o Email — il preventivo parte con nome, importo e dettagli.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREZZI -->
+<section class="prezzi">
+  <h2>Scegli il piano</h2>
+  <p class="subtitle">Inizia gratis. Passa a Pro quando vuoi.</p>
+  <div class="piani">
+    <div class="piano">
+      <h3>Free</h3>
+      <div class="prezzo">€0</div>
+      <p class="desc">Calcolo posa e trasporto · Fino a 3 preventivi salvati · Funziona offline</p>
+    </div>
+    <div class="piano consigliato">
+      <div class="badge-cons">CONSIGLIATO</div>
+      <h3>Pro Annuale</h3>
+      <div class="prezzo">€39,99 <span>/ anno</span></div>
+      <p class="desc">Preventivi illimitati · WhatsApp & Email · PDF · 7 giorni di prova gratuita</p>
+    </div>
+    <div class="piano">
+      <h3>Pro Mensile</h3>
+      <div class="prezzo">€4,99 <span>/ mese</span></div>
+      <p class="desc">Preventivi illimitati · WhatsApp & Email · PDF · Disdici quando vuoi</p>
+    </div>
+  </div>
+  <p class="piano-free">Pagamento sicuro tramite Google Play. Nessun dato di pagamento salvato nell'app.</p>
+</section>
+
+<!-- CTA FINALE -->
+<section class="cta-finale">
+  <h2>Inizia oggi, gratis</h2>
+  <p>Nessuna registrazione. Nessun account. Installi e usi.</p>
+  <a class="cta-btn" href="https://play.google.com/store/apps/details?id=com.serenainfissi.listino" target="_blank">
+    ▶ Scarica su Google Play
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Posa & Trasporti — App per posatori e installatori di infissi italiani</p>
+  <p style="margin-top:8px;">
+    <a href="index.html">Apri l'app web</a> &nbsp;·&nbsp;
+    <a href="mailto:giandemoncell@gmail.com">Contatti</a>
+  </p>
+</footer>
+
+</body>
+</html>
