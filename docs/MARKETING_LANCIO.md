@@ -5,11 +5,15 @@
 | File | Contenuto |
 |---|---|
 | `landing.html` | Landing page completa (GitHub Pages) |
+| `docs/TESTI_LANCIO.md` | Testi Fase 1 teaser + Fase 2 lancio + Fase 3 social proof |
 | `docs/CONTENUTI_SOCIAL.md` | Script video testo+musica (3 versioni) + post Facebook + hashtag |
 | `docs/EMAIL_SEQUENCE.md` | 3 email pronte (lancio, reminder, conversione) |
 | `docs/COMUNICATO_STAMPA.md` | Comunicato per testate di settore |
-| `docs/CONTENT_CALENDAR.md` | Calendario 4 settimane + KPI |
+| `docs/CONTENT_CALENDAR.md` | Calendario settimane 1-4 + KPI |
+| `docs/CONTENUTI_MESE2.md` | Calendario settimane 5-8 + conversione Free→Pro |
 | `docs/VOLANTINO.md` | Testo volantino A5/A6 stampabile |
+| `docs/PIANO_LANCIO_D0.md` | Checklist operativa per il giorno dell'approvazione Play Store |
+| `docs/RISPOSTE_RECENSIONI.md` | Template risposte recensioni Play Store (positive, neutre, negative) |
 
 ---
 

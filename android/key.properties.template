@@ -1,0 +1,9 @@
+# RINOMINA QUESTO FILE IN: key.properties
+# NON committare key.properties in Git (e' gia escluso da .gitignore)
+#
+# Genera la keystore con il comando in KEYSTORE_README.md, poi compila qui:
+
+storeFile=../../keystore/serena-release.jks
+storePassword=LA_TUA_PASSWORD_KEYSTORE
+keyAlias=serena-key
+keyPassword=LA_TUA_PASSWORD_CHIAVE

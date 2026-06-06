@@ -1,63 +1,148 @@
-# Testi Promozionali - Serena Infissi
+# Testi Promozionali — Posa & Trasporti
+# Aggiornato: giugno 2026 — Link Landing Page
+
+Landing page: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/landing.html
+Play Store: https://play.google.com/store/apps/details?id=com.serenainfissi.listino
 
 ---
 
-## 1. Post per Gruppi Facebook (lungo)
+## 1. Post Facebook gruppi (lungo, ~150 parole)
 
 ```
-Ciao a tutti! Abbiamo sviluppato un'app gratuita pensata per chi fa posa in opera e trasporto infissi.
+Ciao a tutti, vi lascio questa app che uso per fare preventivi veloci in cantiere: si chiama Posa & Trasporti, è su Google Play ed è gratuita.
 
 Cosa fa:
-- Listino prezzi completo e personalizzabile (porte interne, serramenti esterni, persiane, avvolgibili, blindati, zanzariere, supplementi, trasporto)
-- Crei preventivi in 2 minuti e li invii al cliente via WhatsApp o email
-- Stampi in PDF con i dati della tua ditta
-- Storico preventivi sempre a portata di mano
-- Funziona anche senza internet
+- Listino prezzi posa personalizzabile (porte interne, serramenti, persiane, avvolgibili, zanzariere, blindate, supplementi)
+- Calcola automaticamente il trasporto in base ai km
+- Preventivo pronto in 1 minuto, lo mandi direttamente al cliente via WhatsApp o email
+- PDF con i dati della tua ditta
+- Funziona senza connessione — utile quando sei in cantiere senza segnale
 
-Si installa direttamente dal browser sul telefono, senza scaricare niente dallo store.
+L'ho installata direttamente dallo store, niente browser o link strani.
 
-Provale gratis per 30 giorni e dicci cosa ne pensate:
-https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/
+È gratis per usarla, c'è un Pro opzionale se volete i preventivi illimitati e la stampa.
 
-Per installarla: apri il link da Chrome > tre puntini > "Installa app"
+Scaricatela da qui:
+https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/landing.html
 
-Se avete suggerimenti o manca qualcosa scriveteci, la stiamo migliorando in base ai feedback di chi la usa davvero sul campo!
+Se manca qualcosa o avete suggerimenti, scrivetelo nei commenti — la stanno aggiornando su richiesta di chi la usa sul campo.
 ```
 
 ---
 
-## 2. Messaggio per Gruppi WhatsApp (breve)
+## 2. Post Facebook gruppi (breve, ~50 parole)
 
 ```
-Ciao! Se fate posa in opera infissi date un'occhiata a questa app gratuita:
+Per chi fa posa infissi: c'è un'app su Google Play che fa il preventivo posa + trasporto in 1 minuto, funziona offline e lo mandi al cliente via WhatsApp.
 
-https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/
-
-Listino prezzi personalizzabile + preventivi pronti in 2 minuti da inviare al cliente via WhatsApp o email.
-
-Si installa dal browser, funziona offline. 30 giorni gratis.
-
-Fateci sapere cosa ne pensate!
+Gratis da qui:
+https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/landing.html
 ```
 
 ---
 
-## 3. Messaggio diretto a posatori/installatori
+## 3. Script voiceover video 30-60 sec (YouTube Shorts / TikTok / Reels)
+
+**Voiceover (parlato)**
 
 ```
-Ciao, sto sviluppando un'app per posatori di infissi. Serve per avere il listino prezzi sempre in tasca e fare preventivi veloci da mandare al cliente via WhatsApp.
+[0:00]
+"Un cliente mi chiama: vuole sapere quanto gli costa la posa di tre finestre e il trasporto, abita a 40 km."
 
-Te la faccio provare gratis, mi farebbe piacere avere un parere da chi fa questo mestiere:
-https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/
+[0:06]
+"Apro l'app, Posa & Trasporti."
 
-Se hai 5 minuti, provale e dimmi se manca qualcosa o se i prezzi di default hanno senso. Grazie!
+[0:09]
+"Aggiungo tre serramenti al preventivo — scelgo la tipologia, metto le misure. Secondi."
+
+[0:15]
+"Qui sotto aggiungo il trasporto: inserisco i km, calcola da solo."
+
+[0:20]
+"Totale. Il preventivo è pronto."
+
+[0:23]
+"Lo mando via WhatsApp direttamente dall'app. Il cliente lo riceve in PDF."
+
+[0:28]
+"Tutto in meno di un minuto. Senza connessione, senza fogli, senza fare i conti a mano."
+
+[0:34]
+"Si scarica gratis su Google Play. Si chiama Posa & Trasporti."
+```
+
+**Testi sovrimposti sullo schermo (on-screen captions)**
+
+```
+[0:00] — "Cliente chiama: 3 finestre + trasporto, 40 km"
+[0:06] — "Apro l'app"
+[0:09] — "Aggiungo i serramenti"
+[0:15] — "Calcolo trasporto automatico"
+[0:20] — "Preventivo pronto"
+[0:23] — "Lo mando via WhatsApp in PDF"
+[0:28] — "Meno di 1 minuto. Offline."
+[0:34] — "Scarica gratis su Google Play — Posa & Trasporti"
 ```
 
 ---
 
-## 4. Post breve per commenti/risposte nei gruppi
+## 4. Caption YouTube Shorts / TikTok / Reels
 
 ```
-Se vi serve un listino posa infissi con preventivi rapidi da mandare via WhatsApp, provate questa app gratuita: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/
-Si installa dal browser, funziona offline. Feedback benvenuti!
+Un cliente chiama, vuole il preventivo posa + trasporto. In meno di un minuto, dal telefono, anche senza internet.
+
+Posa & Trasporti — listino prezzi personalizzabile, calcolo km automatico, PDF via WhatsApp.
+
+Gratis su Google Play:
+https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/landing.html
+
+#posatoreinfissi #serramentista #infissi #preventivo #artigiani #installatoreinfissi #posainfissi #serramenti #lavoroincantiere
+```
+
+---
+
+## 5. Email a fornitori / rivenditori infissi
+
+**Oggetto:** Un'app gratuita da consigliare ai vostri installatori
+
+```
+Buongiorno,
+
+le scrivo per segnalarle un'app Android che potrebbe essere utile per i posatori e installatori che lavorano con voi: si chiama Posa & Trasporti ed è disponibile gratis su Google Play.
+
+Permette di fare preventivi posa + trasporto in pochi tocchi, direttamente dal telefono, anche senza connessione internet. Il cliente riceve il PDF via WhatsApp o email in meno di un minuto.
+
+Il listino è completamente personalizzabile (tipologie di infisso, supplementi, km di trasporto), così ogni installatore può adattarlo ai propri prezzi.
+
+Se vuole, può condividere il link direttamente con i suoi installatori:
+https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/landing.html
+
+È gratuita per l'uso base; c'è un abbonamento Pro opzionale per chi vuole preventivi illimitati e stampa.
+
+Resto disponibile per qualsiasi informazione.
+
+Cordiali saluti
+```
+
+---
+
+## 6. Post forum di settore (Edilportale, forum serramentisti)
+
+```
+Salve a tutti,
+
+segnalo un'app Android per chi lavora nella posa e nel trasporto di infissi: si chiama Posa & Trasporti (com.serenainfissi.listino su Google Play).
+
+Funzionalità principali:
+- Listino prezzi posa completamente personalizzabile per tipologia (porte interne, serramenti esterni, persiane, avvolgibili, zanzariere, blindate, supplementi vari)
+- Calcolo automatico del costo trasporto in base ai km percorsi
+- Generazione preventivo e invio al cliente via WhatsApp, email o PDF
+- Funzionamento offline completo — nessuna connessione richiesta in cantiere
+
+L'app è gratuita; esiste un piano Pro (mensile o annuale con 7 giorni di prova) che sblocca preventivi illimitati e stampa diretta.
+
+Link Play Store:
+https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/landing.html
+
+Segnalazioni di bug o richieste di nuove funzionalità sono benvenute — lo sviluppo è attivo.
 ```

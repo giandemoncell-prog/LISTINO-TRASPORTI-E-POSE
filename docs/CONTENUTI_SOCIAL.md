@@ -72,7 +72,7 @@ Musica: strumentale motivazionale/artigianale — cerca "upbeat acoustic work" s
 > Funziona anche senza internet — utile in cantiere.
 >
 > Si chiama **Posa & Trasporti**, è gratis su Google Play:
-> [link]
+> https://play.google.com/store/apps/details?id=com.serenainfissi.listino
 >
 > Se la provate ditemi cosa ne pensate.
 
@@ -87,13 +87,13 @@ Musica: strumentale motivazionale/artigianale — cerca "upbeat acoustic work" s
 > L'ho sviluppata per uso mio, poi ho deciso di metterla su Play Store per chi fa il nostro mestiere.
 >
 > **Posa & Trasporti** — gratis su Google Play.
-> [link]
+> https://play.google.com/store/apps/details?id=com.serenainfissi.listino
 
 ---
 
 ### Variante 3 — breve (per commenti o risposta a discussioni)
 
-> Per i preventivi posa uso questa app: **Posa & Trasporti** su Google Play. Gratis, funziona offline, mandi il preventivo su WhatsApp direttamente. [link]
+> Per i preventivi posa uso questa app: **Posa & Trasporti** su Google Play. Gratis, funziona offline, mandi il preventivo su WhatsApp direttamente. https://play.google.com/store/apps/details?id=com.serenainfissi.listino
 
 ---
 
