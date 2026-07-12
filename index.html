@@ -138,6 +138,10 @@
             .print-header { display: block !important; text-align: center; margin-bottom: 20px; padding: 15px; border-bottom: 2px solid #1a5276; }
             .print-header h2 { color: #1a5276; margin-bottom: 5px; }
             .print-header p { color: #555; font-size: 0.85em; margin: 2px 0; }
+            .form-group input, .form-group select, .form-group textarea {
+                border: none !important; box-shadow: none !important;
+                background: transparent !important; padding: 2px 0 !important;
+            }
         }
 
         @media (max-width: 600px) {
@@ -166,7 +170,7 @@
 <div class="container">
     <div class="tabs">
         <button class="tab active" onclick="showPanel('listino', this)">Listino Prezzi</button>
-        <button class="tab" onclick="showPanel('preventivo', this)">Nuovo Preventivo</button>
+        <button class="tab" id="tab-preventivo" onclick="showPanel('preventivo', this)">Nuovo Preventivo</button>
         <button class="tab" onclick="showPanel('storico', this)">Storico Preventivi</button>
         <button class="tab" onclick="showPanel('impostazioni', this)">Impostazioni</button>
         <button class="tab" onclick="showPanel('guida', this)">Guida</button>
@@ -320,7 +324,7 @@
                 </div>
                 <div class="form-group">
                     <label>Distanza (km)</label>
-                    <input type="number" id="p_km" value="0" min="0" step="1" onchange="calcolaPreventivo()">
+                    <input type="number" id="p_km" value="0" min="0" step="1" inputmode="decimal" onchange="calcolaPreventivo()">
                 </div>
             </div>
             <div class="form-row">
@@ -335,7 +339,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card no-print">
             <h2>Voci Preventivo</h2>
             <div id="linee-preventivo"></div>
             <button class="btn btn-primary" onclick="aggiungiLinea()" style="margin-top:10px">+ Aggiungi voce</button>
@@ -918,7 +922,7 @@ function renderLinee() {
             </div>
             <div class="form-group" style="max-width:80px">
                 <label>Q.tà</label>
-                <input type="number" class="qta-input" value="${esc(qta)}" min="0.1" step="1" onchange="calcolaPreventivo()">
+                <input type="number" class="qta-input" value="${esc(qta)}" min="0.1" step="1" inputmode="decimal" onchange="calcolaPreventivo()">
             </div>
             <div class="form-group">
                 <label>Note</label>
@@ -1266,9 +1270,7 @@ function caricaPreventivo(index) {
         aggiungiLinea();
     }
 
-    showPanel('preventivo');
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab')[1].classList.add('active');
+    showPanel('preventivo', document.getElementById('tab-preventivo'));
     calcolaPreventivo();
 }
 

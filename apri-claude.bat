@@ -24,4 +24,4 @@ echo   FIX AUDIT: tutti completati (11/11)
 echo  ==========================================
 echo.
 
-claude --resume ba8b0f9b-d290-4e08-9057-5d936162f43e
+claude --resume 8b273d4a-e8ed-4506-930e-006e1635fecd

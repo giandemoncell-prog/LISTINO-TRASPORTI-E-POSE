@@ -30,3 +30,8 @@ Thumbs.db
 
 # FileMaker (vecchio file di lavoro)
 *.fmp12
+
+# Claude Code - stato locale (contiene cronologia comandi/credenziali locali)
+.claude/
+.omc/
+.claude-session.md
