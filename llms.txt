@@ -22,4 +22,6 @@
 ## Pagine
 
 - App: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/
+- Landing page / presentazione: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/landing.html
+- App su Google Play: https://play.google.com/store/apps/details?id=com.serenainfissi.listino
 - Privacy policy: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/privacy-policy.html
