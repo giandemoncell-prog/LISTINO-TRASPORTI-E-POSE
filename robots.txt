@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/sitemap.xml

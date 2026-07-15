@@ -1,0 +1,25 @@
+# Posa & Trasporti
+
+> App gratuita (con opzione Pro in abbonamento) per posatori, installatori e rivenditori di infissi in Italia. Fornisce un listino prezzi di posa in opera e trasporto sempre a portata di mano, permette di creare preventivi professionali in pochi minuti e di inviarli al cliente via WhatsApp, email o PDF. Funziona al 100% offline: tutti i dati restano sul dispositivo, senza account o cloud.
+
+## Informazioni chiave
+
+- Pubblico: posatori, installatori e rivenditori di infissi, serramenti e porte in Italia.
+- Piattaforme: app web/PWA e app Android (Google Play).
+- Prezzo: versione Free (fino a 3 preventivi salvati); Pro 4,99 €/mese o 39,99 €/anno (stampa PDF, invio WhatsApp/email, preventivi illimitati).
+- Lingua: italiano.
+- Privacy: nessun dato inviato a server esterni; tutto salvato localmente sul dispositivo.
+
+## Funzionalità principali
+
+- Listino prezzi posa in opera per porte interne, infissi esterni, blindati, zanzariere, parquet e supplementi.
+- Calcolo trasporto: tariffa base + costo al km, con scarico per piano e piattaforma idraulica.
+- Creazione preventivi con calcolo automatico di imponibile, IVA e totale.
+- Invio preventivo via WhatsApp, email o stampa/PDF.
+- Storico preventivi salvati e modificabili.
+- Dati azienda (ragione sociale, P.IVA, contatti) inseriti su ogni preventivo.
+
+## Pagine
+
+- App: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/
+- Privacy policy: https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/privacy-policy.html
