@@ -75,6 +75,23 @@ PENSATA PER CHI LAVORA SUL CAMPO
 Questa non e l'ennesima app generica per preventivi. E stata progettata specificamente per posatori, installatori e rivenditori di infissi in Italia. Le voci del listino rispecchiano il lavoro reale: dalla posa di una portafinestra allo smontaggio di un vecchio cassonetto, dal trasporto con scarico al piano alla piattaforma idraulica.
 
 Semplice. Veloce. Fatta per il tuo mestiere.
+
+DOMANDE FREQUENTI
+
+Cos'e Posa & Trasporti?
+E un'app per posatori, installatori e rivenditori di infissi in Italia. Contiene un listino prezzi completo per la posa in opera e il trasporto, e permette di creare preventivi professionali in pochi minuti da inviare al cliente via WhatsApp, email o PDF.
+
+Funziona senza internet?
+Si, dopo la prima installazione l'app funziona al 100% offline: tutti i dati (listino, preventivi, dati azienda) sono salvati sul dispositivo, senza bisogno di connessione o account cloud.
+
+Come si calcola il costo del trasporto infissi?
+Il costo del trasporto si calcola come tariffa base piu il costo al chilometro moltiplicato per la distanza indicata, con voci separate per trasporto interno ed esterno, scarico per piano e uso della piattaforma idraulica.
+
+L'app e gratuita?
+Si, la versione gratuita permette di usare il listino prezzi e salvare fino a 3 preventivi. La versione Pro, in abbonamento mensile o annuale, sblocca stampa PDF, invio WhatsApp/email e preventivi illimitati.
+
+Come si invia un preventivo al cliente?
+Dopo aver compilato il preventivo, si puo inviare direttamente via WhatsApp o email con un tocco, oppure stamparlo o salvarlo come PDF per l'archivio.
 ```
 
 ---
