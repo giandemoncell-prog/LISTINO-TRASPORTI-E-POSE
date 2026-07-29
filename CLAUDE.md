@@ -25,7 +25,7 @@ App PWA + APK Android (via Capacitor) per posatori e installatori di infissi ita
 - `salvaPreventivo`: max 3 preventivi salvati per Free
 - `stampaPreventivo`, `inviaWhatsApp`, `inviaEmail`: Pro-only
 
-Prodotti Play Console: `pro_monthly` (4,99 €/mese), `pro_yearly` (39,99 €/anno + 7gg trial). Gli ID sono hardcoded in `index.html` come `PRODUCT_MONTHLY` / `PRODUCT_YEARLY` — NON modificarli dopo aver creato i prodotti su Play Console.
+Prodotti Play Console: `pro_monthly` (5,99 €/mese), `pro_yearly` (48,99 €/anno + 7gg trial). Gli ID sono hardcoded in `index.html` come `PRODUCT_MONTHLY` / `PRODUCT_YEARLY` — NON modificarli dopo aver creato i prodotti su Play Console. Nota: Play Console applica l'IVA (22%) e arrotonda al prezzo "civetta" più vicino sopra il valore netto inserito — inserire un prezzo netto più basso del prezzo finale desiderato.
 
 ## Build pipeline
 

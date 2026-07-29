@@ -593,15 +593,15 @@
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
                 <div style="border:2px solid #e0e0e0;border-radius:10px;padding:20px;">
                     <h3 style="margin:0 0 8px;color:#1a5276;">Mensile</h3>
-                    <div style="font-size:2em;font-weight:700;color:#1a5276;">4,99 €<span style="font-size:0.5em;color:#888;font-weight:400;">/mese</span></div>
+                    <div style="font-size:2em;font-weight:700;color:#1a5276;">5,99 €<span style="font-size:0.5em;color:#888;font-weight:400;">/mese</span></div>
                     <p style="color:#666;font-size:0.85em;margin:8px 0 15px;">Disdici quando vuoi</p>
                     <button class="btn btn-primary" onclick="acquistaMensile()" style="width:100%;">Attiva mensile</button>
                 </div>
                 <div style="border:2px solid #27ae60;border-radius:10px;padding:20px;background:#f4fdf6;position:relative;">
                     <div style="position:absolute;top:-10px;right:15px;background:#27ae60;color:white;font-size:0.75em;padding:3px 10px;border-radius:10px;font-weight:600;">CONSIGLIATO</div>
                     <h3 style="margin:0 0 8px;color:#27ae60;">Annuale</h3>
-                    <div style="font-size:2em;font-weight:700;color:#27ae60;">39,99 €<span style="font-size:0.5em;color:#888;font-weight:400;">/anno</span></div>
-                    <p style="color:#666;font-size:0.85em;margin:8px 0 15px;">Risparmi il 33% &middot; 7 giorni di prova gratuita</p>
+                    <div style="font-size:2em;font-weight:700;color:#27ae60;">48,99 €<span style="font-size:0.5em;color:#888;font-weight:400;">/anno</span></div>
+                    <p style="color:#666;font-size:0.85em;margin:8px 0 15px;">Risparmi il 32% &middot; 7 giorni di prova gratuita</p>
                     <button class="btn btn-success" onclick="acquistaAnnuale()" style="width:100%;">Attiva annuale</button>
                 </div>
             </div>
@@ -1573,7 +1573,7 @@ function acquistaMensile() {
 function acquistaAnnuale() {
     if (typeof CdvPurchase === 'undefined') return nativoNonDisponibile();
     const confermato = confirm(
-        'Abbonamento annuale — 39,99 €/anno\n\n' +
+        'Abbonamento annuale — 48,99 €/anno\n\n' +
         'Prova gratuita: 7 giorni. Al termine, il rinnovo annuale viene addebitato automaticamente tramite Google Play.\n\n' +
         'Puoi disdire in qualsiasi momento dal tuo account Google Play prima della scadenza del periodo di prova.\n\n' +
         'Vuoi continuare?'
