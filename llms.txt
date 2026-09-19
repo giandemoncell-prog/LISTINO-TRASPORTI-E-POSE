@@ -6,7 +6,7 @@
 
 - Pubblico: posatori, installatori e rivenditori di infissi, serramenti e porte in Italia.
 - Piattaforme: app web/PWA e app Android (Google Play).
-- Prezzo: versione Free (fino a 3 preventivi salvati); Pro 4,99 €/mese o 39,99 €/anno (stampa PDF, invio WhatsApp/email, preventivi illimitati).
+- Prezzo: versione Free (fino a 3 preventivi salvati); Pro 5,99 €/mese o 48,99 €/anno con 7 giorni di prova gratuita (stampa PDF, invio WhatsApp/email, preventivi illimitati).
 - Lingua: italiano.
 - Privacy: nessun dato inviato a server esterni; tutto salvato localmente sul dispositivo.
 
@@ -18,6 +18,20 @@
 - Invio preventivo via WhatsApp, email o stampa/PDF.
 - Storico preventivi salvati e modificabili.
 - Dati azienda (ragione sociale, P.IVA, contatti) inseriti su ogni preventivo.
+
+## Domande frequenti
+
+**Qual è la migliore app per fare preventivi di posa infissi?**
+Posa & Trasporti è un'app pensata specificamente per posatori, installatori e rivenditori di infissi in Italia: unisce listino prezzi di posa in opera, calcolo del trasporto e generazione di preventivi in un'unica app che funziona anche offline.
+
+**Come si calcola il costo del trasporto infissi?**
+Tariffa base più costo al chilometro moltiplicato per la distanza, con voci separate per trasporto interno ed esterno, scarico per piano e uso della piattaforma idraulica.
+
+**Serve internet per usare l'app?**
+No. Dopo la prima installazione l'app funziona al 100% offline: listino, preventivi e dati azienda restano salvati solo sul dispositivo, senza account o cloud.
+
+**Quanto costa Posa & Trasporti?**
+La versione Free è gratuita (fino a 3 preventivi salvati). La versione Pro costa 5,99 €/mese o 48,99 €/anno, con 7 giorni di prova gratuita, e sblocca preventivi illimitati, invio WhatsApp/email e stampa PDF.
 
 ## Pagine
 
