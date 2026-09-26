@@ -2,7 +2,38 @@
 
 ---
 
-## 1. Nome App (max 30 caratteri)
+## ✅ AGGIORNAMENTO ASO INVIATO A GOOGLE — 2026-09-20
+
+Stato al 20/09: 10+ download, 0 recensioni, ultimo aggiornamento scheda 27/06.
+Il titolo precedente (`Posa & Trasporti`) non conteneva nessuna parola chiave
+cercata dagli utenti ("infissi", "serramenti", "preventivi") — pesava molto
+sul posizionamento nella ricerca del Play Store.
+
+Le modifiche sotto sono state **inserite direttamente in Play Console e
+inviate per la revisione Google il 2026-09-20** (di solito entro 7 giorni).
+Valori precedenti conservati subito sotto per confronto/rollback.
+
+**Nuovo titolo (26/30 caratteri):**
+```
+Posa & Trasporti - Infissi
+```
+
+**Nuova descrizione breve (~77/80 caratteri — verificare contatore in Play Console):**
+```
+Listino prezzi posa infissi e serramenti, preventivi via WhatsApp ed email.
+```
+
+**Descrizione completa:** nessuna riscrittura necessaria, aggiungere solo
+"serramentisti" come termine di pubblico nella sezione "PENSATA PER CHI
+LAVORA SUL CAMPO" (vedi sotto, già aggiornato in questo file).
+
+**Azione non testuale ma da fare appena possibile:** chiedere una recensione
+ai primi utenti (es. nei gruppi FB dove è stato pubblicato il post) — 0
+recensioni pesa sia sulla conversione che sull'algoritmo di raccomandazione.
+
+---
+
+## 1. Nome App (max 30 caratteri) — VALORE ATTUALMENTE LIVE
 
 ```
 Posa & Trasporti
@@ -12,7 +43,7 @@ Posa & Trasporti
 
 ---
 
-## 2. Descrizione breve (max 80 caratteri)
+## 2. Descrizione breve (max 80 caratteri) — VALORE ATTUALMENTE LIVE
 
 ```
 Listino prezzi posa infissi, preventivi e invio rapido via WhatsApp e email.
@@ -72,14 +103,14 @@ Non sai come si usa? La guida e dentro l'app, chiara e in italiano.
 
 PENSATA PER CHI LAVORA SUL CAMPO
 
-Questa non e l'ennesima app generica per preventivi. E stata progettata specificamente per posatori, installatori e rivenditori di infissi in Italia. Le voci del listino rispecchiano il lavoro reale: dalla posa di una portafinestra allo smontaggio di un vecchio cassonetto, dal trasporto con scarico al piano alla piattaforma idraulica.
+Questa non e l'ennesima app generica per preventivi. E stata progettata specificamente per posatori, serramentisti, installatori e rivenditori di infissi in Italia. Le voci del listino rispecchiano il lavoro reale: dalla posa di una portafinestra allo smontaggio di un vecchio cassonetto, dal trasporto con scarico al piano alla piattaforma idraulica.
 
 Semplice. Veloce. Fatta per il tuo mestiere.
 
 DOMANDE FREQUENTI
 
 Cos'e Posa & Trasporti?
-E un'app per posatori, installatori e rivenditori di infissi in Italia. Contiene un listino prezzi completo per la posa in opera e il trasporto, e permette di creare preventivi professionali in pochi minuti da inviare al cliente via WhatsApp, email o PDF.
+E un'app per posatori, serramentisti, installatori e rivenditori di infissi in Italia. Contiene un listino prezzi completo per la posa in opera e il trasporto, e permette di creare preventivi professionali in pochi minuti da inviare al cliente via WhatsApp, email o PDF.
 
 Funziona senza internet?
 Si, dopo la prima installazione l'app funziona al 100% offline: tutti i dati (listino, preventivi, dati azienda) sono salvati sul dispositivo, senza bisogno di connessione o account cloud.

@@ -42,6 +42,22 @@ Versione 1.0.3
 
 ---
 
+## Versione 1.0.6 (versionCode 7)
+
+### Italiano (default)
+```
+Versione 1.0.6
+
+- Corretta la stampa e il PDF del preventivo
+- Tastierino numerico automatico nei campi numerici
+- Aprendo un preventivo salvato si apre subito la scheda giusta
+- Nuove domande frequenti (FAQ) nella Guida dell'app
+```
+
+(Caratteri: 229)
+
+---
+
 ## Template per versioni successive
 
 ### Schema da seguire

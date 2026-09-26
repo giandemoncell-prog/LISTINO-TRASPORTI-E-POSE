@@ -2,13 +2,17 @@
 
 App PWA + APK Android (via Capacitor) per posatori e installatori di infissi italiani. Listino prezzi posa, preventivi rapidi, condivisione WhatsApp/Email/PDF. Funziona 100% offline. Monetizzazione tramite abbonamento Google Play Billing.
 
+## Ripresa lavori
+
+All'inizio di ogni sessione leggere **`D:\SITO_WEB+SOCIAL\contatti_posa_trasporti\PROSSIMA_SESSIONE.md`** (task aperti) e `STRATEGIA_V2.md` nella stessa cartella (strategia marketing/vendita aggiornata al 26/09/2026).
+
 ## Quick reference
 
 - **Nome visibile**: Posa & Trasporti
 - **appId / package**: `com.serenainfissi.listino` (NON cambiare dopo prima pubblicazione)
-- **Versione corrente**: 1.0.1 (versionCode 2)
+- **Versione corrente**: 1.0.6 (versionCode 7), AAB generato il 2026-09-26 (pubblicata su Play Store: 1.0.5) — note in `docs/RELEASE_NOTES.md`
 - **AAB firmato**: `android/app/build/outputs/bundle/release/app-release.aab`
-- **Stato**: pronto per upload Play Store, in attesa approvazione account Play Console
+- **Stato**: pubblicata su Play Store (al 2026-09-19: 7 installazioni, 0 abbonati)
 
 ## Architettura
 
@@ -64,6 +68,25 @@ NON serve toccare `android/` a mano — lo gestisce Capacitor via sync.
 - `KEYSTORE_README.md` — gestione chiave di firma
 - `CAPACITOR_SETUP.md` — documentazione tecnica
 - `MANUALE_TECNICO.md` — documentazione utente/tecnica preesistente
+
+## Team di agenti IA
+
+Agenti in `C:\Users\Luca\.claude\agents\` (globali). Lista completa modelli: `D:\TEAM_WORKSPACE\CLAUDE.md`. Delegare solo se l'utente lo chiede o il task è chiaramente del loro ambito.
+
+| Agente | Modello | Ambito |
+|---|---|---|
+| `pt-dev` | DeepSeek V4 Pro (`deepseek/deepseek-reasoner`) | Codice app: `index.html`, `sw.js`, `manifest.json`, paywall, calcoli |
+| `pt-release` | Gemini 2.5 Flash (`gemini/gemini-2.5-flash`) | Bump versione, sync `www/`, `bundleRelease`, checklist Play Store |
+| `pt-store` | Claude Sonnet 5 (`claude-sonnet-5`) | Testi Play Store, release notes, risposte recensioni (`docs/`) |
+
+Generici utili: `qwen-coder` / `deepseek-coder` (locali, Ollama) per fix veloci a costo zero; `fable` per copy social/spot; `haiku` per task ripetitivi.
+
+Regole:
+- **Costi**: 80% bozza con agenti flash/locali, 20% rifinitura premium.
+- **Agenti disattivati**: `qwen-plus` / `qwen-flash` (chiave DashScope revocata 2026-09-08) → non assegnarli ad agenti `pt-*`.
+- **Nessuna IA dentro l'app**: gli agenti lavorano sui sorgenti, mai integrati nell'app (vincolo "100% offline" + Data Safety).
+- **Multi-agente + release**: prima di `bundleRelease` verificare che `www/index.html` sia allineato al sorgente `index.html`.
+- Dopo aver modificato un file agente serve riavviare Claude Code perché la modifica venga caricata.
 
 ## Contesto utente
 
