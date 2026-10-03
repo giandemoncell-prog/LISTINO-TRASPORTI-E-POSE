@@ -103,7 +103,7 @@
           "name": "L'app Posa & Trasporti è gratuita?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Sì, la versione gratuita permette di usare il listino prezzi e salvare fino a 3 preventivi. La versione Pro, in abbonamento mensile o annuale, sblocca stampa PDF, invio WhatsApp/email e preventivi illimitati."
+            "text": "Sì, la versione gratuita permette di usare il listino prezzi, salvare fino a 3 preventivi e fare 3 invii gratuiti (WhatsApp, email o PDF). La versione Pro, in abbonamento mensile o annuale, sblocca invii e stampa PDF illimitati e preventivi illimitati."
           }
         },
         {
@@ -187,6 +187,33 @@
         .btn-danger:hover { background: #c0392b; }
         .btn-secondary { background: #95a5a6; color: white; }
         .btn-secondary:hover { background: #7f8c8d; }
+
+        /* Paywall contestuale: bottom sheet mostrato nel punto in cui serve Pro */
+        .pro-sheet-overlay {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+            z-index: 1000; align-items: flex-end; justify-content: center;
+        }
+        .pro-sheet-overlay.open { display: flex; }
+        .pro-sheet {
+            background: white; width: 100%; max-width: 520px; border-radius: 16px 16px 0 0;
+            padding: 24px 20px 28px; box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+        }
+        .pro-sheet h3 { color: #1a5276; font-size: 1.2em; margin-bottom: 8px; }
+        .pro-sheet p { color: #555; font-size: 0.95em; line-height: 1.5; margin-bottom: 14px; }
+        .pro-sheet ul { margin: 0 0 16px 20px; color: #444; font-size: 0.92em; line-height: 1.7; }
+        .pro-sheet .pro-plan-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .pro-sheet .pro-plan-row .btn { flex: 1; justify-content: center; flex-direction: column; gap: 2px; padding: 12px 10px; }
+        .pro-sheet .pro-plan-row .btn small { font-size: 0.78em; font-weight: 400; opacity: 0.9; }
+        .pro-sheet .pro-later { width: 100%; background: none; color: #888; font-size: 0.9em; padding: 10px; border: none; cursor: pointer; }
+
+        /* Messaggio non bloccante (es. contatore invii gratuiti) */
+        .toast-msg {
+            position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px);
+            background: #1a5276; color: white; padding: 12px 18px; border-radius: 8px;
+            font-size: 0.92em; max-width: 90%; text-align: center; box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+            opacity: 0; pointer-events: none; transition: opacity 0.3s, transform 0.3s; z-index: 1100;
+        }
+        .toast-msg.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         .actions { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
 
@@ -580,9 +607,7 @@
                 <strong>Limiti versione gratuita:</strong>
                 <ul style="margin:8px 0 0 20px;">
                     <li>Massimo 3 preventivi salvati</li>
-                    <li>Stampa / Esportazione PDF non disponibile</li>
-                    <li>Invio via WhatsApp non disponibile</li>
-                    <li>Invio via Email non disponibile</li>
+                    <li>3 invii gratuiti in tutto (WhatsApp, email o PDF), poi serve Pro</li>
                     <li>Dati azienda non vengono mostrati nei preventivi stampati</li>
                 </ul>
             </div>
@@ -726,7 +751,7 @@
                 <li>I dati sono salvati <strong>localmente sul dispositivo</strong>. Se cancelli i dati del browser, perderai tariffe personalizzate, storico e dati ditta</li>
                 <li>L'app funziona <strong>offline</strong> dopo la prima apertura</li>
                 <li>Per <strong>aggiornare</strong> l'app, chiudila completamente e riaprila</li>
-                <li>La versione gratuita permette di salvare fino a <strong>3 preventivi</strong>. Con il piano Pro i preventivi salvati sono illimitati</li>
+                <li>La versione gratuita permette di salvare fino a <strong>3 preventivi</strong> e fare <strong>3 invii gratuiti</strong> (WhatsApp, email o PDF). Con il piano Pro invii, stampe e preventivi sono illimitati</li>
             </ul>
         </div>
 
@@ -743,7 +768,7 @@
                 Il costo del trasporto si calcola come tariffa base più il costo al chilometro moltiplicato per la distanza indicata, con voci separate per trasporto interno ed esterno, scarico per piano e uso della piattaforma idraulica.</p>
 
                 <p style="margin-top:15px;"><strong>L'app è gratuita?</strong><br>
-                Sì, la versione gratuita permette di usare il listino prezzi e salvare fino a 3 preventivi. La versione Pro, in abbonamento mensile o annuale, sblocca stampa PDF, invio WhatsApp/email e preventivi illimitati.</p>
+                Sì, la versione gratuita permette di usare il listino prezzi, salvare fino a 3 preventivi e fare 3 invii gratuiti (WhatsApp, email o PDF). La versione Pro, in abbonamento mensile o annuale, sblocca invii e stampa PDF illimitati e preventivi illimitati.</p>
 
                 <p style="margin-top:15px;"><strong>Come si invia un preventivo al cliente?</strong><br>
                 Dopo aver compilato il preventivo, si può inviare direttamente via WhatsApp o email con un tocco, oppure stamparlo o salvarlo come PDF per l'archivio.</p>
@@ -754,6 +779,30 @@
 
 <!-- Cordova bridge (iniettato da Capacitor sul device; assente nel browser web) -->
 <script src="cordova.js" onerror=""></script>
+<!-- PAYWALL CONTESTUALE -->
+<div id="pro-sheet-overlay" class="pro-sheet-overlay" onclick="if(event.target===this) chiudiPaywall()">
+    <div class="pro-sheet" role="dialog" aria-modal="true" aria-labelledby="pro-sheet-title">
+        <h3 id="pro-sheet-title">Funzione Pro</h3>
+        <p id="pro-sheet-desc"></p>
+        <ul>
+            <li>Preventivi illimitati</li>
+            <li>Invio su WhatsApp ed email con un tocco</li>
+            <li>Stampa PDF con la tua intestazione</li>
+        </ul>
+        <div id="pro-sheet-acquisto">
+            <div class="pro-plan-row">
+                <button class="btn btn-primary" onclick="chiudiPaywall(); acquistaMensile()">Mensile<small>5,99 € / mese</small></button>
+                <button class="btn btn-success" onclick="chiudiPaywall(); acquistaAnnuale()">Annuale<small>48,99 € / anno · 7 giorni gratis</small></button>
+            </div>
+        </div>
+        <div id="pro-sheet-web" style="display:none;">
+            <p>Per attivare Pro devi installare l'app dal Google Play Store.</p>
+            <a class="btn btn-success" style="width:100%;justify-content:center;text-decoration:none;" href="https://play.google.com/store/apps/details?id=com.serenainfissi.listino" target="_blank" rel="noopener">Scarica su Google Play</a>
+        </div>
+        <button class="pro-later" onclick="chiudiPaywall()">Non ora</button>
+    </div>
+</div>
+
 <script>
 // --- Tariffe default (da listino 2026) ---
 const TARIFFE_DEFAULT = {
@@ -1439,6 +1488,10 @@ function installApp() {
 
 // --- Pro / Abbonamento ---
 const FREE_PREVENTIVI_LIMIT = 3;
+// Invii gratuiti (WhatsApp, email o PDF) per chi non ha Pro: il cliente riceve il preventivo
+// subito, e il paywall arriva quando l'utente ha già visto il risultato.
+const FREE_INVII_OMAGGIO = 3;
+const CHIAVE_INVII_GRATIS = 'serena_invii_gratis';
 const PRODUCT_MONTHLY = 'pro_monthly';
 const PRODUCT_YEARLY = 'pro_yearly';
 
@@ -1496,10 +1549,71 @@ function aggiornaProUI() {
     if (limitInfo) limitInfo.style.display = pro ? 'none' : 'block';
 }
 
+// Paywall contestuale: resta sulla schermata in cui l'utente sta lavorando
+// e mostra il beneficio specifico, invece di un alert + salto alla scheda Abbonamento.
+function mostraPaywall(funzione, descrizione) {
+    const overlay = document.getElementById('pro-sheet-overlay');
+    if (!overlay) {
+        // Fallback se il markup non c'è (non dovrebbe succedere)
+        showPanelByName('abbonamento');
+        return;
+    }
+    document.getElementById('pro-sheet-title').textContent = funzione;
+    document.getElementById('pro-sheet-desc').textContent = descrizione;
+    const nativo = typeof CdvPurchase !== 'undefined';
+    document.getElementById('pro-sheet-acquisto').style.display = nativo ? 'block' : 'none';
+    document.getElementById('pro-sheet-web').style.display = nativo ? 'none' : 'block';
+    overlay.classList.add('open');
+}
+
+function chiudiPaywall() {
+    const overlay = document.getElementById('pro-sheet-overlay');
+    if (overlay) overlay.classList.remove('open');
+}
+
+// Contatore dei soli invii gratuiti. Nota: vive in localStorage, quindi è un limite "morbido"
+// (si azzera cancellando i dati dell'app). Il controllo vero dell'abbonamento resta su Play Store.
+function invantiGratuitiUsati() {
+    try {
+        return parseInt(localStorage.getItem(CHIAVE_INVII_GRATIS) || '0', 10) || 0;
+    } catch(e) { return 0; }
+}
+
+function salvaInvioGratuito(n) {
+    try { localStorage.setItem(CHIAVE_INVII_GRATIS, String(n)); } catch(e) { /* ignore */ }
+}
+
+function mostraToast(messaggio) {
+    let t = document.getElementById('toast-msg');
+    if (!t) {
+        t = document.createElement('div');
+        t.id = 'toast-msg';
+        t.className = 'toast-msg';
+        document.body.appendChild(t);
+    }
+    t.textContent = messaggio;
+    t.classList.add('show');
+    clearTimeout(mostraToast._timer);
+    mostraToast._timer = setTimeout(() => t.classList.remove('show'), 4000);
+}
+
+// Chiamata prima di ogni funzione Pro (WhatsApp, email, PDF).
+// Con Pro: sempre ok. Senza Pro: consuma un invio gratuito finché ce ne sono, poi mostra il paywall.
 function richiediPro(funzione) {
     if (isPro()) return true;
-    showPanelByName('abbonamento');
-    setTimeout(() => alert('Funzione disponibile solo nella versione Pro:\n\n' + funzione + '\n\nPassa a Pro per sbloccarla.'), 100);
+    const usati = invantiGratuitiUsati();
+    if (usati < FREE_INVII_OMAGGIO) {
+        salvaInvioGratuito(usati + 1);
+        const restanti = FREE_INVII_OMAGGIO - (usati + 1);
+        mostraToast(restanti > 0
+            ? 'Invio gratuito usato. Ti restano ' + restanti + ' invii gratis.'
+            : 'Ultimo invio gratuito usato. Con Pro invii senza limiti.');
+        return true;
+    }
+    mostraPaywall(
+        'Sblocca: ' + funzione,
+        'Hai usato i ' + FREE_INVII_OMAGGIO + ' invii gratuiti. Con Pro invii e stampi i preventivi senza limiti, con la tua intestazione.'
+    );
     return false;
 }
 
@@ -1507,8 +1621,10 @@ function checkLimitePreventivi() {
     if (isPro()) return true;
     const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
     if (storico.length >= FREE_PREVENTIVI_LIMIT) {
-        showPanelByName('abbonamento');
-        setTimeout(() => alert('Hai raggiunto il limite di ' + FREE_PREVENTIVI_LIMIT + ' preventivi salvati nella versione gratuita.\n\nPassa a Pro per salvarne illimitati.'), 100);
+        mostraPaywall(
+            'Hai raggiunto il limite gratuito',
+            'Nella versione gratuita puoi salvare fino a ' + FREE_PREVENTIVI_LIMIT + ' preventivi. Con Pro li salvi senza limiti.'
+        );
         return false;
     }
     return true;
@@ -1562,8 +1678,9 @@ function aggiornaStatoAbbonamento() {
     }
 }
 
+// Dal browser web l'acquisto non è possibile: invece di un vicolo cieco, porta allo store.
 function nativoNonDisponibile() {
-    alert('Acquisto disponibile solo nell\'app installata dal Google Play Store.\n\nDal browser web non e\' possibile sottoscrivere l\'abbonamento.');
+    window.open('https://play.google.com/store/apps/details?id=com.serenainfissi.listino', '_blank', 'noopener');
 }
 
 function acquistaMensile() {
