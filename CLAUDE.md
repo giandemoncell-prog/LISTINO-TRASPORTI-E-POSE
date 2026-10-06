@@ -10,7 +10,7 @@ All'inizio di ogni sessione leggere **`D:\SITO_WEB+SOCIAL\contatti_posa_trasport
 
 - **Nome visibile**: Posa & Trasporti
 - **appId / package**: `com.serenainfissi.listino` (NON cambiare dopo prima pubblicazione)
-- **Versione corrente**: 1.0.8 (versionCode 9), sorgenti del 2026-10-06 (pubblicata su Play Store: 1.0.5; 1.0.6 e 1.0.7 generate ma non risultano caricate) — note in `docs/RELEASE_NOTES.md`
+- **Versione corrente**: 1.0.8 (versionCode 9), sorgenti del 2026-10-06 (in produzione su Play Store: 1.0.7, versionCode 8, verificato su Play Console il 2026-10-06) — note in `docs/RELEASE_NOTES.md`
 - **AAB firmato**: `android/app/build/outputs/bundle/release/app-release.aab`
 - **Stato**: pubblicata su Play Store (al 2026-09-19: 7 installazioni, 0 abbonati)
 
