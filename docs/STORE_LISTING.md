@@ -33,6 +33,24 @@ recensioni pesa sia sulla conversione che sull'algoritmo di raccomandazione.
 
 ---
 
+## PROPOSTA 06/10/2026 — allineare la scheda alla versione 1.0.7 (3 invii gratuiti)
+
+Stato: **non ancora applicata** in Play Console. La FAQ live dice ancora che WhatsApp/email/PDF sono solo Pro, ma dalla 1.0.7 i primi 3 invii sono gratuiti: e' il miglior argomento per installare e va detto.
+
+**1) Nella sezione "INVIA AL CLIENTE COME PREFERISCI", aggiungere in fondo la riga:**
+```
+- I primi 3 invii sono gratuiti: provi con un cliente vero prima di decidere
+```
+
+**2) Sostituire la risposta FAQ "L'app e gratuita?" con:**
+```
+Si, la versione gratuita permette di usare il listino prezzi, salvare fino a 3 preventivi e fare 3 invii gratuiti al cliente (WhatsApp, email o PDF). La versione Pro, in abbonamento mensile o annuale, sblocca invii, stampa PDF e preventivi illimitati.
+```
+
+Titolo e descrizione breve: non toccarli (conversione scheda → installazione 50% negli ultimi 28 giorni, gia' ottima).
+
+---
+
 ## 1. Nome App (max 30 caratteri) — VALORE ATTUALMENTE LIVE
 
 ```
