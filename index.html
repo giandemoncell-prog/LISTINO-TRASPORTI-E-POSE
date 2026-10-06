@@ -133,11 +133,14 @@
 
         .tabs {
             display: flex; gap: 5px; margin-bottom: 20px;
+            overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
         }
+        .tabs::-webkit-scrollbar { display: none; }
         .tab {
             padding: 12px 24px; background: white; border: none;
             border-radius: 8px 8px 0 0; cursor: pointer;
             font-size: 0.95em; color: #555; transition: all 0.2s;
+            white-space: nowrap; flex-shrink: 0;
         }
         .tab.active { background: #2e86c1; color: white; font-weight: 600; }
         .tab:hover:not(.active) { background: #e8e8e8; }
@@ -260,6 +263,9 @@
 
         .empty-state { text-align: center; padding: 40px; color: #999; }
 
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .nota-riga { font-size: 0.85em; color: #777; font-style: italic; margin-top: 2px; }
+
         .print-header { display: none; }
 
         @media print {
@@ -282,7 +288,13 @@
             .header { flex-direction: column; text-align: center; gap: 5px; }
             .form-row { flex-direction: column; }
             .form-group { min-width: 100%; }
-            .preventivo-linea { flex-direction: column; }
+            .preventivo-linea { flex-direction: column; align-items: stretch; }
+            .preventivo-linea .form-group { max-width: none !important; }
+            .container { padding: 12px; }
+            .card { padding: 16px; }
+            .tab { padding: 10px 14px; font-size: 0.9em; }
+            .tariff-table th, .tariff-table td { padding: 8px 8px; }
+            .totale-box .amount { font-size: 1.4em; }
         }
     </style>
 </head>
@@ -608,7 +620,6 @@
                 <ul style="margin:8px 0 0 20px;">
                     <li>Massimo 3 preventivi salvati</li>
                     <li>3 invii gratuiti in tutto (WhatsApp, email o PDF), poi serve Pro</li>
-                    <li>Dati azienda non vengono mostrati nei preventivi stampati</li>
                 </ul>
             </div>
         </div>
@@ -617,7 +628,7 @@
             <h2>Passa a Pro</h2>
             <p style="color:#555;margin-bottom:20px;">Sblocca tutte le funzioni: preventivi illimitati, stampa PDF, condivisione WhatsApp ed email, intestazione professionale con i dati della tua ditta.</p>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px;">
                 <div style="border:2px solid #e0e0e0;border-radius:10px;padding:20px;">
                     <h3 style="margin:0 0 8px;color:#1a5276;">Mensile</h3>
                     <div style="font-size:2em;font-weight:700;color:#1a5276;">5,99 €<span style="font-size:0.5em;color:#888;font-weight:400;">/mese</span></div>
@@ -898,7 +909,7 @@ const AZIENDA_FIELDS = ['az_ragione','az_titolare','az_indirizzo','az_piva','az_
 function init() {
     loadTariffe();
     loadAzienda();
-    document.getElementById('p_data').value = new Date().toISOString().split('T')[0];
+    document.getElementById('p_data').value = oggiISO();
     aggiungiLinea();
     renderStorico();
 }
@@ -913,9 +924,8 @@ function salvaAzienda() {
 }
 
 function loadAzienda() {
-    const saved = localStorage.getItem('serena_azienda');
-    if (!saved) return;
-    const dati = JSON.parse(saved);
+    const dati = leggiJSON('serena_azienda', null);
+    if (!dati) return;
     AZIENDA_FIELDS.forEach(id => {
         const el = document.getElementById(id);
         if (el && dati[id]) el.value = dati[id];
@@ -923,9 +933,8 @@ function loadAzienda() {
 }
 
 function getAziendaTesto() {
-    const saved = localStorage.getItem('serena_azienda');
-    if (!saved) return '';
-    const d = JSON.parse(saved);
+    const d = leggiJSON('serena_azienda', null);
+    if (!d) return '';
     let t = '';
     if (d.az_ragione) t += d.az_ragione + '\n';
     if (d.az_indirizzo) t += d.az_indirizzo + '\n';
@@ -955,8 +964,7 @@ function saveTariffe() {
 }
 
 function loadTariffe() {
-    const saved = localStorage.getItem('serena_tariffe');
-    const tariffe = saved ? JSON.parse(saved) : TARIFFE_DEFAULT;
+    const tariffe = leggiJSON('serena_tariffe', null) || TARIFFE_DEFAULT;
     Object.keys(tariffe).forEach(k => {
         const el = document.getElementById(k);
         if (el) { el.value = tariffe[k]; el.min = '0'; }
@@ -985,7 +993,7 @@ function esportaBackup() {
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    const ts = new Date().toISOString().slice(0, 10);
+    const ts = oggiISO();
     a.href = url;
     a.download = `posa-trasporti-backup-${ts}.json`;
     document.body.appendChild(a);
@@ -1043,7 +1051,10 @@ function showPanel(name, btn) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById('panel-' + name).classList.add('active');
-    if (btn) btn.classList.add('active');
+    if (btn) {
+        btn.classList.add('active');
+        if (btn.scrollIntoView) btn.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
     window.scrollTo(0, 0);
 }
 
@@ -1111,7 +1122,9 @@ function renderLinee() {
     calcolaPreventivo();
 }
 
-function calcolaPreventivo() {
+// Unica fonte di calcolo: usata sia dal riepilogo a schermo sia dal testo WhatsApp/email,
+// cosi' gli importi inviati al cliente coincidono sempre con quelli visualizzati.
+function calcolaRighe() {
     const km = Math.max(0, parseFloat(document.getElementById('p_km').value) || 0);
     const ivaRaw = getTariffa('t_iva');
     const iva = ivaRaw > 0 ? ivaRaw : 0;
@@ -1123,7 +1136,6 @@ function calcolaPreventivo() {
         const tipo = el.querySelector('.tipo-select').value;
         const qtaRaw = parseFloat(el.querySelector('.qta-input').value);
         const qta = qtaRaw > 0 ? qtaRaw : 1;
-        const id = el.dataset.linea;
         const voce = CATALOGO_VOCI[tipo];
         if (!voce) return;
 
@@ -1133,45 +1145,85 @@ function calcolaPreventivo() {
 
         // Per le voci di trasporto, aggiungi il costo al km
         if (voce.perKm && km > 0) {
-            const costoKm = km * getTariffa(voce.perKm);
-            prezzo += costoKm;
+            prezzo += km * Math.max(0, getTariffa(voce.perKm));
             desc += ` (${km} km)`;
         }
 
         const subtotale = prezzo * qta;
         totale += subtotale;
-        righe.push({ desc, qta, prezzo, subtotale, unita: voce.unita });
-
-        const subEl = el.querySelector(`[data-sub="${id}"]`);
-        if (subEl) subEl.textContent = formatEuro(subtotale);
+        const note = (el.querySelector('.note-input').value || '').trim();
+        righe.push({ id: el.dataset.linea, label: voce.label, desc, note, qta, prezzo, subtotale, unita: voce.unita });
     });
 
-    // Riepilogo
+    const ivaAmount = totale * iva / 100;
+    return { km, iva, righe, totale, ivaAmount, totaleFinale: totale + ivaAmount };
+}
+
+function unitaVisibile(unita) {
+    return unita !== 'pz' && unita !== 'viaggio' ? unita : '';
+}
+
+function calcolaPreventivo() {
+    const calc = calcolaRighe();
+
+    calc.righe.forEach(r => {
+        const subEl = document.querySelector(`[data-sub="${r.id}"]`);
+        if (subEl) subEl.textContent = formatEuro(r.subtotale);
+    });
+
+    // Riepilogo (visibile anche in stampa: le note di riga compaiono sotto la descrizione)
     const riepilogo = document.getElementById('riepilogo');
     riepilogo.innerHTML = `
+        <div class="table-scroll">
         <table class="tariff-table">
             <thead><tr><th>Descrizione</th><th>Q.tà</th><th>Prezzo Unit.</th><th>Subtotale</th></tr></thead>
             <tbody>
-                ${righe.map(r => `
+                ${calc.righe.map(r => `
                     <tr>
-                        <td>${r.desc}</td>
-                        <td>${r.qta} ${r.unita !== 'pz' && r.unita !== 'viaggio' ? r.unita : ''}</td>
+                        <td>${esc(r.desc)}${r.note ? `<div class="nota-riga">${esc(r.note)}</div>` : ''}</td>
+                        <td>${r.qta} ${unitaVisibile(r.unita)}</td>
                         <td>${formatEuro(r.prezzo)}</td>
                         <td><strong>${formatEuro(r.subtotale)}</strong></td>
                     </tr>
                 `).join('')}
             </tbody>
-        </table>`;
+        </table>
+        </div>`;
 
-    const ivaAmount = totale * iva / 100;
-    document.getElementById('totale-imponibile').textContent = formatEuro(totale);
-    document.getElementById('iva-perc').textContent = iva;
-    document.getElementById('totale-iva').textContent = formatEuro(ivaAmount);
-    document.getElementById('totale-finale').textContent = formatEuro(totale + ivaAmount);
+    document.getElementById('totale-imponibile').textContent = formatEuro(calc.totale);
+    document.getElementById('iva-perc').textContent = calc.iva;
+    document.getElementById('totale-iva').textContent = formatEuro(calc.ivaAmount);
+    document.getElementById('totale-finale').textContent = formatEuro(calc.totaleFinale);
 }
 
+// Formato italiano con separatore delle migliaia: 1234.5 -> "€ 1.234,50"
 function formatEuro(n) {
-    return '\u20AC ' + n.toFixed(2).replace('.', ',');
+    const [intero, dec] = (Number(n) || 0).toFixed(2).split('.');
+    return '€ ' + intero.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ',' + dec;
+}
+
+// Data di oggi nel fuso orario del telefono (toISOString usa UTC: tra mezzanotte
+// e le 2 in Italia avrebbe proposto la data di ieri).
+function oggiISO() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+
+// "2026-10-06" -> "06/10/2026" per i testi inviati al cliente
+function dataItaliana(iso) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    return m ? `${m[3]}/${m[2]}/${m[1]}` : (iso || '');
+}
+
+// Legge un JSON da localStorage senza bloccare l'app se il dato e' corrotto.
+function leggiJSON(chiave, predefinito) {
+    try {
+        const v = localStorage.getItem(chiave);
+        return v ? JSON.parse(v) : predefinito;
+    } catch(e) {
+        console.warn('Dato non leggibile in ' + chiave, e);
+        return predefinito;
+    }
 }
 
 // Escape HTML per evitare XSS quando si inserisce input utente in innerHTML.
@@ -1183,10 +1235,10 @@ function esc(s) {
 
 function buildTestoPreventivo() {
     const cliente = (document.getElementById('p_cliente').value || 'Cliente').replace(/[\r\n]+/g, ' ');
-    const data = document.getElementById('p_data').value;
+    const data = dataItaliana(document.getElementById('p_data').value);
     const indirizzo = document.getElementById('p_indirizzo').value.replace(/[\r\n]+/g, ' ');
-    const km = document.getElementById('p_km').value;
     const note = document.getElementById('p_note').value;
+    const calc = calcolaRighe();
 
     const azienda = getAziendaTesto();
     let testo = `*PREVENTIVO*\n`;
@@ -1194,24 +1246,18 @@ function buildTestoPreventivo() {
     testo += `Data: ${data}\n`;
     testo += `Cliente: ${cliente}\n`;
     if (indirizzo) testo += `Indirizzo: ${indirizzo}\n`;
-    if (km > 0) testo += `Distanza: ${km} km\n`;
+    if (calc.km > 0) testo += `Distanza: ${calc.km} km\n`;
     testo += `\n*--- DETTAGLIO ---*\n`;
 
-    document.querySelectorAll('.preventivo-linea').forEach(el => {
-        const tipo = el.querySelector('.tipo-select').value;
-        const qta = parseFloat(el.querySelector('.qta-input').value) || 1;
-        const voce = CATALOGO_VOCI[tipo];
-        if (!voce) return;
-        let prezzo = getTariffa(voce.tariffa);
-        if (voce.perKm && km > 0) prezzo += km * getTariffa(voce.perKm);
-        const sub = prezzo * qta;
-        const unitaStr = voce.unita !== 'pz' && voce.unita !== 'viaggio' ? ` ${voce.unita}` : '';
-        testo += `${voce.label} x${qta}${unitaStr} = ${formatEuro(sub)}\n`;
+    calc.righe.forEach(r => {
+        const unitaStr = unitaVisibile(r.unita) ? ` ${r.unita}` : '';
+        testo += `${r.label} x${r.qta}${unitaStr} = ${formatEuro(r.subtotale)}\n`;
+        if (r.note) testo += `   (${r.note.replace(/[\r\n]+/g, ' ')})\n`;
     });
 
-    testo += `\n*Totale imponibile:* ${document.getElementById('totale-imponibile').textContent}`;
-    testo += `\n*IVA (${document.getElementById('iva-perc').textContent}%):* ${document.getElementById('totale-iva').textContent}`;
-    testo += `\n*TOTALE:* ${document.getElementById('totale-finale').textContent}`;
+    testo += `\n*Totale imponibile:* ${formatEuro(calc.totale)}`;
+    testo += `\n*IVA (${calc.iva}%):* ${formatEuro(calc.ivaAmount)}`;
+    testo += `\n*TOTALE:* ${formatEuro(calc.totaleFinale)}`;
     if (note) testo += `\n\nNote: ${note}`;
     return testo;
 }
@@ -1240,10 +1286,9 @@ async function condividiTestoPreventivo() {
 
 function stampaPreventivo() {
     if (!richiediPro('Stampa / Esportazione PDF')) return;
-    const saved = localStorage.getItem('serena_azienda');
+    const d = leggiJSON('serena_azienda', null);
     const header = document.getElementById('print-header-az');
-    if (saved) {
-        const d = JSON.parse(saved);
+    if (d) {
         let html = '';
         if (d.az_ragione) html += `<h2>${esc(d.az_ragione)}</h2>`;
         if (d.az_indirizzo) html += `<p>${esc(d.az_indirizzo)}</p>`;
@@ -1340,7 +1385,7 @@ function salvaPreventivo() {
         righe
     };
 
-    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    const storico = leggiJSON('serena_storico', []);
     storico.unshift(preventivo);
     localStorage.setItem('serena_storico', JSON.stringify(storico));
     renderStorico();
@@ -1370,14 +1415,14 @@ function resetPreventivo() {
     document.getElementById('p_indirizzo').value = '';
     document.getElementById('p_km').value = 0;
     document.getElementById('p_note').value = '';
-    document.getElementById('p_data').value = new Date().toISOString().split('T')[0];
+    document.getElementById('p_data').value = oggiISO();
     lineePreventivo = [];
     lineaCounter = 0;
     aggiungiLinea();
 }
 
 function renderStorico() {
-    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    const storico = leggiJSON('serena_storico', []);
     const container = document.getElementById('lista-storico');
     const q = (document.getElementById('cerca-storico') || {}).value || '';
     const filtro = q.trim().toLowerCase();
@@ -1411,7 +1456,7 @@ function renderStorico() {
 }
 
 function caricaPreventivo(index) {
-    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    const storico = leggiJSON('serena_storico', []);
     const p = storico[index];
     if (!p) return;
     if (formHaDati() && !confirm(`Caricare il preventivo "${p.cliente || 'Senza nome'}"?\n\nI dati attualmente nel form andranno persi.`)) return;
@@ -1453,7 +1498,7 @@ function caricaPreventivo(index) {
 function eliminaPreventivo(index, e) {
     e.stopPropagation();
     if (!confirm('Eliminare questo preventivo?')) return;
-    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    const storico = leggiJSON('serena_storico', []);
     storico.splice(index, 1);
     localStorage.setItem('serena_storico', JSON.stringify(storico));
     renderStorico();
@@ -1508,11 +1553,18 @@ function isProFromStore() {
     }
 }
 
+// Diventa true quando Play Billing ha caricato gli acquisti dell'utente.
+let storePronto = false;
+
 // Fonte di verita': su device sempre il Play Store; in browser web sempre FREE.
 // localStorage NON e' attendibile (manipolabile da DevTools) — usato solo come
-// cache UI di fallback per il primissimo render prima che lo store risponda.
+// cache sul device nei primi secondi, prima che lo store risponda: cosi' un abbonato
+// che apre l'app e invia subito non vede il paywall ne' consuma invii gratuiti.
 function isPro() {
     if (typeof CdvPurchase !== 'undefined') {
+        if (!storePronto) {
+            try { return localStorage.getItem('serena_pro') === '1'; } catch(e) { return false; }
+        }
         return isProFromStore();
     }
     return false;
@@ -1619,7 +1671,7 @@ function richiediPro(funzione) {
 
 function checkLimitePreventivi() {
     if (isPro()) return true;
-    const storico = JSON.parse(localStorage.getItem('serena_storico') || '[]');
+    const storico = leggiJSON('serena_storico', []);
     if (storico.length >= FREE_PREVENTIVI_LIMIT) {
         mostraPaywall(
             'Hai raggiunto il limite gratuito',
@@ -1645,6 +1697,7 @@ function showPanelByName(name) {
 // --- Play Billing (attivo solo dentro APK con cordova-plugin-purchase) ---
 function initPlayBilling() {
     if (typeof CdvPurchase === 'undefined') return;
+    aggiornaProUI(); // mostra subito lo stato in cache mentre lo store si collega
     try {
         const { store, ProductType, Platform } = CdvPurchase;
         store.register([
@@ -1659,7 +1712,7 @@ function initPlayBilling() {
             .cancelled(() => { try { aggiornaStatoAbbonamento(); } catch(e) { console.warn('cancelled error:', e); } });
         store.error(err => console.warn('Play Billing error:', err));
         store.initialize([Platform.GOOGLE_PLAY])
-            .then(() => aggiornaStatoAbbonamento())
+            .then(() => { storePronto = true; aggiornaStatoAbbonamento(); })
             .catch(err => console.warn('Play Billing init error:', err));
         document.addEventListener('visibilitychange', () => {
             if (document.visibilityState === 'visible') aggiornaStatoAbbonamento();

@@ -10,13 +10,13 @@ All'inizio di ogni sessione leggere **`D:\SITO_WEB+SOCIAL\contatti_posa_trasport
 
 - **Nome visibile**: Posa & Trasporti
 - **appId / package**: `com.serenainfissi.listino` (NON cambiare dopo prima pubblicazione)
-- **Versione corrente**: 1.0.6 (versionCode 7), AAB generato il 2026-09-26 (pubblicata su Play Store: 1.0.5) — note in `docs/RELEASE_NOTES.md`
+- **Versione corrente**: 1.0.8 (versionCode 9), sorgenti del 2026-10-06 (pubblicata su Play Store: 1.0.5; 1.0.6 e 1.0.7 generate ma non risultano caricate) — note in `docs/RELEASE_NOTES.md`
 - **AAB firmato**: `android/app/build/outputs/bundle/release/app-release.aab`
 - **Stato**: pubblicata su Play Store (al 2026-09-19: 7 installazioni, 0 abbonati)
 
 ## Architettura
 
-- **Frontend**: `index.html` monolitico (~1100 righe), zero bundler, zero framework. CSS e JS inline.
+- **Frontend**: `index.html` monolitico (~1770 righe), zero bundler, zero framework. CSS e JS inline.
 - **Storage**: tutto in `localStorage` (`serena_storico`, `serena_azienda`, `serena_pro`, `serena_tariffe`).
 - **PWA**: `manifest.json` + `sw.js` (service worker per offline).
 - **Web app pubblica**: GitHub Pages su `https://giandemoncell-prog.github.io/LISTINO-TRASPORTI-E-POSE/`
@@ -36,6 +36,8 @@ Prodotti Play Console: `pro_monthly` (5,99 €/mese), `pro_yearly` (48,99 €/an
 JDK 21 incluso in Android Studio è configurato in `android/gradle.properties` (`org.gradle.java.home`). Java 25 di sistema NON è supportato da Android Gradle Plugin → non rimuovere quel setting.
 
 ```bash
+npm test                  # controlli automatici (ID prodotto, appId, www/ allineato, sintassi JS)
+npm run release           # sync + controlli + AAB firmato, tutto in uno (Windows)
 npm run android:sync      # copia www/ + cap sync
 cd android && ./gradlew bundleRelease   # AAB firmato
 cd android && ./gradlew assembleDebug   # APK debug per test rapido

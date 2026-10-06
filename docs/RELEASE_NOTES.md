@@ -58,6 +58,24 @@ Versione 1.0.6
 
 ---
 
+## Versione 1.0.8 (versionCode 9)
+
+Include anche le novità della 1.0.7 (versionCode 8): 3 invii gratuiti e paywall contestuale. Se la 1.0.7 è già stata caricata su Play Console, togliere la prima riga.
+
+### Italiano (default)
+```
+Versione 1.0.8
+
+- 3 invii gratuiti del preventivo (WhatsApp, email o PDF)
+- Le note di ogni voce ora compaiono nel preventivo inviato
+- Importi con separatore delle migliaia (es. 1.570,00 €)
+- Data in formato italiano nel testo inviato
+- Schermate più comode sul telefono
+- Abbonati Pro riconosciuti subito all'apertura
+```
+
+---
+
 ## Template per versioni successive
 
 ### Schema da seguire

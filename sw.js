@@ -1,4 +1,4 @@
-const CACHE_NAME = 'serena-infissi-v9';
+const CACHE_NAME = 'serena-infissi-v10';
 const ASSETS = [
     './',
     './index.html',
