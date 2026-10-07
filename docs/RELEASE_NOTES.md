@@ -69,6 +69,7 @@ Versione 1.0.8
 - Data in formato italiano nel testo inviato
 - Schermate più comode sul telefono
 - Abbonati Pro riconosciuti subito all'apertura
+- Nella Guida: link al gruppo Facebook dei posatori
 ```
 
 ---

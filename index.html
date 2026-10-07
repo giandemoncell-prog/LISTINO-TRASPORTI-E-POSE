@@ -757,6 +757,15 @@
         </div>
 
         <div class="card">
+            <h2>Gruppo dei posatori</h2>
+            <p style="color:#555;line-height:1.8;">
+                Prezzi di posa nelle varie zone, preventivi, problemi di cantiere e suggerimenti per migliorare l'app:
+                ne parliamo nel gruppo Facebook <strong>Posatori &amp; Serramentisti &ndash; Prezzi, Preventivi e Strumenti</strong>.
+            </p>
+            <a class="btn btn-primary" style="margin-top:10px;text-decoration:none;" href="https://www.facebook.com/groups/2126631114644277/" target="_blank" rel="noopener">Entra nel gruppo</a>
+        </div>
+
+        <div class="card">
             <h2>7. Consigli Utili</h2>
             <ul style="padding-left:20px;line-height:2.2;color:#555;">
                 <li>I dati sono salvati <strong>localmente sul dispositivo</strong>. Se cancelli i dati del browser, perderai tariffe personalizzate, storico e dati ditta</li>
@@ -790,6 +799,17 @@
 
 <!-- Cordova bridge (iniettato da Capacitor sul device; assente nel browser web) -->
 <script src="cordova.js" onerror=""></script>
+<!-- RICHIESTA RECENSIONE (dopo il 2° invio riuscito) -->
+<div id="review-sheet-overlay" class="pro-sheet-overlay" onclick="if(event.target===this) rispostaRecensione('dopo')">
+    <div class="pro-sheet" role="dialog" aria-modal="true" aria-labelledby="review-sheet-title">
+        <h3 id="review-sheet-title">Ti sta tornando utile?</h3>
+        <p>Posa &amp; Trasporti la sviluppa un posatore, da solo. Due righe su Google Play aiutano altri colleghi a trovarla e a me a capire cosa migliorare.</p>
+        <button class="btn btn-success" style="width:100%;justify-content:center;margin-bottom:8px;" onclick="rispostaRecensione('si')">Lascia una recensione</button>
+        <button class="pro-later" onclick="rispostaRecensione('dopo')">Più tardi</button>
+        <button class="pro-later" style="padding-top:0;" onclick="rispostaRecensione('no')">No, grazie</button>
+    </div>
+</div>
+
 <!-- PAYWALL CONTESTUALE -->
 <div id="pro-sheet-overlay" class="pro-sheet-overlay" onclick="if(event.target===this) chiudiPaywall()">
     <div class="pro-sheet" role="dialog" aria-modal="true" aria-labelledby="pro-sheet-title">
@@ -1286,6 +1306,7 @@ async function condividiTestoPreventivo() {
 
 function stampaPreventivo() {
     if (!richiediPro('Stampa / Esportazione PDF')) return;
+    registraInvioRiuscito();
     const d = leggiJSON('serena_azienda', null);
     const header = document.getElementById('print-header-az');
     if (d) {
@@ -1343,6 +1364,7 @@ function provaPrintConFallback(isAndroid) {
 
 function inviaWhatsApp() {
     if (!richiediPro('Invio via WhatsApp')) return;
+    registraInvioRiuscito();
     const testo = buildTestoPreventivo();
     const url = 'https://wa.me/?text=' + encodeURIComponent(testo);
     window.open(url, '_blank');
@@ -1350,6 +1372,7 @@ function inviaWhatsApp() {
 
 function inviaEmail() {
     if (!richiediPro('Invio via Email')) return;
+    registraInvioRiuscito();
     const cliente = document.getElementById('p_cliente').value || 'Cliente';
     const testo = buildTestoPreventivo().replace(/\*/g, '');
     const subject = `Preventivo - ${cliente}`;
@@ -1729,6 +1752,47 @@ function aggiornaStatoAbbonamento() {
     } catch(e) {
         console.warn('aggiornaStatoAbbonamento error:', e);
     }
+}
+
+// --- Richiesta recensione ---
+// Chiesta una sola volta dopo il 2° invio (WhatsApp, email o PDF): l'utente ha gia' visto
+// l'app funzionare con un cliente vero. "Più tardi" la ripropone dopo altri 5 invii, "No" mai piu'.
+// Solo dentro l'APK: nella versione web non c'e' una scheda Play da recensire.
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=com.serenainfissi.listino';
+const CHIAVE_INVII_TOTALI = 'serena_invii_totali';
+const CHIAVE_RECENSIONE = 'serena_recensione'; // 'fatta' | 'no' | numero invii a cui richiedere
+
+function registraInvioRiuscito() {
+    try {
+        const totali = (parseInt(localStorage.getItem(CHIAVE_INVII_TOTALI) || '0', 10) || 0) + 1;
+        localStorage.setItem(CHIAVE_INVII_TOTALI, String(totali));
+        if (!isCapacitorNative()) return;
+        const stato = localStorage.getItem(CHIAVE_RECENSIONE) || '2';
+        if (stato === 'fatta' || stato === 'no') return;
+        if (totali >= (parseInt(stato, 10) || 2)) {
+            // Lascia partire prima WhatsApp/email: la richiesta si trova al rientro nell'app
+            setTimeout(() => {
+                const overlay = document.getElementById('review-sheet-overlay');
+                if (overlay) overlay.classList.add('open');
+            }, 1500);
+        }
+    } catch(e) { /* localStorage non disponibile: nessuna richiesta */ }
+}
+
+function rispostaRecensione(risposta) {
+    const overlay = document.getElementById('review-sheet-overlay');
+    if (overlay) overlay.classList.remove('open');
+    try {
+        if (risposta === 'si') {
+            localStorage.setItem(CHIAVE_RECENSIONE, 'fatta');
+            window.open(PLAY_STORE_URL, '_blank', 'noopener');
+        } else if (risposta === 'no') {
+            localStorage.setItem(CHIAVE_RECENSIONE, 'no');
+        } else {
+            const totali = parseInt(localStorage.getItem(CHIAVE_INVII_TOTALI) || '0', 10) || 0;
+            localStorage.setItem(CHIAVE_RECENSIONE, String(totali + 5));
+        }
+    } catch(e) { /* ignore */ }
 }
 
 // Dal browser web l'acquisto non è possibile: invece di un vicolo cieco, porta allo store.
